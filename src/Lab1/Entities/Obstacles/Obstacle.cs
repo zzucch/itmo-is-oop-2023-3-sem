@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 
-public interface IObstacle
+public abstract class Obstacle
 {
-    Damage DamageDealt { get; }
+    public Damage DamageDealt { get; init; }
 }
