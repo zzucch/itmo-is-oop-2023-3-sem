@@ -1,6 +1,8 @@
+using Itmo.ObjectOrientedProgramming.Lab1.Models;
+
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
 
 public interface IJumpEngine : IEngine
 {
-    int SubspaceTravelLength { get; }
+    SubspaceTravel SubspaceTravelLength { get; }
 }

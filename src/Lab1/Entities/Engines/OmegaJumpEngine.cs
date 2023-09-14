@@ -2,23 +2,21 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
 
-public class AlphaJumpEngine : IJumpEngine
+public class OmegaJumpEngine : IJumpEngine
 {
-    public AlphaJumpEngine()
+    public OmegaJumpEngine()
     {
         FuelType = Fuel.GravitonicMatter;
-        CanEnterSubspace = false;
-        SubspaceTravelLength = SubspaceTravel.Alpha;
+        CanEnterSubspace = true;
+        SubspaceTravelLength = SubspaceTravel.Omega;
     }
 
     public Fuel FuelType { get; }
-
     public bool CanEnterSubspace { get; }
-
     public SubspaceTravel SubspaceTravelLength { get; }
 
     public double FuelPerLightYear(int lightYear)
     {
-        return 10 * lightYear;
+        return double.Log(lightYear);
     }
 }
