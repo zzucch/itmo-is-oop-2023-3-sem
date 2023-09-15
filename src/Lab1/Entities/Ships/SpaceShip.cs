@@ -8,21 +8,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 
 public abstract class SpaceShip
 {
-    protected SpaceShip()
-    {
-        HpLeft = 1;
-        IsCrewAlive = true;
-        HullStrength = HullStrength.Class1;
-        MdCharacteristics = MassDimensional.Low;
-        Deflectors = new List<IDeflector>();
-    }
-
-    protected int HpLeft { get; set; }
+    protected int HitPointsLeft { get; set; } = 1;
     protected int FuelLeft { get; set; }
-    protected bool IsCrewAlive { get; set; }
-    protected HullStrength HullStrength { get; init; }
-    protected MassDimensional MdCharacteristics { get; init; }
-    protected IList<IDeflector> Deflectors { get; init; }
+    protected bool IsCrewAlive { get; set; } = true;
+    protected HullStrength HullStrength { get; init; } = HullStrength.Class1;
+    protected MassDimensional MdCharacteristics { get; init; } = MassDimensional.Low;
+    protected IList<IDeflector> Deflectors { get; init; } = new List<IDeflector>();
 
     public void Deflect(Obstacle? obstacle)
     {
@@ -33,7 +24,7 @@ public abstract class SpaceShip
 
         foreach (IDeflector deflector in Deflectors)
         {
-            if (deflector.IsFunctioning && deflector.Deflect(obstacle))
+            if (deflector.IsFunctioning && deflector.TryDeflect(obstacle))
             {
                 if (!deflector.IsFunctioning)
                 {
@@ -44,13 +35,13 @@ public abstract class SpaceShip
             }
         }
 
-        if (HpLeft > (int)obstacle.DamageDealt)
+        if (HitPointsLeft > (int)obstacle.DamageDealt)
         {
-            HpLeft -= (int)obstacle.DamageDealt;
+            HitPointsLeft -= (int)obstacle.DamageDealt;
             return;
         }
 
-        HpLeft = 0;
+        HitPointsLeft = 0;
         IsCrewAlive = false;
     }
 }
