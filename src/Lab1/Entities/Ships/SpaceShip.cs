@@ -8,11 +8,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 
 public abstract class SpaceShip
 {
-    protected int HitPointsLeft { get; set; } = 1;
     protected int FuelLeft { get; set; }
+    protected int HitPointsLeft { get; set; } = 1;
     protected bool IsCrewAlive { get; set; } = true;
     protected HullStrength HullStrength { get; init; } = HullStrength.Class1;
-    protected MassDimensional MdCharacteristics { get; init; } = MassDimensional.Low;
+    protected MassDimensional MassDimensionalCharacteristics { get; init; } = MassDimensional.Low;
     protected IList<IDeflector> Deflectors { get; init; } = new List<IDeflector>();
 
     public void Deflect(Obstacle? obstacle)

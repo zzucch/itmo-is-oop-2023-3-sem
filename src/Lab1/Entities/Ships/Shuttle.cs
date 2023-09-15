@@ -7,10 +7,9 @@ public class Shuttle : SpaceShip
     public Shuttle(int fuel)
     {
         FuelLeft = fuel;
-        IsCrewAlive = true;
 
         HitPointsLeft = 100;
         HullStrength = HullStrength.Class1;
-        MdCharacteristics = MassDimensional.Low;
+        MassDimensionalCharacteristics = MassDimensional.Low;
     }
 }
