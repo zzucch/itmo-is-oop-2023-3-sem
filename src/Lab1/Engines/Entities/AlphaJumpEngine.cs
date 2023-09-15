@@ -6,7 +6,7 @@ public class AlphaJumpEngine : JumpEngine
 {
     public AlphaJumpEngine()
     {
-        FuelType = Fuel.GravitonicMatter;
+        FuelType = Fuel.GravitonMatter;
         SubspaceTravelLength = SubspaceTravel.Alpha;
     }
 
