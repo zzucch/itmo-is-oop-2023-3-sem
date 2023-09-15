@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
@@ -13,7 +12,7 @@ public abstract class SpaceShip
     protected bool IsCrewAlive { get; set; } = true;
     protected HullStrength HullStrength { get; init; } = HullStrength.Class1;
     protected MassDimensional MassDimensionalCharacteristics { get; init; } = MassDimensional.Low;
-    protected IList<IDeflector> Deflectors { get; init; } = new List<IDeflector>();
+    protected IDeflector? Deflector { get; init; }
 
     public void Deflect(Obstacle? obstacle)
     {
@@ -22,26 +21,27 @@ public abstract class SpaceShip
             throw new ArgumentNullException(nameof(obstacle));
         }
 
-        foreach (IDeflector deflector in Deflectors)
+        if (Deflector is not null)
         {
-            if (deflector.IsFunctioning && deflector.TryDeflect(obstacle))
+            if (Deflector.IsFunctioning && Deflector.TryDeflect(obstacle))
             {
-                if (!deflector.IsFunctioning)
-                {
-                    Deflectors.Remove(deflector);
-                }
-
                 return;
             }
         }
 
+        HullDeflect(obstacle);
+    }
+
+    private void HullDeflect(Obstacle obstacle)
+    {
         if (HitPointsLeft > (int)obstacle.DamageDealt)
         {
             HitPointsLeft -= (int)obstacle.DamageDealt;
-            return;
         }
-
-        HitPointsLeft = 0;
-        IsCrewAlive = false;
+        else
+        {
+            HitPointsLeft = 0;
+            IsCrewAlive = false;
+        }
     }
 }
