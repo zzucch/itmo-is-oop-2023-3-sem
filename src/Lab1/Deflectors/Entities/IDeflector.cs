@@ -1,7 +1,7 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
 public interface IDeflector
 {

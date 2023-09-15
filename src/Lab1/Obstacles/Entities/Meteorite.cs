@@ -1,6 +1,6 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
 
 public class Meteorite : Obstacle
 {

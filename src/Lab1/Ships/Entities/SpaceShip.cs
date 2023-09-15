@@ -1,9 +1,9 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
-using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
 public abstract class SpaceShip
 {

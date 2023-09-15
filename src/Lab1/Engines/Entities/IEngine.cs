@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public interface IEngine
 {

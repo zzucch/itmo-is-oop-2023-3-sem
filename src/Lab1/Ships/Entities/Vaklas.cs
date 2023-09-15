@@ -1,6 +1,6 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
 public class Vaklas : SpaceShip
 {

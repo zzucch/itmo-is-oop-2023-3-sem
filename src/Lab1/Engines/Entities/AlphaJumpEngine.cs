@@ -1,6 +1,6 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Engines.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public class AlphaJumpEngine : JumpEngine
 {

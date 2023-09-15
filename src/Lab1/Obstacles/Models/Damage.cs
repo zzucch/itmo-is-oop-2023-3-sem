@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab1.Models;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Models;
 
 public enum Damage
 {
