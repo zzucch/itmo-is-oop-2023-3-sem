@@ -1,9 +1,8 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Models;
 
-public enum Damage
+public static class Damage
 {
-    None = 0,
-    Asteroid = 1,
-    Meteorite = 4,
-    SpaceWhale = 40,
+    public static int Asteroid => 1;
+    public static int Meteorite => 4;
+    public static int SpaceWhale => 40;
 }

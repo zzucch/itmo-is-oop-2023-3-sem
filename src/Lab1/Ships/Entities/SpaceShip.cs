@@ -34,9 +34,11 @@ public abstract class SpaceShip
 
     private void HullDeflect(Obstacle obstacle)
     {
-        if (HitPointsLeft > (int)obstacle.DamageDealt)
+        int damageDealt = obstacle.DamageDealt;
+
+        if (HitPointsLeft > damageDealt)
         {
-            HitPointsLeft -= (int)obstacle.DamageDealt;
+            HitPointsLeft -= damageDealt;
         }
         else
         {

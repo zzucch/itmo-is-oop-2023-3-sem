@@ -14,5 +14,5 @@ public class Shuttle : SpaceShip
         MassDimensionalCharacteristics = MassDimensional.Low;
     }
 
-    private ImpulseEngineC ImpulseEngine { get; init; } = new();
+    private IEngine ImpulseEngine { get; init; } = new GammaJumpEngine();
 }

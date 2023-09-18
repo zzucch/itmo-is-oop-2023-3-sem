@@ -14,6 +14,6 @@ public class Vaklas : SpaceShip
         MassDimensionalCharacteristics = MassDimensional.Medium;
     }
 
-    private ImpulseEngineE ImpulseEngine { get; init; } = new();
-    private GammaJumpEngine JumpEngine { get; init; } = new();
+    private IEngine ImpulseEngine { get; init; } = new ImpulseEngineE();
+    private IEngine JumpEngine { get; init; } = new GammaJumpEngine();
 }
