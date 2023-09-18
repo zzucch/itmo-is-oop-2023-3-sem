@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
@@ -12,4 +13,6 @@ public class Shuttle : SpaceShip
         HullStrength = HullStrength.Class1;
         MassDimensionalCharacteristics = MassDimensional.Low;
     }
+
+    private ImpulseEngineC ImpulseEngine { get; init; } = new();
 }
