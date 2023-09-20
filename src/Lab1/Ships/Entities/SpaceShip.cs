@@ -1,4 +1,3 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
@@ -14,13 +13,8 @@ public abstract class SpaceShip
     protected MassDimensional MassDimensionalCharacteristics { get; init; } = MassDimensional.Low;
     protected IDeflector? Deflector { get; init; }
 
-    public void Deflect(Obstacle? obstacle)
+    public void Deflect(Obstacle obstacle)
     {
-        if (obstacle is null)
-        {
-            throw new ArgumentNullException(nameof(obstacle));
-        }
-
         if (Deflector is not null)
         {
             if (Deflector.IsFunctioning && Deflector.TryDeflect(obstacle))
