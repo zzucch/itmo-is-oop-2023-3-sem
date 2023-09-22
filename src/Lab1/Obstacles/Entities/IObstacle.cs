@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
 
-public abstract class Obstacle
+public interface IObstacle
 {
     public int DamageDealt { get; protected init; }
 }

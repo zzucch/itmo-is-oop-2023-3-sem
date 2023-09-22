@@ -7,5 +7,5 @@ public interface IDeflector
 {
     DeflectorStrength Strength { get; }
     bool IsFunctioning { get; }
-    bool TryDeflect(Obstacle obstacle);
+    bool TryDeflect(IObstacle obstacle);
 }

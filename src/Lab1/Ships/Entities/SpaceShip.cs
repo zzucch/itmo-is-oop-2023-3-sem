@@ -13,7 +13,7 @@ public abstract class SpaceShip
     protected MassDimensional MassDimensionalCharacteristics { get; init; } = MassDimensional.Low;
     protected IDeflector? Deflector { get; init; }
 
-    public void Deflect(Obstacle obstacle)
+    public void Deflect(IObstacle obstacle)
     {
         if (Deflector is not null)
         {
@@ -26,7 +26,7 @@ public abstract class SpaceShip
         HullDeflect(obstacle);
     }
 
-    private void HullDeflect(Obstacle obstacle)
+    private void HullDeflect(IObstacle obstacle)
     {
         int damageDealt = obstacle.DamageDealt;
 
