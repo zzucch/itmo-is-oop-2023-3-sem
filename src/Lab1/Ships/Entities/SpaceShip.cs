@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public abstract class SpaceShip
+public abstract class SpaceShip : ISpaceShip
 {
     protected int FuelLeft { get; set; }
     protected int HitPointsLeft { get; set; } = 1;
