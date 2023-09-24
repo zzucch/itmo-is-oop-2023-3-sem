@@ -12,6 +12,6 @@ public class OmegaJumpEngine : JumpEngine
 
     public static double FuelPerLightYear(int lightYear)
     {
-        return double.Log(lightYear);
+        return lightYear * double.Log(lightYear);
     }
 }
