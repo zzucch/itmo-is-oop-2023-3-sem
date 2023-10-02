@@ -6,6 +6,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 public interface IDeflector
 {
     DeflectorStrength Strength { get; }
-    bool IsFunctioning { get; }
     bool TryDeflect(IObstacle obstacle);
 }
