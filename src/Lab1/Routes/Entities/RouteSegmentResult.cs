@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 
-public record RouteResult
+public record RouteSegmentResult
 {
     public int TimeTaken { get; set; }
     public double FuelConsumed { get; set; }

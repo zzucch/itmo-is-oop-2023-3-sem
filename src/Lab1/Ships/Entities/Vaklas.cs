@@ -10,7 +10,7 @@ public class Vaklas : SpaceShip
         FuelLeft = fuel;
 
         HitPointsLeft = 200;
-        HullStrength = HullStrength.CLass2;
+        HullStrength = HullStrength.Class2;
         MassDimensionalCharacteristics = MassDimensional.Medium;
 
         // todo: implement deflectors
