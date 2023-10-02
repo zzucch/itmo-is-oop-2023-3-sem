@@ -3,19 +3,19 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
-public class Vaklas : SpaceShip
+public class Augur : SpaceShip
 {
-    public Vaklas(int fuel)
+    public Augur(int fuel)
     {
         FuelLeft = fuel;
 
         HitPointsLeft = 200;
-        HullStrength = HullStrength.CLass2;
-        MassDimensionalCharacteristics = MassDimensional.Medium;
+        HullStrength = HullStrength.Class3;
+        MassDimensionalCharacteristics = MassDimensional.High;
 
         // todo: implement deflectors
     }
 
     private IEngine ImpulseEngine { get; init; } = new ImpulseEngineE();
-    private IEngine JumpEngine { get; init; } = new GammaJumpEngine();
+    private IEngine JumpEngine { get; init; } = new AlphaJumpEngine();
 }
