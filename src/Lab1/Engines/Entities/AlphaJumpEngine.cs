@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Engines.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
-public class AlphaJumpEngine : JumpEngine
+public class AlphaJumpEngine : JumpEngine, IEngine
 {
     public AlphaJumpEngine()
     {
@@ -10,7 +10,7 @@ public class AlphaJumpEngine : JumpEngine
         SubspaceTravelLength = SubspaceTravel.Alpha;
     }
 
-    public static double FuelPerLightYear(int lightYear)
+    public double FuelPerLightYear(int lightYear)
     {
         return 10 * lightYear;
     }
