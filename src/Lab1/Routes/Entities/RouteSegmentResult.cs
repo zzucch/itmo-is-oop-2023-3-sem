@@ -8,4 +8,5 @@ public record RouteSegmentResult
     public bool ShipLost { get; set; }
     public bool ShipDestroyed { get; set; }
     public bool CrewLost { get; set; }
+    public bool FacedObstacle { get; set; }
 }
