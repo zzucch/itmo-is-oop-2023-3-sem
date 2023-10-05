@@ -14,10 +14,7 @@ public abstract class SpaceShip : ISpaceShip
     protected MassDimensional MassDimensionalCharacteristics { get; init; } = MassDimensional.Low;
     protected IDeflector? Deflector { get; init; }
 
-    public RouteSegmentResult Travel(RouteSegment routeSegment)
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract RouteSegmentResult Travel(RouteSegment routeSegment);
 
     public void Deflect(IObstacle obstacle)
     {
