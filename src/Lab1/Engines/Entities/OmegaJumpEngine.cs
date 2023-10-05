@@ -10,7 +10,7 @@ public class OmegaJumpEngine : JumpEngine, IEngine
         SubspaceTravelLength = SubspaceTravel.Omega;
     }
 
-    public double FuelPerLightYear(int lightYear)
+    public double TravelFuelConsumption(int lightYear)
     {
         return lightYear * double.Log(lightYear);
     }

@@ -14,7 +14,7 @@ public class ImpulseEngineC : IEngine
 
     public bool CanEnterSubspace { get; }
 
-    public double FuelPerLightYear(int lightYear)
+    public double TravelFuelConsumption(int lightYear)
     {
         return 10;
     }

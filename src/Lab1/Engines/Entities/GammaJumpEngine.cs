@@ -9,7 +9,7 @@ public class GammaJumpEngine : JumpEngine, IEngine
         SubspaceTravelLength = SubspaceTravel.Gamma;
     }
 
-    public double FuelPerLightYear(int lightYear)
+    public double TravelFuelConsumption(int lightYear)
     {
         return lightYear * lightYear;
     }

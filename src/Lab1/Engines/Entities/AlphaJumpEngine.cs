@@ -10,7 +10,7 @@ public class AlphaJumpEngine : JumpEngine, IEngine
         SubspaceTravelLength = SubspaceTravel.Alpha;
     }
 
-    public double FuelPerLightYear(int lightYear)
+    public double TravelFuelConsumption(int lightYear)
     {
         return 10 * lightYear;
     }
