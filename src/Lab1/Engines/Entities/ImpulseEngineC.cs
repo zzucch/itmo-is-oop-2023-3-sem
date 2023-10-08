@@ -1,21 +1,16 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
 public class ImpulseEngineC : IEngine
 {
-    public ImpulseEngineC()
+    public Fuel FuelType { get; } = Fuel.ActivePlasma;
+
+    public TravelResult Travel(int lightYear, Environment environment)
     {
-        FuelType = Fuel.ActivePlasma;
-        CanEnterSubspace = false;
-    }
-
-    public Fuel FuelType { get; }
-
-    public bool CanEnterSubspace { get; }
-
-    public double TravelFuelConsumption(int lightYear)
-    {
-        return 10;
+        return new TravelResult(
+            travelTimeTaken: lightYear / 10,
+            travelFuelConsumption: 10);
     }
 }

@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 
@@ -6,11 +7,13 @@ public class GammaJumpEngine : JumpEngine, IEngine
 {
     public GammaJumpEngine()
     {
-        SubspaceTravelLength = SubspaceTravel.Gamma;
+        SubspaceTravelDistance = SubspaceTravel.Gamma;
     }
 
-    public double TravelFuelConsumption(int lightYear)
+    public TravelResult Travel(int lightYear, Environment environment)
     {
-        return lightYear * lightYear;
+        return new TravelResult(
+            travelTimeTaken: lightYear / 10,
+            travelFuelConsumption: lightYear * lightYear);
     }
 }
