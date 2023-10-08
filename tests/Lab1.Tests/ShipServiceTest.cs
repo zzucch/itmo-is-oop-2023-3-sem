@@ -20,7 +20,7 @@ public class ShipServiceTest
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
-                    length: 100,
+                    distanceLightYear: 100,
                     obstacles: new List<IObstacle>(),
                     Environment.DenseNebula),
             })),
@@ -36,7 +36,7 @@ public class ShipServiceTest
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
-                    length: 100,
+                    distanceLightYear: 100,
                     obstacles: new List<IObstacle>()
                     {
                         new AntimatterFlash(),
@@ -56,7 +56,7 @@ public class ShipServiceTest
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
-                    length: 100,
+                    distanceLightYear: 100,
                     obstacles: new List<IObstacle>()
                     {
                         new SpaceWhales(),
@@ -75,7 +75,7 @@ public class ShipServiceTest
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
-                    length: 10,
+                    distanceLightYear: 10,
                     obstacles: new List<IObstacle>(),
                     Environment.NormalSpace),
             })),
@@ -91,7 +91,7 @@ public class ShipServiceTest
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
-                    length: 100,
+                    distanceLightYear: 100,
                     obstacles: new List<IObstacle>(),
                     Environment.DenseNebula),
             })),
@@ -107,7 +107,7 @@ public class ShipServiceTest
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
-                    length: 100,
+                    distanceLightYear: 100,
                     obstacles: new List<IObstacle>(),
                     Environment.NitriteNebula),
             })),
