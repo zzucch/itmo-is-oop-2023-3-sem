@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Hulls.Models;
 
 public enum HullStrength
 {
