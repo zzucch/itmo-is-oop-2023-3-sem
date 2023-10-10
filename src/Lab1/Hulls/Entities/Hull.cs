@@ -11,25 +11,26 @@ public class Hull
     }
 
     private double HitPointsLeft { get; set; }
+    private MassDimensional MassDimensional { get; set; }
     private HullStrength HullStrength { get; init; }
 
     public bool TryHullDeflect(double damageDealt)
     {
-        switch (HullStrength)
+        damageDealt *= HullStrength switch
         {
-            case HullStrength.Class1:
-                damageDealt *= 0.9;
-                break;
-            case HullStrength.Class2:
-                damageDealt *= 0.8;
-                break;
-            case HullStrength.Class3:
-                damageDealt *= 0.7;
-                break;
-            default:
-                damageDealt *= 1;
-                break;
-        }
+            HullStrength.Class1 => 0.9,
+            HullStrength.Class2 => 0.8,
+            HullStrength.Class3 => 0.7,
+            _ => 1,
+        };
+
+        damageDealt *= MassDimensional switch
+        {
+            MassDimensional.Low => 0.9,
+            MassDimensional.Medium => 0.8,
+            MassDimensional.High => 0.7,
+            _ => 1,
+        };
 
         if (damageDealt >= HitPointsLeft)
         {
