@@ -8,7 +8,7 @@ public class OmegaJumpEngine : JumpEngine, IEngine
     public OmegaJumpEngine()
     {
         FuelType = Fuel.GravitonMatter;
-        SubspaceTravelDistance = SubspaceTravel.Omega;
+        SubspaceTravelDistance = 200;
     }
 
     public TravelResult Travel(int lightYear, Environment environment)

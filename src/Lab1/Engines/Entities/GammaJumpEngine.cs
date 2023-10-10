@@ -7,7 +7,7 @@ public class GammaJumpEngine : JumpEngine, IEngine
 {
     public GammaJumpEngine()
     {
-        SubspaceTravelDistance = SubspaceTravel.Gamma;
+        SubspaceTravelDistance = 300;
     }
 
     public TravelResult Travel(int lightYear, Environment environment)

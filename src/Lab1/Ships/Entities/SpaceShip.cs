@@ -36,9 +36,6 @@ public abstract class SpaceShip : ISpaceShip
             travelResult = JumpEngine.Travel(routeSegment.DistanceLightYear, routeSegment.Environment);
         }
 
-        routeSegment.Obstacles.ToList().ForEach(Deflect);
-
-        result.CrewLost = CrewState == CrewState.Dead;
         result.FuelConsumed = travelResult.TravelFuelConsumption;
         result.TimeTaken = travelResult.TravelTimeTaken;
 
