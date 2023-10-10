@@ -24,9 +24,16 @@ public abstract class SpaceShip : ISpaceShip
             FacedObstacle = routeSegment.Obstacles.Count > 0,
         };
 
+        TravelResult travelResult;
+
         if (ImpulseEngine is not null)
         {
-            TravelResult travelResult = ImpulseEngine.Travel(routeSegment.DistanceLightYear, routeSegment.Environment);
+            travelResult = ImpulseEngine.Travel(routeSegment.DistanceLightYear, routeSegment.Environment);
+        }
+
+        if (JumpEngine is not null)
+        {
+            travelResult = JumpEngine.Travel(routeSegment.DistanceLightYear, routeSegment.Environment);
         }
 
         routeSegment.Obstacles.ToList().ForEach(Deflect);
