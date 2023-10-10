@@ -1,5 +1,8 @@
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Engines.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Hulls.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
@@ -7,40 +10,31 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
 public abstract class SpaceShip : ISpaceShip
 {
-    protected int FuelLeft { get; set; }
-    protected int HitPointsLeft { get; set; } = 1;
-    protected CrewState CrewState { get; set; } = CrewState.Alive;
-    protected HullStrength HullStrength { get; init; } = HullStrength.Class1;
-    protected MassDimensional MassDimensionalCharacteristics { get; init; } = MassDimensional.Low;
+    protected IEngine? ImpulseEngine { get; init; }
+    protected IEngine? JumpEngine { get; init; }
     protected IDeflector? Deflector { get; init; }
+    protected Hull Hull { get; init; }
+    protected ShipState ShipState { get; set; } = ShipState.Ready;
+    private CrewState CrewState { get; set; } = CrewState.Alive;
 
-    public abstract RouteSegmentResult Travel(RouteSegment routeSegment);
-
-    public void Deflect(IObstacle obstacle)
+    public RouteSegmentResult Travel(RouteSegment routeSegment)
     {
-        if (Deflector is not null)
+        var result = new RouteSegmentResult
         {
-            if (Deflector.TryDeflect(obstacle))
-            {
-                return;
-            }
+            FacedObstacle = routeSegment.Obstacles.Count > 0,
+        };
+
+        if (ImpulseEngine is not null)
+        {
+            TravelResult travelResult = ImpulseEngine.Travel(routeSegment.DistanceLightYear, routeSegment.Environment);
         }
 
-        HullDeflect(obstacle);
-    }
+        routeSegment.Obstacles.ToList().ForEach(Deflect);
 
-    private void HullDeflect(IObstacle obstacle)
-    {
-        int damageDealt = obstacle.DamageDealt;
+        result.CrewLost = CrewState == CrewState.Dead;
+        result.FuelConsumed = travelResult.TravelFuelConsumption;
+        result.TimeTaken = travelResult.TravelTimeTaken;
 
-        if (HitPointsLeft > damageDealt)
-        {
-            HitPointsLeft -= damageDealt;
-        }
-        else
-        {
-            HitPointsLeft = 0;
-            CrewState = CrewState.Dead;
-        }
+        return result;
     }
 }
