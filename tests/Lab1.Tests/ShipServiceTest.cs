@@ -15,13 +15,13 @@ public class ShipServiceTest
     {
         yield return new object[]
         {
-            new Shuttle(100),
-            new Augur(100),
+            new Shuttle(),
+            new Augur(),
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
                     distanceLightYear: 100,
-                    obstacles: new List<IObstacle>(),
+                    obstacles: new List<Obstacle>(),
                     Environment.DenseNebula),
             })),
         };
@@ -31,13 +31,13 @@ public class ShipServiceTest
     {
         yield return new object[]
         {
-            new Vaklas(100),
-            new Vaklas(100),
+            new Vaklas(),
+            new Vaklas(),
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
                     distanceLightYear: 100,
-                    obstacles: new List<IObstacle>()
+                    obstacles: new List<Obstacle>()
                     {
                         new AntimatterFlash(),
                     },
@@ -50,16 +50,16 @@ public class ShipServiceTest
     {
         yield return new object[]
         {
-            new Vaklas(100),
-            new Augur(100),
-            new Meridian(100),
+            new Vaklas(),
+            new Augur(),
+            new Meridian(),
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
                     distanceLightYear: 100,
-                    obstacles: new List<IObstacle>()
+                    obstacles: new List<Obstacle>()
                     {
-                        new SpaceWhales(),
+                        new SpaceWhales(1),
                     },
                     Environment.NitriteNebula),
             })),
@@ -70,13 +70,13 @@ public class ShipServiceTest
     {
         yield return new object[]
         {
-            new Shuttle(100),
-            new Vaklas(100),
+            new Shuttle(),
+            new Vaklas(),
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
                     distanceLightYear: 10,
-                    obstacles: new List<IObstacle>(),
+                    obstacles: new List<Obstacle>(),
                     Environment.NormalSpace),
             })),
         };
@@ -86,13 +86,13 @@ public class ShipServiceTest
     {
         yield return new object[]
         {
-            new Augur(100),
-            new Stella(100),
+            new Augur(),
+            new Stella(),
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
                     distanceLightYear: 100,
-                    obstacles: new List<IObstacle>(),
+                    obstacles: new List<Obstacle>(),
                     Environment.DenseNebula),
             })),
         };
@@ -102,13 +102,13 @@ public class ShipServiceTest
     {
         yield return new object[]
         {
-            new Shuttle(100),
-            new Vaklas(100),
+            new Shuttle(),
+            new Vaklas(),
             new Route(new List<RouteSegment>(new List<RouteSegment>()
             {
                 new(
                     distanceLightYear: 100,
-                    obstacles: new List<IObstacle>(),
+                    obstacles: new List<Obstacle>(),
                     Environment.NitriteNebula),
             })),
         };
