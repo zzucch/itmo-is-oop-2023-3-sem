@@ -1,15 +1,20 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
-
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
 public abstract class Deflector : IDeflector
 {
-    public virtual bool TryNormalDeflect(IObstacle obstacle)
+    private int Hp { get; set; }
+
+    public virtual bool TryPhysicalDeflect(int damage)
     {
-        throw new System.NotImplementedException();
+        if (Hp > damage)
+        {
+            Hp -= damage;
+        }
+
+        return Hp > damage;
     }
 
-    public virtual bool TryPhotonDeflect(IObstacle obstacle)
+    public virtual bool TryPhotonDeflect()
     {
         return false;
     }

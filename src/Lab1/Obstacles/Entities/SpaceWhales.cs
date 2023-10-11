@@ -1,8 +1,11 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Models;
-
 namespace Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
 
-public class SpaceWhales : IObstacle
+public class SpaceWhales : Obstacle
 {
-    public int DamageDealt { get; init; } = Damage.SpaceWhale;
+    private const int SpaceWhalePhysicalDamage = 40;
+
+    public SpaceWhales(int amount)
+        : base(physicalDamage: SpaceWhalePhysicalDamage * amount)
+    {
+    }
 }

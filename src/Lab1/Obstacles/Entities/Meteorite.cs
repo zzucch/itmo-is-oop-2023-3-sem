@@ -1,8 +1,11 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Models;
-
 namespace Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
 
-public class Meteorite : IObstacle
+public class Meteorite : Obstacle
 {
-    public int DamageDealt { get; init; } = Damage.Meteorite;
+    private const int MeteoritePhysicalDamage = 4;
+
+    public Meteorite()
+        : base(MeteoritePhysicalDamage)
+    {
+    }
 }

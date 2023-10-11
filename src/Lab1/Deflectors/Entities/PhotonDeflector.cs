@@ -9,15 +9,15 @@ public class PhotonDeflector : DeflectorDecorator
     {
     }
 
-    private int Charge { get; set; } = 3;
+    private int PhotonDeflectionCharge { get; set; } = 3;
 
     public override bool TryPhotonDeflect(IObstacle obstacle)
     {
-        if (Charge > 0)
+        if (PhotonDeflectionCharge > 0)
         {
-            Charge -= 1;
+            PhotonDeflectionCharge--;
         }
 
-        return Charge > 0;
+        return PhotonDeflectionCharge > 0;
     }
 }

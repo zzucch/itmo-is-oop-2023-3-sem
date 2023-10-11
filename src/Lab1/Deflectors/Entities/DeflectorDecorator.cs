@@ -11,9 +11,9 @@ public abstract class DeflectorDecorator : Deflector
 
     private Deflector Deflector { get; }
 
-    public override bool TryNormalDeflect(IObstacle obstacle)
+    public override bool TryPhysicalDeflect(int damage)
     {
-        return Deflector.TryNormalDeflect(obstacle);
+        return Deflector.TryPhysicalDeflect(damage);
     }
 
     public override bool TryPhotonDeflect(IObstacle obstacle)
