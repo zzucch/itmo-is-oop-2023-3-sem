@@ -4,15 +4,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Hulls.Entities;
 
 public class Hull
 {
-    public Hull(HullStrength hullStrength, double hitPointsLeft)
+    public Hull(HullStrength hullStrength, double hitPointsLeft, MassDimensional massDimensional)
     {
         HullStrength = hullStrength;
         HitPointsLeft = hitPointsLeft;
+        MassDimensional = massDimensional;
     }
 
+    private HullStrength HullStrength { get; }
     private double HitPointsLeft { get; set; }
-    private MassDimensional MassDimensional { get; set; }
-    private HullStrength HullStrength { get; init; }
+    private MassDimensional MassDimensional { get; }
 
     public bool TryHullDeflect(double damageDealt)
     {
