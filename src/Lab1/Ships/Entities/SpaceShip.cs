@@ -1,7 +1,6 @@
-using System.Linq;
+using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Engines.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Hulls.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
@@ -10,35 +9,45 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
 public abstract class SpaceShip : ISpaceShip
 {
+    protected SpaceShip(IEngine? impulseEngine, IEngine? jumpEngine, IDeflector? deflector, Hull hull)
+    {
+        ImpulseEngine = impulseEngine;
+        JumpEngine = jumpEngine;
+        Deflector = deflector;
+        Hull = hull;
+    }
+
     protected IEngine? ImpulseEngine { get; init; }
     protected IEngine? JumpEngine { get; init; }
-    protected IDeflector? Deflector { get; init; }
-    protected Hull Hull { get; init; }
-    protected ShipState ShipState { get; set; } = ShipState.Ready;
+    private IDeflector? Deflector { get; init; }
+    private Hull Hull { get; init; }
     private CrewState CrewState { get; set; } = CrewState.Alive;
 
     public RouteSegmentResult Travel(RouteSegment routeSegment)
     {
-        var result = new RouteSegmentResult
-        {
-            FacedObstacle = routeSegment.Obstacles.Count > 0,
-        };
+        throw new NotImplementedException();
+    }
 
-        TravelResult travelResult;
-
-        if (ImpulseEngine is not null)
+    public void TakePhysicalDamage(int damage)
+    {
+        if (Deflector != null && Deflector.TryPhysicalDeflect(damage))
         {
-            travelResult = ImpulseEngine.Travel(routeSegment.DistanceLightYear, routeSegment.Environment);
+            return;
         }
 
-        if (JumpEngine is not null)
+        if (!Hull.TryHullDeflect(damage))
         {
-            travelResult = JumpEngine.Travel(routeSegment.DistanceLightYear, routeSegment.Environment);
+            CrewState = CrewState.Dead;
+        }
+    }
+
+    public void TakePhotonDamage()
+    {
+        if (Deflector is not null && Deflector.TryPhotonDeflect())
+        {
+            return;
         }
 
-        result.FuelConsumed = travelResult.TravelFuelConsumption;
-        result.TimeTaken = travelResult.TravelTimeTaken;
-
-        return result;
+        CrewState = CrewState.Dead;
     }
 }
