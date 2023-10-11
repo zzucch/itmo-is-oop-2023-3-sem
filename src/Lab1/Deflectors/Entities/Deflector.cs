@@ -6,21 +6,21 @@ public abstract class Deflector : IDeflector
     {
     }
 
-    protected Deflector(int hp)
+    protected Deflector(int hitPoints)
     {
-        Hp = hp;
+        HitPoints = hitPoints;
     }
 
-    private int Hp { get; set; }
+    private int HitPoints { get; set; }
 
     public virtual bool TryPhysicalDeflect(int damage)
     {
-        if (Hp > damage)
+        if (HitPoints > damage)
         {
-            Hp -= damage;
+            HitPoints -= damage;
         }
 
-        return Hp > damage;
+        return HitPoints > damage;
     }
 
     public virtual bool TryPhotonDeflect()

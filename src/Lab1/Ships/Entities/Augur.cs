@@ -1,27 +1,14 @@
+using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Hulls.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Hulls.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
 public class Augur : SpaceShip
 {
-    public Augur(int fuel)
+    public Augur()
+        : base(new ImpulseEngineE(), new AlphaJumpEngine(), new DeflectorClass3(), new Hull(HullStrength.Class3, MassDimensional.High))
     {
-        FuelLeft = fuel;
-
-        HitPointsLeft = 200;
-        HullStrength = HullStrength.Class3;
-        MassDimensionalCharacteristics = MassDimensional.High;
-
-        // todo: implement deflectors
-    }
-
-    private IEngine ImpulseEngine { get; init; } = new ImpulseEngineE();
-    private IEngine JumpEngine { get; init; } = new AlphaJumpEngine();
-
-    public override RouteSegmentResult Travel(RouteSegment routeSegment)
-    {
-        throw new System.NotImplementedException();
     }
 }
