@@ -2,6 +2,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
 public abstract class Deflector : IDeflector
 {
+    protected Deflector(int hp)
+    {
+        Hp = hp;
+    }
+
     private int Hp { get; set; }
 
     public virtual bool TryPhysicalDeflect(int damage)
