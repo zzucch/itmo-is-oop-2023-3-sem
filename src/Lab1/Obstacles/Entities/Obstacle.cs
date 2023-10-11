@@ -4,6 +4,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
 
 public abstract class Obstacle
 {
+    protected Obstacle()
+    {
+    }
+
     protected Obstacle(int physicalDamage)
     {
         PhysicalDamage = physicalDamage;
