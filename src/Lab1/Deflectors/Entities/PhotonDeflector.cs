@@ -1,5 +1,3 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
-
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
 public class PhotonDeflector : DeflectorDecorator
@@ -11,7 +9,7 @@ public class PhotonDeflector : DeflectorDecorator
 
     private int PhotonDeflectionCharge { get; set; } = 3;
 
-    public override bool TryPhotonDeflect(IObstacle obstacle)
+    public override bool TryPhotonDeflect()
     {
         if (PhotonDeflectionCharge > 0)
         {

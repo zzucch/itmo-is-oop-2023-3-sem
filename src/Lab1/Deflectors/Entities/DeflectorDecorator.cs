@@ -1,5 +1,3 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
-
 namespace Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 
 public abstract class DeflectorDecorator : Deflector
@@ -16,8 +14,8 @@ public abstract class DeflectorDecorator : Deflector
         return Deflector.TryPhysicalDeflect(damage);
     }
 
-    public override bool TryPhotonDeflect(IObstacle obstacle)
+    public override bool TryPhotonDeflect()
     {
-        return Deflector.TryPhotonDeflect(obstacle);
+        return Deflector.TryPhotonDeflect();
     }
 }
