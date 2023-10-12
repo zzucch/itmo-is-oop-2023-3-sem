@@ -10,8 +10,8 @@ public class Hull
         MassDimensional = massDimensional;
     }
 
-    private HullStrength HullStrength { get; }
     private double HitPointsLeft { get; set; } = 100;
+    private HullStrength HullStrength { get; }
     private MassDimensional MassDimensional { get; }
 
     public bool TryHullDeflect(double damageDealt)

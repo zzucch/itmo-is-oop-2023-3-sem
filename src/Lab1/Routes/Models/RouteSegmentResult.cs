@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 
 public record RouteSegmentResult
 {

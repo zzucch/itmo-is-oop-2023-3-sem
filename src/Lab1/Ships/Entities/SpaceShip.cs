@@ -3,6 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Deflectors.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Hulls.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
