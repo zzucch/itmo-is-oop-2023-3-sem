@@ -9,11 +9,14 @@ public class Deflector : IDeflector
         DeflectionStrategy = deflectionStrategy;
     }
 
-    private int HitPoints { get; set; } = 100;
+    private int HitPoints { get; set; } = 1000;
     private IDeflectionStrategy DeflectionStrategy { get; init; }
 
     public bool TryDeflect(Damage damage)
     {
-        return DeflectionStrategy.TryDeflect(damage, HitPoints);
+        (bool success, int hitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPoints);
+        HitPoints = hitPointsLeft;
+
+        return success;
     }
 }
