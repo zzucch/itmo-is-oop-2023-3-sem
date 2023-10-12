@@ -1,21 +1,28 @@
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
+
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 
 public class PhotonDeflector : DeflectorDecorator
 {
-    public PhotonDeflector(Deflector deflector)
+    private const DamageType DeflectionType = DamageType.Photon;
+
+    public PhotonDeflector(IDeflector deflector)
         : base(deflector)
     {
     }
 
-    private int PhotonDeflectionCharge { get; set; } = 3;
+    private IDeflectionStrategy PhotonDeflectionStrategy { get; set; } = new PhotonDeflectionStrategy();
+    private int PhotonHitPoints { get; set; } = 3;
 
-    public override bool TryPhotonDeflect()
+    public override bool TryDeflect(Damage damage)
     {
-        if (PhotonDeflectionCharge > 0)
+        if (damage.Type is not DeflectionType)
         {
-            PhotonDeflectionCharge--;
+            return base.TryDeflect(damage);
         }
 
-        return PhotonDeflectionCharge > 0;
+        (bool success, PhotonHitPoints) = PhotonDeflectionStrategy.TryDeflect(damage, PhotonHitPoints);
+
+        return success;
     }
 }

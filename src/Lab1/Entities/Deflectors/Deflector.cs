@@ -14,8 +14,7 @@ public class Deflector : IDeflector
 
     public bool TryDeflect(Damage damage)
     {
-        (bool success, int hitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPoints);
-        HitPoints = hitPointsLeft;
+        (bool success, HitPoints) = DeflectionStrategy.TryDeflect(damage, HitPoints);
 
         return success;
     }

@@ -1,21 +1,18 @@
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
+
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 
-public abstract class DeflectorDecorator : Deflector
+public abstract class DeflectorDecorator : IDeflector
 {
-    protected DeflectorDecorator(Deflector deflector)
+    protected DeflectorDecorator(IDeflector deflector)
     {
         Deflector = deflector;
     }
 
-    private Deflector Deflector { get; }
+    private IDeflector Deflector { get; }
 
-    public override bool TryPhysicalDeflect(int damage)
+    public virtual bool TryDeflect(Damage damage)
     {
-        return Deflector.TryPhysicalDeflect(damage);
-    }
-
-    public override bool TryPhotonDeflect()
-    {
-        return Deflector.TryPhotonDeflect();
+        return Deflector.TryDeflect(damage);
     }
 }
