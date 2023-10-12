@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Itmo.ObjectOrientedProgramming.Lab1.Obstacles.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
+using Itmo.ObjectOrientedProgramming.Lab1.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Services;
-using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Tests;
