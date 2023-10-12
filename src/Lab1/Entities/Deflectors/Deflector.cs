@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 

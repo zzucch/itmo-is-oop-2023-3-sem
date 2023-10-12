@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 public enum DamageType
 {
