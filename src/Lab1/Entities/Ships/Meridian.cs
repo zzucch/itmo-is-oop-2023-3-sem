@@ -8,7 +8,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 public class Meridian : SpaceShip
 {
     public Meridian()
-        : base(new ImpulseEngineE(), new GammaJumpEngine(), new Deflector(new PhysicalClass2DeflectionStrategy()), new Hull.Hull(HullStrength.Class2, MassDimensional.Medium))
+        : base(
+            new ImpulseEngineE(),
+            new GammaJumpEngine(),
+            new Deflector(new PhysicalClass2DeflectionStrategy()),
+            new Hull.Hull(new PhysicalClass2DeflectionStrategy(), MassDimensional.Medium))
     {
     }
 }

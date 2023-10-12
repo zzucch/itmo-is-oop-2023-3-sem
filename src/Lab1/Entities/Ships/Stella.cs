@@ -8,7 +8,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 public class Stella : SpaceShip
 {
     public Stella()
-        : base(new ImpulseEngineC(), new OmegaJumpEngine(), new Deflector(new PhysicalClass1DeflectionStrategy()), new Hull.Hull(HullStrength.Class1, MassDimensional.Low))
+        : base(
+            new ImpulseEngineC(),
+            new OmegaJumpEngine(),
+            new Deflector(new PhysicalClass1DeflectionStrategy()),
+            new Hull.Hull(new PhysicalClass1DeflectionStrategy(), MassDimensional.Low))
     {
     }
 }

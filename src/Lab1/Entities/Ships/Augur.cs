@@ -8,7 +8,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 public class Augur : SpaceShip
 {
     public Augur()
-        : base(new ImpulseEngineE(), new AlphaJumpEngine(), new Deflector(new PhysicalClass3DeflectionStrategy()), new Hull.Hull(HullStrength.Class3, MassDimensional.High))
+        : base(
+            new ImpulseEngineE(),
+            new AlphaJumpEngine(),
+            new Deflector(new PhysicalClass3DeflectionStrategy()),
+            new Hull.Hull(new PhysicalClass3DeflectionStrategy(), MassDimensional.High))
     {
     }
 }
