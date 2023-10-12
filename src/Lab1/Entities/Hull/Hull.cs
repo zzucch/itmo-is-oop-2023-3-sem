@@ -1,44 +1,24 @@
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Hull;
 
 public class Hull
 {
-    public Hull(HullStrength hullStrength, MassDimensional massDimensional)
+    public Hull(IDeflectionStrategy deflectionStrategy, MassDimensional massDimensional)
     {
-        HullStrength = hullStrength;
+        DeflectionStrategy = deflectionStrategy;
         MassDimensional = massDimensional;
     }
 
-    private double HitPointsLeft { get; set; } = 100;
-    private HullStrength HullStrength { get; }
+    private IDeflectionStrategy DeflectionStrategy { get; set; }
     private MassDimensional MassDimensional { get; }
+    private int HitPointsLeft { get; set; } = 500;
 
-    public bool TryHullDeflect(double damageDealt)
+    public bool TryHullDeflect(Damage damage)
     {
-        damageDealt *= HullStrength switch
-        {
-            HullStrength.Class1 => 0.9,
-            HullStrength.Class2 => 0.75,
-            HullStrength.Class3 => 0.25,
-            _ => 1,
-        };
+        (bool success, HitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
 
-        damageDealt *= MassDimensional switch
-        {
-            MassDimensional.Low => 0.9,
-            MassDimensional.Medium => 0.75,
-            MassDimensional.High => 0.25,
-            _ => 1,
-        };
-
-        if (damageDealt >= HitPointsLeft)
-        {
-            HitPointsLeft = 0;
-            return false;
-        }
-
-        HitPointsLeft -= damageDealt;
-        return true;
+        return success;
     }
 }
