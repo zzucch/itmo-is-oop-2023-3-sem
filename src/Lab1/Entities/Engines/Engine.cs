@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
 
-public class Engine : IEngine
+public class Engine
 {
     public Engine(ITravellingStrategy travellingStrategy)
     {

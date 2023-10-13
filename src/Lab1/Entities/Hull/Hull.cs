@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Hull;
 
-public class Hull : IHull
+public class Hull
 {
     public Hull(IDeflectionStrategy deflectionStrategy, MassDimensional massDimensional)
     {
