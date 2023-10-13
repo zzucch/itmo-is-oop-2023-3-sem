@@ -1,10 +1,11 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.RouteSegmentResults;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 
 public interface ISpaceShip
 {
-    RouteSegmentResult Travel(RouteSegment routeSegment);
-    void TakeDamage(Damage damage);
+    TravelResult Travel(RouteSegment routeSegment);
+    ShipDeflectionResult TakeDamage(Damage damage);
 }

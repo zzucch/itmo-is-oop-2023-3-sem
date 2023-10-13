@@ -1,8 +1,9 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.RouteSegmentResults;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 
 public interface IDeflector
 {
-    bool TryDeflect(Damage damage);
+    DeflectionResult TryDeflect(Damage damage);
 }

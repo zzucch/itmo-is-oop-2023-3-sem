@@ -1,5 +1,6 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.RouteSegmentResults;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Hull;
 
@@ -15,10 +16,11 @@ public class Hull
     private MassDimensional MassDimensional { get; }
     private int HitPointsLeft { get; set; } = 500;
 
-    public bool TryDeflect(Damage damage)
+    public DeflectionResult TryDeflect(Damage damage)
     {
-        (bool success, HitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
+        (bool success, int hitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
+        bool damageTaken = (HitPointsLeft - hitPointsLeft) > 0;
 
-        return success;
+        return new DeflectionResult(success, damageTaken);
     }
 }

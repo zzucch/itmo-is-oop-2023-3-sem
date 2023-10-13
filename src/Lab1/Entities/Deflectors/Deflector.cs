@@ -1,5 +1,6 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.RouteSegmentResults;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 
@@ -10,13 +11,13 @@ public class Deflector : IDeflector
         DeflectionStrategy = deflectionStrategy;
     }
 
-    private int HitPoints { get; set; } = 1000;
+    private int HitPointsLeft { get; set; } = 1000;
     private IDeflectionStrategy DeflectionStrategy { get; init; }
 
-    public bool TryDeflect(Damage damage)
+    public DeflectionResult TryDeflect(Damage damage)
     {
-        (bool success, HitPoints) = DeflectionStrategy.TryDeflect(damage, HitPoints);
+        (bool success, HitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
 
-        return success;
+        return new DeflectionResult(success, DeflectorDestroyed: HitPointsLeft == 0);
     }
 }

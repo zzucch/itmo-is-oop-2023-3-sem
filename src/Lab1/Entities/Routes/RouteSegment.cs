@@ -6,14 +6,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 
 public class RouteSegment
 {
-    public RouteSegment(int distanceLightYear, ICollection<Obstacle> obstacles, EnvironmentType environmentType)
+    public RouteSegment(int distanceLightYear, ICollection<IObstacle> obstacles, EnvironmentType environmentType, double environmentAcceleration)
     {
         DistanceLightYear = distanceLightYear;
         Obstacles = obstacles;
         EnvironmentType = environmentType;
+        this.EnvironmentAcceleration = environmentAcceleration;
     }
 
-    public EnvironmentType EnvironmentType { get; protected init; }
-    public ICollection<Obstacle> Obstacles { get; init; }
-    public int DistanceLightYear { get; init; }
+    public ICollection<IObstacle> Obstacles { get; init; }
+    public double EnvironmentAcceleration { get; }
+    public EnvironmentType EnvironmentType { get; }
+    public int DistanceLightYear { get; }
 }
