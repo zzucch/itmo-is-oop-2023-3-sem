@@ -1,15 +1,14 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
+using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 
-public class AntimatterFlash : Obstacle
+public class AntimatterFlash : IObstacle
 {
-    public AntimatterFlash()
-    {
-    }
+    private const int AntimatterPhotonDamage = 1;
 
-    protected override void DoDamage(ISpaceShip ship)
+    public void DoDamage(ISpaceShip ship)
     {
-        ship.TakePhotonDamage();
+        ship.TakeDamage(new Damage(DamageType.Photon, AntimatterPhotonDamage));
     }
 }
