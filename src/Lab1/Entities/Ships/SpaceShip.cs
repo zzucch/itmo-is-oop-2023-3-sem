@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Models.RouteSegmentResults;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 
@@ -22,7 +22,7 @@ public abstract class SpaceShip : ISpaceShip
     private Hull.Hull Hull { get; }
     private CrewState CrewState { get; set; } = CrewState.Alive;
 
-    public TravelResult Travel(RouteSegment routeSegment)
+    public ShipTravelResult Travel(RouteSegment routeSegment)
     {
         TravelResult? impulseTravelResult = ImpulseEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.EnvironmentAcceleration);
         TravelResult? jumpTravelResult = JumpEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.EnvironmentAcceleration);
@@ -31,26 +31,28 @@ public abstract class SpaceShip : ISpaceShip
         {
             if (jumpTravelResult?.Success is false)
             {
-                return impulseTravelResult;
+                return new ShipTravelResult(impulseTravelResult, CrewState);
             }
 
             if (jumpTravelResult is not null)
             {
-                return jumpTravelResult;
+                return new ShipTravelResult(jumpTravelResult, CrewState);
             }
         }
 
         if (jumpTravelResult?.Success is true)
         {
-            return jumpTravelResult;
+            return new ShipTravelResult(jumpTravelResult, CrewState);
         }
 
-        return new TravelResult(
-            Success: false,
-            TravelTimeTaken: 0D,
-            FuelTypeConsumed: Fuel.ActivePlasma,
-            TravelFuelConsumption: 0D,
-            ShipLost: false);
+        return new ShipTravelResult(
+            new TravelResult(
+                Success: false,
+                TravelTimeTaken: 0D,
+                FuelTypeConsumed: Fuel.ActivePlasma,
+                TravelFuelConsumption: 0D,
+                ShipLost: false),
+            CrewState);
     }
 
     public ShipDeflectionResult TakeDamage(Damage damage)

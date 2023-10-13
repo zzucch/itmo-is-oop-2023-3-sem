@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Models.RouteSegmentResults;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 using Itmo.ObjectOrientedProgramming.Lab1.Services;
 using Xunit;
 

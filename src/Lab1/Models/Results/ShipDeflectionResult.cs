@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab1.Models.RouteSegmentResults;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 public record ShipDeflectionResult(
     DeflectionResult? DeflectorResult,
