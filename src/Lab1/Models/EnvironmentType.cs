@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Models;
 
-public enum Environment
+public enum EnvironmentType
 {
     NormalSpace,
     DenseNebula,

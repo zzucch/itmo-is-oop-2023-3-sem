@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Hull;
 
-public class Hull
+public class Hull : IHull
 {
     public Hull(IDeflectionStrategy deflectionStrategy, MassDimensional massDimensional)
     {
@@ -15,7 +15,7 @@ public class Hull
     private MassDimensional MassDimensional { get; }
     private int HitPointsLeft { get; set; } = 500;
 
-    public bool TryHullDeflect(Damage damage)
+    public bool TryDeflect(Damage damage)
     {
         (bool success, HitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
 

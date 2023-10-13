@@ -10,10 +10,10 @@ public class Engine : IEngine
         TravellingStrategy = travellingStrategy;
     }
 
-    private ITravellingStrategy TravellingStrategy { get; set; }
+    private ITravellingStrategy TravellingStrategy { get; }
 
-    public TravelResult TryTravel(int distanceLightYear, Environment environment)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
-        return TravellingStrategy.TryTravel(distanceLightYear, environment);
+        return TravellingStrategy.TryTravel(distanceLightYear, environmentType);
     }
 }

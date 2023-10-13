@@ -22,7 +22,7 @@ public class ShipServiceTest
                 new(
                     distanceLightYear: 100,
                     obstacles: new List<Obstacle>(),
-                    Environment.DenseNebula),
+                    EnvironmentType.DenseNebula),
             })),
         };
     }
@@ -41,7 +41,7 @@ public class ShipServiceTest
                     {
                         new AntimatterFlash(),
                     },
-                    Environment.DenseNebula),
+                    EnvironmentType.DenseNebula),
             })),
         };
     }
@@ -61,7 +61,7 @@ public class ShipServiceTest
                     {
                         new SpaceWhales(1),
                     },
-                    Environment.NitriteNebula),
+                    EnvironmentType.NitriteNebula),
             })),
         };
     }
@@ -77,7 +77,7 @@ public class ShipServiceTest
                 new(
                     distanceLightYear: 10,
                     obstacles: new List<Obstacle>(),
-                    Environment.NormalSpace),
+                    EnvironmentType.NormalSpace),
             })),
         };
     }
@@ -93,7 +93,7 @@ public class ShipServiceTest
                 new(
                     distanceLightYear: 100,
                     obstacles: new List<Obstacle>(),
-                    Environment.DenseNebula),
+                    EnvironmentType.DenseNebula),
             })),
         };
     }
@@ -109,7 +109,7 @@ public class ShipServiceTest
                 new(
                     distanceLightYear: 100,
                     obstacles: new List<Obstacle>(),
-                    Environment.NitriteNebula),
+                    EnvironmentType.NitriteNebula),
             })),
         };
     }

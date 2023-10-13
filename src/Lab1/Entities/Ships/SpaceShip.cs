@@ -34,7 +34,7 @@ public abstract class SpaceShip : ISpaceShip
             return;
         }
 
-        if (!Hull.TryHullDeflect(damage))
+        if (!Hull.TryDeflect(damage))
         {
             CrewState = CrewState.Dead;
         }
