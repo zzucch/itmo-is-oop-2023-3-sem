@@ -5,7 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 public class JumpGammaTravellingStrategy : ITravellingStrategy
 {
     private const double SpeedLightYearsPerHour = 100.0;
-    private const int MaxTravelDistance = 100000;
+    private const int MaxTravelDistance = 10000;
 
     private const EnvironmentType PassableEnvironment = EnvironmentType.NitriteNebula;
 
