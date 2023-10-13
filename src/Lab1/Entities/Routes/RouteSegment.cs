@@ -13,7 +13,7 @@ public class RouteSegment
         Environment = environment;
     }
 
-    public int DistanceLightYear { get; init; }
-    public ICollection<Obstacle> Obstacles { get; init; }
     public Environment Environment { get; protected init; }
+    public ICollection<Obstacle> Obstacles { get; init; }
+    public int DistanceLightYear { get; init; }
 }

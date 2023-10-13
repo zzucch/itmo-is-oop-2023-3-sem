@@ -1,8 +1,8 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 
-public interface IEngine
+public interface ITravellingStrategy
 {
     TravelResult TryTravel(int distanceLightYear, Environment environment);
 }
