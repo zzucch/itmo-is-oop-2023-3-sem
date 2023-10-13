@@ -14,7 +14,7 @@ public class ImpulseETravellingStrategy : ITravellingStrategy
         EnvironmentType.DenseNebula,
     };
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, double environmentAcceleration)
     {
         if (_passableEnvironments.Contains(environmentType) is false)
         {
@@ -26,6 +26,10 @@ public class ImpulseETravellingStrategy : ITravellingStrategy
                 ShipLost: false);
         }
 
+        // TravelTimeTaken:
+        // speed(time) = e^t;
+        // distance = Integrate([e^time], {0, time}) = e^t - 1;
+        // time = ln(distance + 1)
         return new TravelResult(
             Success: true,
             TravelTimeTaken: double.Log(distanceLightYear + 1),

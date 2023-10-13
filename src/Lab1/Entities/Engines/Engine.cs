@@ -12,8 +12,8 @@ public class Engine
 
     private ITravellingStrategy TravellingStrategy { get; }
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, double environmentSlowingCoefficient)
     {
-        return TravellingStrategy.TryTravel(distanceLightYear, environmentType);
+        return TravellingStrategy.TryTravel(distanceLightYear, environmentType, environmentSlowingCoefficient);
     }
 }
