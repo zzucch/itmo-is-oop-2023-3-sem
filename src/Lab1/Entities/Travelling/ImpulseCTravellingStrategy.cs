@@ -28,14 +28,18 @@ public class ImpulseCTravellingStrategy : ITravellingStrategy
         }
 
         // TODO
-        if (environmentAcceleration < 0 && IsStoppedDuringTravel(distanceLightYear, environmentAcceleration))
+        if (environmentAcceleration < 0)
         {
-            return new TravelResult(
-                Success: true,
-                TravelTimeTaken: distanceLightYear / SpeedLightYearsPerHour,
-                FuelTypeConsumed: Fuel.ActivePlasma,
-                TravelFuelConsumption: StartFuelConsumption + ( * FuelConsumptionPerLightYear),
-                ShipLost: true);
+            double stopDistance = GetStopDistance(environmentAcceleration);
+            if (stopDistance < distanceLightYear)
+            {
+                return new TravelResult(
+                    Success: true,
+                    TravelTimeTaken: stopDistance / SpeedLightYearsPerHour,
+                    FuelTypeConsumed: Fuel.ActivePlasma,
+                    TravelFuelConsumption: StartFuelConsumption + (stopDistance * FuelConsumptionPerLightYear),
+                    ShipLost: true);
+            }
         }
 
         return new TravelResult(
@@ -47,9 +51,8 @@ public class ImpulseCTravellingStrategy : ITravellingStrategy
     }
 
     // stop_distance = (start_speed^2 - end_speed^2) / (2 * acceleration), end_speed = 0 when ship stops
-    // if travel_distance > stop_distance, ship is stopped
-    private static bool IsStoppedDuringTravel(int distanceLightYear, double environmentAcceleration)
+    private static double GetStopDistance(double environmentAcceleration)
     {
-        return distanceLightYear > (SpeedLightYearsPerHour * SpeedLightYearsPerHour) / (2 * environmentAcceleration);
+        return (SpeedLightYearsPerHour * SpeedLightYearsPerHour) / (2 * environmentAcceleration);
     }
 }
