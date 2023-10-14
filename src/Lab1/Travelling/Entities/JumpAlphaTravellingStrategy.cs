@@ -1,11 +1,11 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab1.FuelMarket.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Sales.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities;
 
-public class JumpAlphaTravellingStrategy : ITravellingStrategy
+public class JumpAlphaTravellingStrategy : IDenseNebulaExclusiveTravellingStrategy
 {
     private const int SpeedLightYearsPerHour = 100;
     private const double FuelConsumptionPerLightYear = 10.0;

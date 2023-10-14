@@ -1,13 +1,14 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Deflection;
-using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Deflectors;
-using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Hull;
-using Itmo.ObjectOrientedProgramming.Lab1.Engines;
-using Itmo.ObjectOrientedProgramming.Lab1.FuelMarket.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hull;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Sales.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models.Results;
-using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.Engines;
+using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
@@ -26,14 +27,6 @@ public abstract class SpaceShip : ISpaceShip
     private IDeflector? Deflector { get; set; }
     private Hull Hull { get; }
     private CrewState CrewState { get; set; } = CrewState.Alive;
-
-    public void MakeDeflectorPhoton()
-    {
-        if (Deflector is not null)
-        {
-            Deflector = new PhotonDeflector(Deflector);
-        }
-    }
 
     public ShipTravelResult Travel(IRouteSegment routeSegment)
     {
@@ -64,7 +57,7 @@ public abstract class SpaceShip : ISpaceShip
             CrewState);
     }
 
-    public ShipDeflectionResult TakeDamage(Damage.Models.Damage damage)
+    public ShipDeflectionResult TakeDamage(Damage damage)
     {
         DeflectionResult? deflectorResult = Deflector?.TryDeflect(damage);
         if (deflectorResult?.Success is true)

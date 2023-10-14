@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Obstacles;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;

@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
-using Itmo.ObjectOrientedProgramming.Lab1.FuelMarket.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Sales.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities;
 
-public class ImpulseETravellingStrategy : INegativeAccelerationTolerantStrategy
+public class ImpulseETravellingStrategy : ITravellingStrategy
 {
     private const double StartFuelConsumption = 100.0;
     private const double FuelConsumptionPerLightYear = 1000.0;

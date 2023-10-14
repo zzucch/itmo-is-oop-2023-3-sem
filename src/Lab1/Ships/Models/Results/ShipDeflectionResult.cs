@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Models.Results;
 

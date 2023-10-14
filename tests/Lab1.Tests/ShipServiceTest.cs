@@ -1,7 +1,11 @@
 using System.Collections.Generic;
-using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Obstacles;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Sales.Entities.CostStrategies;
+using Itmo.ObjectOrientedProgramming.Lab1.Sales.Entities.Markets;
 using Itmo.ObjectOrientedProgramming.Lab1.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 using Xunit;
@@ -24,7 +28,7 @@ public class ShipServiceTest
         yield return new object[]
         {
             new Vaklas(),
-            new Vaklas(),
+            new Vaklas(new PhotonDeflector(new Deflector(new PhysicalClass1DeflectionStrategy()))),
         };
     }
 
@@ -110,7 +114,6 @@ public class ShipServiceTest
                     new AntimatterFlash(),
                 }),
         });
-        vaklasWithPhotonDeflector.MakeDeflectorPhoton();
 
         var launcher = new ShipLauncher(route);
 
@@ -166,7 +169,7 @@ public class ShipServiceTest
 
     [Theory]
     [MemberData(nameof(FourthTestShips))]
-    public void ChooseShip_ShouldReturnShuttle_WhenShortRouteInNormalSpaceIsLaunched(
+    public void ChooseOptimalShip_ShouldReturnShuttle_WhenShortRouteInNormalSpaceIsLaunched(
         ISpaceShip shuttle,
         ISpaceShip vaklas)
     {
@@ -177,13 +180,17 @@ public class ShipServiceTest
                 distanceLightYear: 10,
                 obstacles: new List<INormalSpaceObstacle>()),
         });
+
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
+        var market = new GravitonMatterFuelMarketDecorator(
+            new FuelMarket(new ActivePlasmaCostStrategy(activePlasmaCost)),
+            new GravitonMatterCostStrategy(gravitonMatterCost));
 
-        var chooser = new ShipChooser(route, activePlasmaCost, gravitonMatterCost);
+        var chooser = new OptimalShipChooser(route, market);
 
         // Act
-        ISpaceShip? chosenShip = chooser.ChooseShip(shuttle, vaklas);
+        ISpaceShip? chosenShip = chooser.ChooseOptimalShip(shuttle, vaklas);
 
         // Assert
         Assert.True(chosenShip is Shuttle);
@@ -191,7 +198,7 @@ public class ShipServiceTest
 
     [Theory]
     [MemberData(nameof(FifthTestShips))]
-    public void ChooseShip_ShouldReturnShipWithEnoughSubspaceTravelDistance_WhenMediumRouteInDenseNebulaIsLaunched(
+    public void ChooseOptimalShip_ShouldReturnShipWithEnoughSubspaceTravelDistance_WhenMediumRouteInDenseNebulaIsLaunched(
         ISpaceShip augur,
         ISpaceShip stella)
     {
@@ -202,13 +209,17 @@ public class ShipServiceTest
                 distanceLightYear: 100,
                 obstacles: new List<IDenseNebulaObstacle>()),
         });
+
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
+        var market = new GravitonMatterFuelMarketDecorator(
+            new FuelMarket(new ActivePlasmaCostStrategy(activePlasmaCost)),
+            new GravitonMatterCostStrategy(gravitonMatterCost));
 
-        var chooser = new ShipChooser(route, activePlasmaCost, gravitonMatterCost);
+        var chooser = new OptimalShipChooser(route, market);
 
         // Act
-        ISpaceShip? chosenShip = chooser.ChooseShip(augur, stella);
+        ISpaceShip? chosenShip = chooser.ChooseOptimalShip(augur, stella);
 
         // Assert
         Assert.True(chosenShip is Stella);
@@ -216,7 +227,7 @@ public class ShipServiceTest
 
     [Theory]
     [MemberData(nameof(SixthTestShips))]
-    public void ChooseShip_ShouldReturnMoreAdvancedShip_WhenRouteInNitriteParticleNebulaIsLaunched(
+    public void ChooseOptimalShip_ShouldReturnMoreAdvancedShip_WhenRouteInNitriteParticleNebulaIsLaunched(
         ISpaceShip shuttle,
         ISpaceShip vaklas)
     {
@@ -227,13 +238,17 @@ public class ShipServiceTest
                 distanceLightYear: 100,
                 obstacles: new List<INitriteNebulaObstacle>()),
         });
+
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
+        var market = new GravitonMatterFuelMarketDecorator(
+            new FuelMarket(new ActivePlasmaCostStrategy(activePlasmaCost)),
+            new GravitonMatterCostStrategy(gravitonMatterCost));
 
-        var chooser = new ShipChooser(route, activePlasmaCost, gravitonMatterCost);
+        var chooser = new OptimalShipChooser(route, market);
 
         // Act
-        ISpaceShip? chosenShip = chooser.ChooseShip(shuttle, vaklas);
+        ISpaceShip? chosenShip = chooser.ChooseOptimalShip(shuttle, vaklas);
 
         // Assert
         Assert.True(chosenShip is Vaklas);
@@ -243,8 +258,7 @@ public class ShipServiceTest
     public void LaunchShip_ShouldCompleteWithSuccess_WhenTravellingLongPassableRoute()
     {
         // Arrange
-        SpaceShip ship = new Meridian();
-        ship.MakeDeflectorPhoton();
+        SpaceShip meridianWithPhotonDeflector = new Meridian(new PhotonDeflector(new Deflector(new PhysicalClass2DeflectionStrategy())));
 
         var route = new Route(
             new List<IRouteSegment>
@@ -282,7 +296,7 @@ public class ShipServiceTest
         var launcher = new ShipLauncher(route);
 
         // Act
-        IEnumerable<RouteSegmentResult> routeSegmentResults = launcher.LaunchShip(ship);
+        IEnumerable<RouteSegmentResult> routeSegmentResults = launcher.LaunchShip(meridianWithPhotonDeflector);
 
         // Assert
         Assert.DoesNotContain(
