@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.FuelMarket;
@@ -9,6 +10,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Services;
 
 public class ShipChooser
 {
+    private const int TimeComparisonTolerance = 1;
+
     public ShipChooser(Route route, decimal activePlasmaCost, decimal gravitonMatterCost)
     {
         Route = route;
@@ -38,6 +41,15 @@ public class ShipChooser
             if (!secondResults1.All(i => i.Success))
             {
                 return first;
+            }
+
+            double firstTime = 0, secondTime = 0;
+            firstTime += firstResults1.Sum(segmentResult => segmentResult.TimeTaken);
+            secondTime += secondResults1.Sum(segmentResult => segmentResult.TimeTaken);
+
+            if (Math.Abs(firstTime - secondTime) > TimeComparisonTolerance)
+            {
+                return firstTime < secondTime ? first : second;
             }
 
             decimal firstCost = 0, secondCost = 0;

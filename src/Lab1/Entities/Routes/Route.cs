@@ -9,5 +9,5 @@ public class Route
         RouteSegments = routeSegments;
     }
 
-    public IReadOnlyCollection<RouteSegment> RouteSegments { get; init; }
+    public IReadOnlyCollection<RouteSegment> RouteSegments { get; }
 }

@@ -12,7 +12,7 @@ public class Deflector : IDeflector
     }
 
     private int HitPointsLeft { get; set; } = 1000;
-    private IDeflectionStrategy DeflectionStrategy { get; init; }
+    private IDeflectionStrategy DeflectionStrategy { get; }
 
     public DeflectionResult TryDeflect(Damage damage)
     {

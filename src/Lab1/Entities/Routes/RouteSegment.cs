@@ -14,7 +14,7 @@ public class RouteSegment
         EnvironmentAcceleration = environmentAcceleration;
     }
 
-    public ICollection<IObstacle> Obstacles { get; init; }
+    public ICollection<IObstacle> Obstacles { get; }
     public double EnvironmentAcceleration { get; }
     public EnvironmentType EnvironmentType { get; }
     public int DistanceLightYear { get; }

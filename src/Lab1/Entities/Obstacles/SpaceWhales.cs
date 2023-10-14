@@ -13,7 +13,7 @@ public class SpaceWhales : IObstacle
         Amount = amount;
     }
 
-    private int Amount { get; set; }
+    private int Amount { get; }
 
     public ShipDeflectionResult Damage(ISpaceShip ship)
     {

@@ -12,7 +12,7 @@ public class Hull
         MassDimensional = massDimensional;
     }
 
-    private IDeflectionStrategy DeflectionStrategy { get; set; }
+    private IDeflectionStrategy DeflectionStrategy { get; }
     private MassDimensional MassDimensional { get; }
     private int HitPointsLeft { get; set; } = 500;
 
@@ -20,6 +20,7 @@ public class Hull
     {
         (bool success, int hitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
         bool damageTaken = (HitPointsLeft - hitPointsLeft) > 0;
+        HitPointsLeft = hitPointsLeft;
 
         return new DeflectionResult(success, damageTaken);
     }
