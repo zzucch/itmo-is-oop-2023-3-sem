@@ -6,7 +6,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 
-public class Meridian : SpaceShip
+public class Meridian : SpaceShip, IEmitterSpaceShip
 {
     public Meridian()
         : base(

@@ -16,7 +16,7 @@ public class ImpulseCTravellingStrategy : ITravellingStrategy
         EnvironmentType.DenseNebula,
     };
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, double environmentAcceleration)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
         if (_passableEnvironments.Contains(environmentType) is false)
         {
@@ -28,32 +28,11 @@ public class ImpulseCTravellingStrategy : ITravellingStrategy
                 ShipLost: false);
         }
 
-        // TODO
-        if (environmentAcceleration < 0)
-        {
-            double stopDistance = GetStopDistance(environmentAcceleration);
-            if (stopDistance < distanceLightYear)
-            {
-                return new TravelResult(
-                    Success: true,
-                    TravelTimeTaken: stopDistance / SpeedLightYearsPerHour,
-                    FuelTypeConsumed: Fuel.ActivePlasma,
-                    TravelFuelConsumption: StartFuelConsumption + (stopDistance * FuelConsumptionPerLightYear),
-                    ShipLost: true);
-            }
-        }
-
         return new TravelResult(
             Success: true,
             TravelTimeTaken: distanceLightYear / SpeedLightYearsPerHour,
             FuelTypeConsumed: Fuel.ActivePlasma,
             TravelFuelConsumption: StartFuelConsumption + (distanceLightYear * FuelConsumptionPerLightYear),
             ShipLost: false);
-    }
-
-    // stop_distance = (start_speed^2 - end_speed^2) / (2 * acceleration), end_speed = 0 when ship stops
-    private static double GetStopDistance(double environmentAcceleration)
-    {
-        return (SpeedLightYearsPerHour * SpeedLightYearsPerHour) / (2 * environmentAcceleration);
     }
 }

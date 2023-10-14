@@ -13,8 +13,18 @@ public class Engine
 
     private ITravellingStrategy TravellingStrategy { get; }
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, double environmentAcceleration)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
-        return TravellingStrategy.TryTravel(distanceLightYear, environmentType, environmentAcceleration);
+        if ((environmentType is EnvironmentType.DenseNebula && TravellingStrategy is not INegativeAccelerationTolerantStrategy) is false)
+        {
+            return TravellingStrategy.TryTravel(distanceLightYear, environmentType);
+        }
+
+        return new TravelResult(
+            Success: false,
+            TravelTimeTaken: 0.0,
+            FuelTypeConsumed: Fuel.ActivePlasma,
+            TravelFuelConsumption: 0.0,
+            ShipLost: true);
     }
 }

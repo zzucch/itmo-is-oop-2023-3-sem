@@ -10,7 +10,7 @@ public class JumpGammaTravellingStrategy : ITravellingStrategy
 
     private const EnvironmentType PassableEnvironment = EnvironmentType.NitriteNebula;
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, double environmentAcceleration)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
         if (environmentType is not PassableEnvironment)
         {

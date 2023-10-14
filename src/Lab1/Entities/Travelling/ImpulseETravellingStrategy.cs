@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 
-public class ImpulseETravellingStrategy : ITravellingStrategy
+public class ImpulseETravellingStrategy : INegativeAccelerationTolerantStrategy
 {
     private const double StartFuelConsumption = 100.0;
     private const double FuelConsumptionPerLightYear = 100.0;
@@ -15,7 +15,7 @@ public class ImpulseETravellingStrategy : ITravellingStrategy
         EnvironmentType.DenseNebula,
     };
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, double environmentAcceleration)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
         if (_passableEnvironments.Contains(environmentType) is false)
         {

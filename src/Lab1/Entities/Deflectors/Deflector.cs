@@ -18,6 +18,6 @@ public class Deflector : IDeflector
     {
         (bool success, HitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
 
-        return new DeflectionResult(success, DeflectorDestroyed: HitPointsLeft == 0);
+        return new DeflectionResult(success, DeflectingEntityDestroyed: HitPointsLeft == 0);
     }
 }

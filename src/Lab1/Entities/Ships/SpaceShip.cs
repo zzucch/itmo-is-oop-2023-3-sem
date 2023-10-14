@@ -16,8 +16,8 @@ public abstract class SpaceShip : ISpaceShip
         Hull = hull;
     }
 
-    protected Engine? ImpulseEngine { get; }
-    protected Engine? JumpEngine { get; }
+    private Engine? ImpulseEngine { get; }
+    private Engine? JumpEngine { get; }
     private IDeflector? Deflector { get; set; }
     private Hull.Hull Hull { get; }
     private CrewState CrewState { get; } = CrewState.Alive;
@@ -32,8 +32,8 @@ public abstract class SpaceShip : ISpaceShip
 
     public ShipTravelResult Travel(RouteSegment routeSegment)
     {
-        TravelResult? impulseTravelResult = ImpulseEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.EnvironmentAcceleration);
-        TravelResult? jumpTravelResult = JumpEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.EnvironmentAcceleration);
+        TravelResult? impulseTravelResult = ImpulseEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType);
+        TravelResult? jumpTravelResult = JumpEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType);
 
         if (impulseTravelResult is not null && impulseTravelResult.Success)
         {
