@@ -6,12 +6,19 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services;
 
-public static class ShipService
+public class ShipLauncher
 {
-    public static IReadOnlyCollection<RouteSegmentResult> LaunchShip(ISpaceShip ship, Route route)
+    public ShipLauncher(Route route)
+    {
+        Route = route;
+    }
+
+    private Route Route { get; }
+
+    public IEnumerable<RouteSegmentResult> LaunchShip(ISpaceShip ship)
     {
         var results = new List<RouteSegmentResult>();
-        foreach (RouteSegment segment in route.RouteSegments)
+        foreach (RouteSegment segment in Route.RouteSegments)
         {
             var deflectionResults = segment.Obstacles.Select(obstacle => obstacle.Damage(ship)).ToList();
 

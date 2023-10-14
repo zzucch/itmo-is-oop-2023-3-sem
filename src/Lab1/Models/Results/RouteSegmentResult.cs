@@ -6,7 +6,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 public record RouteSegmentResult(
     bool Success,
     Fuel FuelTypeConsumed,
-    double FuelConsumption,
+    double FuelConsumptionAmount,
     double TimeTaken,
     bool ShipLost,
     bool CrewLost,
