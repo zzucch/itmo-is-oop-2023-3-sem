@@ -11,7 +11,7 @@ public class RouteSegment
         DistanceLightYear = distanceLightYear;
         Obstacles = obstacles;
         EnvironmentType = environmentType;
-        this.EnvironmentAcceleration = environmentAcceleration;
+        EnvironmentAcceleration = environmentAcceleration;
     }
 
     public ICollection<IObstacle> Obstacles { get; init; }

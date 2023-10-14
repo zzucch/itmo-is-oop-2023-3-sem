@@ -18,13 +18,6 @@ public class ShipServiceTest
         {
             new Shuttle(),
             new Augur(),
-            new Route(new List<RouteSegment>(new List<RouteSegment>()
-            {
-                new(
-                    distanceLightYear: 100,
-                    obstacles: new List<Obstacle>(),
-                    EnvironmentType.DenseNebula),
-            })),
         };
     }
 
@@ -34,16 +27,6 @@ public class ShipServiceTest
         {
             new Vaklas(),
             new Vaklas(),
-            new Route(new List<RouteSegment>(new List<RouteSegment>()
-            {
-                new(
-                    distanceLightYear: 100,
-                    obstacles: new List<Obstacle>()
-                    {
-                        new AntimatterFlash(),
-                    },
-                    EnvironmentType.DenseNebula),
-            })),
         };
     }
 
@@ -54,16 +37,6 @@ public class ShipServiceTest
             new Vaklas(),
             new Augur(),
             new Meridian(),
-            new Route(new List<RouteSegment>(new List<RouteSegment>()
-            {
-                new(
-                    distanceLightYear: 100,
-                    obstacles: new List<Obstacle>()
-                    {
-                        new SpaceWhales(1),
-                    },
-                    EnvironmentType.NitriteNebula),
-            })),
         };
     }
 
@@ -73,13 +46,6 @@ public class ShipServiceTest
         {
             new Shuttle(),
             new Vaklas(),
-            new Route(new List<RouteSegment>(new List<RouteSegment>()
-            {
-                new(
-                    distanceLightYear: 10,
-                    obstacles: new List<Obstacle>(),
-                    EnvironmentType.NormalSpace),
-            })),
         };
     }
 
@@ -89,13 +55,6 @@ public class ShipServiceTest
         {
             new Augur(),
             new Stella(),
-            new Route(new List<RouteSegment>(new List<RouteSegment>()
-            {
-                new(
-                    distanceLightYear: 100,
-                    obstacles: new List<Obstacle>(),
-                    EnvironmentType.DenseNebula),
-            })),
         };
     }
 
@@ -105,31 +64,30 @@ public class ShipServiceTest
         {
             new Shuttle(),
             new Vaklas(),
-            new Route(new List<RouteSegment>(new List<RouteSegment>()
-            {
-                new(
-                    distanceLightYear: 100,
-                    obstacles: new List<Obstacle>(),
-                    EnvironmentType.NitriteNebula),
-            })),
         };
-    }
-
-    public static IEnumerable<object[]> SeventhTestShips()
-    {
-        yield return System.Array.Empty<object>();
     }
 
     [Theory]
     [MemberData(nameof(FirstTestShips))]
     public void LaunchShip_ShouldNotCompleteWithSuccess_WhenNoJumpEngineOrNotEnoughSubspaceTravelDistanceInDenseNebula(
         ISpaceShip shuttleWithNoJumpEngine,
-        ISpaceShip augurWithNotEnoughTravelDistance,
-        Route route)
+        ISpaceShip augurWithNotEnoughTravelDistance)
     {
+        // Arrange
+        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        {
+            new(
+                distanceLightYear: 100,
+                obstacles: new List<IObstacle>(),
+                EnvironmentType.DenseNebula,
+                environmentAcceleration: 0),
+        }));
+
+        // Act
         IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(shuttleWithNoJumpEngine, route);
         IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(augurWithNotEnoughTravelDistance, route);
 
+        // Assert
         Assert.False(
             condition: firstRouteResults.All(i => i.Success),
             userMessage: "route should end in failure because shuttle doesn't have jump engine");
@@ -140,18 +98,56 @@ public class ShipServiceTest
 
     [Theory]
     [MemberData(nameof(SecondTestShips))]
-    public void Idk2(ISpaceShip vaklasWithoutPhotonDeflector, ISpaceShip vaklasWithPhotonDeflector, Route route)
+    public void LaunchShip_ShouldOnlyCompleteWithSuccess_WhenShipHasPhotonDeflector(
+        ISpaceShip vaklasWithoutPhotonDeflector,
+        ISpaceShip vaklasWithPhotonDeflector)
     {
+        // Arrange
+        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        {
+            new(
+                distanceLightYear: 100,
+                obstacles: new List<IObstacle>()
+                {
+                    new AntimatterFlash(),
+                },
+                EnvironmentType.DenseNebula,
+                environmentAcceleration: 0),
+        }));
+
+        // Act
+        IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(vaklasWithoutPhotonDeflector, route);
+        IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(vaklasWithPhotonDeflector, route);
+
+        // Assert
     }
 
     [Theory]
     [MemberData(nameof(ThirdTestShips))]
-    public void Idk3(ISpaceShip vaklas, ISpaceShip augur, ISpaceShip meridian, Route route)
+    public void LaunchShip_ShouldCompleteWithDifferentResults_WhenDifferentShipsAreUsedInDenseNebula(
+        ISpaceShip vaklas,
+        ISpaceShip augur,
+        ISpaceShip meridian)
     {
+        // Arrange
+        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        {
+            new(
+                distanceLightYear: 100,
+                obstacles: new List<IObstacle>()
+                {
+                    new SpaceWhales(amount: 1),
+                },
+                EnvironmentType.NitriteNebula,
+                environmentAcceleration: 0),
+        }));
+
+        // Act
         IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(vaklas, route);
         IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(augur, route);
         IReadOnlyCollection<RouteSegmentResult> thirdRouteResults = ShipService.LaunchShip(meridian, route);
 
+        // Assert
         Assert.True(
             condition: firstRouteResults.Any(i => i.ShipDestroyed),
             userMessage: "vaklas should be destroyed after facing space whales");
@@ -166,34 +162,74 @@ public class ShipServiceTest
 
     [Theory]
     [MemberData(nameof(FourthTestShips))]
-    public void Idk4(ISpaceShip shuttle, ISpaceShip vaklas, Route route)
+    public void LaunchShip_ShouldChooseOptimalShip_WhenShortRouteInNormalSpaceIsLaunched(
+        ISpaceShip shuttle,
+        ISpaceShip vaklas)
     {
+        // Arrange
+        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        {
+            new(
+                distanceLightYear: 10,
+                obstacles: new List<IObstacle>(),
+                EnvironmentType.NormalSpace,
+                environmentAcceleration: 0),
+        }));
+
+        // Act
         IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(shuttle, route);
         IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(vaklas, route);
 
-        // todo
+        // Assert
         Assert.True(true);
     }
 
     [Theory]
     [MemberData(nameof(FifthTestShips))]
-    public void Idk5(ISpaceShip augur, ISpaceShip stella, Route route)
+    public void LaunchShip_ShouldChooseShipWithEnoughSubspaceTravelDistance_WhenMediumRouteInDenseNebulaIsLaunched
+    (
+        ISpaceShip augur,
+        ISpaceShip stella)
     {
+        // Arrange
+        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        {
+            new(
+                distanceLightYear: 100,
+                obstacles: new List<IObstacle>(),
+                EnvironmentType.DenseNebula,
+                environmentAcceleration: 0),
+        }));
+
+        // Act
         IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(augur, route);
         IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(stella, route);
 
-        // todo
+        // Assert
         Assert.True(true);
     }
 
     [Theory]
     [MemberData(nameof(SixthTestShips))]
-    public void Idk6(ISpaceShip shuttle, ISpaceShip vaklas, Route route)
+    public void LaunchShip_ShouldChooseMoreAdvancedShip_WhenRouteInNitriteParticleNebulaIsLaunched(
+        ISpaceShip shuttle,
+        ISpaceShip vaklas)
     {
+        // Arrange
+        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        {
+            new(
+                distanceLightYear: 100,
+                obstacles: new List<IObstacle>(),
+                EnvironmentType.NitriteNebula,
+                environmentAcceleration: -10),
+        }));
+
+        // Act
         IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(shuttle, route);
         IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(vaklas, route);
 
-        // todo
+        // Assert
         Assert.True(true);
     }
 }
