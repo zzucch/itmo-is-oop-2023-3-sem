@@ -186,7 +186,7 @@ public class ShipServiceTest
         ISpaceShip? chosenShip = chooser.ChooseShip(shuttle, vaklas);
 
         // Assert
-        Assert.Equal(typeof(Shuttle), chosenShip?.GetType());
+        Assert.True(chosenShip is Shuttle);
     }
 
     [Theory]
