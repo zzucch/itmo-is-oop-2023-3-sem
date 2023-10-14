@@ -5,5 +5,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.TravellingStra
 
 public interface ITravellingStrategy
 {
-    TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType);
+    TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, int acceleration);
 }

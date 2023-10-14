@@ -234,9 +234,7 @@ public class ShipServiceTest
         // Arrange
         var route = new Route(new List<IRouteSegment>
         {
-            new NitriteNebulaRouteSegment(
-                distanceLightYear: 100,
-                obstacles: new List<INitriteNebulaObstacle>()),
+            new NitriteNebulaRouteSegment(distanceLightYear: 100, obstacles: new List<INitriteNebulaObstacle>()),
         });
 
         const decimal activePlasmaCost = 100;

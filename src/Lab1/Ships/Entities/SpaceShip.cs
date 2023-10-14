@@ -29,8 +29,8 @@ public abstract class SpaceShip : ISpaceShip
 
     public ShipTravelResult Travel(IRouteSegment routeSegment)
     {
-        TravelResult? impulseTravelResult = ImpulseEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType);
-        TravelResult? jumpTravelResult = JumpEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType);
+        TravelResult? impulseTravelResult = ImpulseEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.Acceleration);
+        TravelResult? jumpTravelResult = JumpEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.Acceleration);
 
         if (impulseTravelResult?.Success is true)
         {

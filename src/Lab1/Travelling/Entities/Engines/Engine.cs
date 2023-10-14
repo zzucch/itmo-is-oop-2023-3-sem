@@ -15,16 +15,16 @@ public class Engine
 
     private ITravellingStrategy TravellingStrategy { get; }
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, int acceleration)
     {
         if (environmentType is EnvironmentType.DenseNebula && TravellingStrategy is IDenseNebulaExclusiveTravellingStrategy)
         {
-            return TravellingStrategy.TryTravel(distanceLightYear, environmentType);
+            return TravellingStrategy.TryTravel(distanceLightYear, environmentType, acceleration);
         }
 
         if (environmentType is not EnvironmentType.DenseNebula && TravellingStrategy is not IDenseNebulaExclusiveTravellingStrategy)
         {
-            return TravellingStrategy.TryTravel(distanceLightYear, environmentType);
+            return TravellingStrategy.TryTravel(distanceLightYear, environmentType, acceleration);
         }
 
         return new TravelResult(

@@ -9,4 +9,5 @@ public interface IRouteSegment
     public IEnumerable<IObstacle> Obstacles { get; }
     public EnvironmentType EnvironmentType { get; }
     public int DistanceLightYear { get; }
+    public int Acceleration { get; }
 }

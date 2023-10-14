@@ -10,9 +10,11 @@ public class NormalSpaceRouteSegment : IRouteSegment
     {
         DistanceLightYear = distanceLightYear;
         Obstacles = obstacles;
+        Acceleration = 0;
     }
 
     public IEnumerable<IObstacle> Obstacles { get; }
     public EnvironmentType EnvironmentType => EnvironmentType.NormalSpace;
     public int DistanceLightYear { get; }
+    public int Acceleration { get; }
 }

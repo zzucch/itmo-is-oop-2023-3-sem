@@ -13,7 +13,7 @@ public class JumpAlphaTravellingStrategy : IDenseNebulaExclusiveTravellingStrate
 
     private const EnvironmentType PassableEnvironment = EnvironmentType.DenseNebula;
 
-    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
+    public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType, int acceleration)
     {
         if (environmentType is not PassableEnvironment)
         {
