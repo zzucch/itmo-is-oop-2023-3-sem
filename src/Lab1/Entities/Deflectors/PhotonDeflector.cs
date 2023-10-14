@@ -13,8 +13,8 @@ public class PhotonDeflector : DeflectorDecorator
     {
     }
 
-    private IDeflectionStrategy PhotonDeflectionStrategy { get; set; } = new PhotonDeflectionStrategy();
     private int PhotonHitPoints { get; set; } = 3;
+    private IDeflectionStrategy PhotonDeflectionStrategy { get; } = new PhotonDeflectionStrategy();
 
     public override DeflectionResult TryDeflect(Damage damage)
     {
@@ -23,9 +23,9 @@ public class PhotonDeflector : DeflectorDecorator
             return base.TryDeflect(damage);
         }
 
-        (bool success, int photonHitPoints) = PhotonDeflectionStrategy.TryDeflect(damage, PhotonHitPoints);
-        bool damageTaken = (PhotonHitPoints - photonHitPoints) > 0;
+        (bool success, PhotonHitPoints) = PhotonDeflectionStrategy.TryDeflect(damage, PhotonHitPoints);
+        bool deflectorDestroyed = PhotonHitPoints == 0;
 
-        return new DeflectionResult(success, damageTaken);
+        return new DeflectionResult(success, deflectorDestroyed);
     }
 }

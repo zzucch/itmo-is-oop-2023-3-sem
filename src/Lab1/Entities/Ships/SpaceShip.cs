@@ -16,11 +16,19 @@ public abstract class SpaceShip : ISpaceShip
         Hull = hull;
     }
 
-    protected Engine? ImpulseEngine { get; init; }
-    protected Engine? JumpEngine { get; init; }
-    private IDeflector? Deflector { get; }
+    protected Engine? ImpulseEngine { get; }
+    protected Engine? JumpEngine { get; }
+    private IDeflector? Deflector { get; set; }
     private Hull.Hull Hull { get; }
-    private CrewState CrewState { get; set; } = CrewState.Alive;
+    private CrewState CrewState { get; } = CrewState.Alive;
+
+    public void MakeDeflectorPhoton()
+    {
+        if (Deflector is not null)
+        {
+            Deflector = new PhotonDeflector(Deflector);
+        }
+    }
 
     public ShipTravelResult Travel(RouteSegment routeSegment)
     {

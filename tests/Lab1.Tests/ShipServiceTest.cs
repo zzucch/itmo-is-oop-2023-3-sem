@@ -83,9 +83,11 @@ public class ShipServiceTest
                 environmentAcceleration: 0),
         }));
 
+        var launcher = new ShipLauncher(route);
+
         // Act
-        IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(shuttleWithNoJumpEngine, route);
-        IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(augurWithNotEnoughTravelDistance, route);
+        IEnumerable<RouteSegmentResult> firstRouteResults = launcher.LaunchShip(shuttleWithNoJumpEngine);
+        IEnumerable<RouteSegmentResult> secondRouteResults = launcher.LaunchShip(augurWithNotEnoughTravelDistance);
 
         // Assert
         Assert.False(
@@ -99,8 +101,8 @@ public class ShipServiceTest
     [Theory]
     [MemberData(nameof(SecondTestShips))]
     public void LaunchShip_ShouldOnlyCompleteWithSuccess_WhenShipHasPhotonDeflector(
-        ISpaceShip vaklasWithoutPhotonDeflector,
-        ISpaceShip vaklasWithPhotonDeflector)
+        SpaceShip vaklasWithoutPhotonDeflector,
+        SpaceShip vaklasWithPhotonDeflector)
     {
         // Arrange
         var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
@@ -114,12 +116,21 @@ public class ShipServiceTest
                 EnvironmentType.DenseNebula,
                 environmentAcceleration: 0),
         }));
+        vaklasWithPhotonDeflector.MakeDeflectorPhoton();
+
+        var launcher = new ShipLauncher(route);
 
         // Act
-        IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(vaklasWithoutPhotonDeflector, route);
-        IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(vaklasWithPhotonDeflector, route);
+        IEnumerable<RouteSegmentResult> firstRouteResults = launcher.LaunchShip(vaklasWithoutPhotonDeflector);
+        IEnumerable<RouteSegmentResult> secondRouteResults = launcher.LaunchShip(vaklasWithPhotonDeflector);
 
         // Assert
+        Assert.Contains(
+            firstRouteResults,
+            i => i.CrewLost);
+        Assert.DoesNotContain(
+            secondRouteResults,
+            i => i.Success is false);
     }
 
     [Theory]
@@ -142,22 +153,23 @@ public class ShipServiceTest
                 environmentAcceleration: 0),
         }));
 
+        var launcher = new ShipLauncher(route);
+
         // Act
-        IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(vaklas, route);
-        IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(augur, route);
-        IReadOnlyCollection<RouteSegmentResult> thirdRouteResults = ShipService.LaunchShip(meridian, route);
+        IEnumerable<RouteSegmentResult> firstRouteResults = launcher.LaunchShip(vaklas);
+        IEnumerable<RouteSegmentResult> secondRouteResults = launcher.LaunchShip(augur);
+        IEnumerable<RouteSegmentResult> thirdRouteResults = launcher.LaunchShip(meridian);
 
         // Assert
-        Assert.True(
-            condition: firstRouteResults.Any(i => i.ShipDestroyed),
-            userMessage: "vaklas should be destroyed after facing space whales");
-        Assert.True(
-            condition: secondRouteResults.All(i => i.Success) &&
-                       secondRouteResults.Any(i => i.FacedObstacle),
-            userMessage: "augur shouldn't be destroyed after facing space whales, only deflectors should be destroyed");
-        Assert.False(
-            condition: thirdRouteResults.All(i => i.FacedObstacle),
-            userMessage: "meridian should not face any obstacle");
+        Assert.Contains(
+            firstRouteResults,
+            filter: i => i.ShipDestroyed);
+        Assert.Contains(
+            secondRouteResults,
+            filter: i => i is { Success: true, DeflectorDestroyed: true });
+        Assert.DoesNotContain(
+            thirdRouteResults,
+            filter: i => i.Success is false);
     }
 
     [Theory]
@@ -175,19 +187,21 @@ public class ShipServiceTest
                 EnvironmentType.NormalSpace,
                 environmentAcceleration: 0),
         }));
+        const decimal activePlasmaCost = 100;
+        const decimal gravitonMatterCost = 200;
+
+        var chooser = new ShipChooser(route, activePlasmaCost, gravitonMatterCost);
 
         // Act
-        IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(shuttle, route);
-        IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(vaklas, route);
+        ISpaceShip? chosenShip = chooser.ChooseShip(shuttle, vaklas);
 
         // Assert
-        Assert.True(true);
+        Assert.True(chosenShip is Shuttle);
     }
 
     [Theory]
     [MemberData(nameof(FifthTestShips))]
-    public void LaunchShip_ShouldChooseShipWithEnoughSubspaceTravelDistance_WhenMediumRouteInDenseNebulaIsLaunched
-    (
+    public void LaunchShip_ShouldChooseShipWithEnoughSubspaceTravelDistance_WhenMediumRouteInDenseNebulaIsLaunched(
         ISpaceShip augur,
         ISpaceShip stella)
     {
@@ -200,13 +214,16 @@ public class ShipServiceTest
                 EnvironmentType.DenseNebula,
                 environmentAcceleration: 0),
         }));
+        const decimal activePlasmaCost = 100;
+        const decimal gravitonMatterCost = 200;
+
+        var chooser = new ShipChooser(route, activePlasmaCost, gravitonMatterCost);
 
         // Act
-        IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(augur, route);
-        IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(stella, route);
+        ISpaceShip? chosenShip = chooser.ChooseShip(augur, stella);
 
         // Assert
-        Assert.True(true);
+        Assert.True(chosenShip is Stella);
     }
 
     [Theory]
@@ -224,12 +241,15 @@ public class ShipServiceTest
                 EnvironmentType.NitriteNebula,
                 environmentAcceleration: -10),
         }));
+        const decimal activePlasmaCost = 100;
+        const decimal gravitonMatterCost = 200;
+
+        var chooser = new ShipChooser(route, activePlasmaCost, gravitonMatterCost);
 
         // Act
-        IReadOnlyCollection<RouteSegmentResult> firstRouteResults = ShipService.LaunchShip(shuttle, route);
-        IReadOnlyCollection<RouteSegmentResult> secondRouteResults = ShipService.LaunchShip(vaklas, route);
+        ISpaceShip? chosenShip = chooser.ChooseShip(shuttle, vaklas);
 
         // Assert
-        Assert.True(true);
+        Assert.True(chosenShip is Vaklas);
     }
 }
