@@ -245,4 +245,59 @@ public class ShipServiceTest
         // Assert
         Assert.True(chosenShip is Vaklas);
     }
+
+    [Fact]
+    public void LaunchShip_ShouldCompleteWithSuccess_WhenTravellingLongPassableRoute()
+    {
+        // Arrange
+        SpaceShip ship = new Meridian();
+        ship.MakeDeflectorPhoton();
+
+        var route = new Route(
+            new List<RouteSegment>(new List<RouteSegment>()
+            {
+                new(
+                    distanceLightYear: 10000000,
+                    obstacles: new List<IObstacle>
+                    {
+                        new Asteroid(),
+                    },
+                    EnvironmentType.NormalSpace),
+                new(
+                    distanceLightYear: 10000,
+                    obstacles: new List<IObstacle>(),
+                    EnvironmentType.DenseNebula),
+                new(
+                    distanceLightYear: 10000,
+                    obstacles: new List<IObstacle>(),
+                    EnvironmentType.NitriteNebula),
+                new(
+                    distanceLightYear: 1000000,
+                    obstacles: new List<IObstacle>
+                    {
+                        new Asteroid(),
+                    },
+                    EnvironmentType.NormalSpace),
+                new(
+                    distanceLightYear: 10000,
+                    obstacles: new List<IObstacle>
+                    {
+                        new AntimatterFlash(),
+                    },
+                    EnvironmentType.DenseNebula),
+                new(
+                    distanceLightYear: 10000,
+                    obstacles: new List<IObstacle>(),
+                    EnvironmentType.NitriteNebula),
+            }));
+        var launcher = new ShipLauncher(route);
+
+        // Act
+        IEnumerable<RouteSegmentResult> routeSegmentResults = launcher.LaunchShip(ship);
+
+        // Assert
+        Assert.DoesNotContain(
+            routeSegmentResults,
+            filter: i => i.Success is false);
+    }
 }
