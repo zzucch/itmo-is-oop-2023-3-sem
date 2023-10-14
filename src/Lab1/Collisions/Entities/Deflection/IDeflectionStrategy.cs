@@ -4,5 +4,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
 
 public interface IDeflectionStrategy
 {
-    DeflectionStrategyResult TryDeflect(Models.Damage damage, int hitPoints);
+    DeflectionStrategyResult TryDeflect(Damage damage, int hitPoints);
 }

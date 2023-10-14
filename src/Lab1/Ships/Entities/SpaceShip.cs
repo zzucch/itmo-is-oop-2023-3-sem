@@ -24,7 +24,7 @@ public abstract class SpaceShip : ISpaceShip
 
     private Engine? ImpulseEngine { get; }
     private Engine? JumpEngine { get; }
-    private IDeflector? Deflector { get; set; }
+    private IDeflector? Deflector { get; }
     private Hull Hull { get; }
     private CrewState CrewState { get; set; } = CrewState.Alive;
 

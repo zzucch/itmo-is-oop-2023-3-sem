@@ -15,7 +15,7 @@ public class PhotonDeflector : DeflectorDecorator
     private int PhotonHitPoints { get; set; } = 3;
     private IDeflectionStrategy PhotonDeflectionStrategy { get; } = new PhotonDeflectionStrategy();
 
-    public override DeflectionResult TryDeflect(Models.Damage damage)
+    public override DeflectionResult TryDeflect(Damage damage)
     {
         if (damage.Type is not DeflectionType)
         {

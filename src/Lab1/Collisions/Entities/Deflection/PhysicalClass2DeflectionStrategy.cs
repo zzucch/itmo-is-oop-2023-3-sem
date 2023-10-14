@@ -11,7 +11,7 @@ public class PhysicalClass2DeflectionStrategy : IDeflectionStrategy
     private const int MediumDeflectionCoefficient = 3;
     private const int HighDeflectionCoefficient = 100;
 
-    public DeflectionStrategyResult TryDeflect(Models.Damage damage, int hitPoints)
+    public DeflectionStrategyResult TryDeflect(Damage damage, int hitPoints)
     {
         if (damage.Type is not DeflectionType)
         {

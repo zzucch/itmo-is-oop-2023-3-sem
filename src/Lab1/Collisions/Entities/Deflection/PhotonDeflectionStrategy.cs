@@ -6,7 +6,7 @@ public class PhotonDeflectionStrategy : IDeflectionStrategy
 {
     private const DamageType DeflectionType = DamageType.Photon;
 
-    public DeflectionStrategyResult TryDeflect(Models.Damage damage, int hitPoints)
+    public DeflectionStrategyResult TryDeflect(Damage damage, int hitPoints)
     {
         if (damage.Type is not DeflectionType)
         {
