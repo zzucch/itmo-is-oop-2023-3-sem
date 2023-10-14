@@ -59,8 +59,7 @@ public abstract class SpaceShip : ISpaceShip
             new TravelResult(
                 Success: false,
                 TravelTimeTaken: TimeSpan.Zero,
-                FuelTypeConsumed: Fuel.ActivePlasma,
-                TravelFuelConsumption: 0D,
+                FuelConsumed: new Fuel(FuelType.None, 0.0),
                 ShipLost: false),
             CrewState);
     }

@@ -20,16 +20,14 @@ public class ImpulseCTravellingStrategy : ITravellingStrategy
             return new TravelResult(
                 Success: false,
                 TravelTimeTaken: TimeSpan.Zero,
-                FuelTypeConsumed: Fuel.ActivePlasma,
-                TravelFuelConsumption: 0.0,
+                FuelConsumed: new Fuel(FuelType.None, Amount: 0.0),
                 ShipLost: false);
         }
 
         return new TravelResult(
             Success: true,
             TravelTimeTaken: new TimeSpan(distanceLightYear / SpeedLightYearsPerHour),
-            FuelTypeConsumed: Fuel.ActivePlasma,
-            TravelFuelConsumption: StartFuelConsumption + (distanceLightYear * FuelConsumptionPerLightYear),
+            FuelConsumed: new Fuel(FuelType.ActivePlasma, StartFuelConsumption + (distanceLightYear * FuelConsumptionPerLightYear)),
             ShipLost: false);
     }
 }

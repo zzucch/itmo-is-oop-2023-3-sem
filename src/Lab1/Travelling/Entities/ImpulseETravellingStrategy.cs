@@ -24,8 +24,7 @@ public class ImpulseETravellingStrategy : INegativeAccelerationTolerantStrategy
             return new TravelResult(
                 Success: false,
                 TravelTimeTaken: TimeSpan.Zero,
-                FuelTypeConsumed: Fuel.ActivePlasma,
-                TravelFuelConsumption: 0.0,
+                FuelConsumed: new Fuel(FuelType.None, 0.0),
                 ShipLost: false);
         }
 
@@ -36,8 +35,7 @@ public class ImpulseETravellingStrategy : INegativeAccelerationTolerantStrategy
         return new TravelResult(
             Success: true,
             TravelTimeTaken: new TimeSpan((int)double.Log(distanceLightYear + 1)),
-            FuelTypeConsumed: Fuel.ActivePlasma,
-            TravelFuelConsumption: StartFuelConsumption + (distanceLightYear * FuelConsumptionPerLightYear),
+            FuelConsumed: new Fuel(FuelType.ActivePlasma, StartFuelConsumption + (distanceLightYear * FuelConsumptionPerLightYear)),
             ShipLost: false);
     }
 }

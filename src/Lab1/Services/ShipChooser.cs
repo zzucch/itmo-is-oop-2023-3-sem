@@ -23,7 +23,7 @@ public class ShipChooser
     public ISpaceShip? ChooseShip(ISpaceShip first, ISpaceShip second)
     {
         var launcher = new ShipLauncher(Route);
-        var market = new FuelMarket.FuelMarket(ActivePlasmaCost, GravitonMatterCost);
+        var market = new FuelMarket.Entities.FuelMarket(ActivePlasmaCost, GravitonMatterCost);
 
         IEnumerable<RouteSegmentResult> firstResults = launcher.LaunchShip(first);
         IEnumerable<RouteSegmentResult> secondResults = launcher.LaunchShip(second);
@@ -53,9 +53,9 @@ public class ShipChooser
             }
 
             decimal firstCost = 0, secondCost = 0;
-            firstCost += firstResults1.Sum(segmentResult => market.GetCost(segmentResult.FuelTypeConsumed, segmentResult.FuelConsumptionAmount));
+            firstCost += firstResults1.Sum(segmentResult => market.GetCost(segmentResult.FuelConsumed));
 
-            secondCost += secondResults1.Sum(segmentResult => market.GetCost(segmentResult.FuelTypeConsumed, segmentResult.FuelConsumptionAmount));
+            secondCost += secondResults1.Sum(segmentResult => market.GetCost(segmentResult.FuelConsumed));
 
             return firstCost < secondCost ? first : second;
         }

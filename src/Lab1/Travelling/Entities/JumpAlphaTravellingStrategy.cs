@@ -20,8 +20,7 @@ public class JumpAlphaTravellingStrategy : ITravellingStrategy
             return new TravelResult(
                 Success: false,
                 TravelTimeTaken: TimeSpan.Zero,
-                FuelTypeConsumed: Fuel.GravitonMatter,
-                TravelFuelConsumption: 0.0,
+                FuelConsumed: new Fuel(FuelType.None, 0.0),
                 ShipLost: false);
         }
 
@@ -30,16 +29,14 @@ public class JumpAlphaTravellingStrategy : ITravellingStrategy
             return new TravelResult(
                 Success: false,
                 TravelTimeTaken: new TimeSpan(MaxTravelDistance / SpeedLightYearsPerHour),
-                FuelTypeConsumed: Fuel.GravitonMatter,
-                TravelFuelConsumption: MaxTravelDistance * FuelConsumptionPerLightYear,
+                FuelConsumed: new Fuel(FuelType.GravitonMatter, MaxTravelDistance * FuelConsumptionPerLightYear),
                 ShipLost: true);
         }
 
         return new TravelResult(
             Success: true,
             TravelTimeTaken: new TimeSpan(distanceLightYear / SpeedLightYearsPerHour),
-            FuelTypeConsumed: Fuel.GravitonMatter,
-            TravelFuelConsumption: distanceLightYear * FuelConsumptionPerLightYear,
+            FuelConsumed: new Fuel(FuelType.GravitonMatter, distanceLightYear * FuelConsumptionPerLightYear),
             ShipLost: false);
     }
 }

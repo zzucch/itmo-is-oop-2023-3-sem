@@ -38,8 +38,7 @@ public class ShipLauncher
             Success: travelResult.TravelResult.Success &&
                      (deflectionResults.All(i => i.DeflectorResult is null || i.DeflectorResult.Success) ||
                       deflectionResults.All(i => i.HullResult is null || i.HullResult.Success)),
-            travelResult.TravelResult.FuelTypeConsumed,
-            travelResult.TravelResult.TravelFuelConsumption,
+            travelResult.TravelResult.FuelConsumed,
             travelResult.TravelResult.TravelTimeTaken,
             travelResult.TravelResult.ShipLost,
             CrewLost: travelResult.CrewState is CrewState.Dead,
