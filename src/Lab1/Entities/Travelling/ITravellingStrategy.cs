@@ -1,5 +1,5 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 

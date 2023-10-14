@@ -1,7 +1,7 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Ships;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 

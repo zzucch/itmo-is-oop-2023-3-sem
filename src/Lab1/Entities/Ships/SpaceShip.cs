@@ -1,8 +1,11 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Damage;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Fuels;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Ships;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 

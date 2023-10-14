@@ -1,5 +1,5 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Fuels;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.FuelMarket;
 

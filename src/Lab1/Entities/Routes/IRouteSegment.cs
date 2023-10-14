@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Ships;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services;
 

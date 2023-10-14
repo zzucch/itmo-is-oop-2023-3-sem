@@ -1,5 +1,5 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Damage;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflection;
 
