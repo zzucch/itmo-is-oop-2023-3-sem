@@ -1,13 +1,14 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 
 public class Asteroid : IObstacle
 {
     private const int AsteroidPhysicalDamage = 25;
-    public void DoDamage(ISpaceShip ship)
+    public ShipDeflectionResult Damage(ISpaceShip ship)
     {
-        ship.TakeDamage(new Damage(DamageType.Physical, AsteroidPhysicalDamage));
+        return ship.TakeDamage(new Damage(DamageType.Physical, AsteroidPhysicalDamage));
     }
 }

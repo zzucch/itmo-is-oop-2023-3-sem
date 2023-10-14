@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services;
@@ -14,10 +13,11 @@ public static class ShipService
         var results = new List<RouteSegmentResult>();
         foreach (RouteSegment segment in route.RouteSegments)
         {
-            if (results.All(i => i.Success))
-            {
-                results.Add(ship.Travel(segment));
-            }
+            var deflectionResults = segment.Obstacles.Select(obstacle => obstacle.Damage(ship)).ToList();
+
+            ShipTravelResult travelResult = ship.Travel(segment);
+
+            results.Add(new RouteSegmentResult(travelResult, deflectionResults));
         }
 
         return results;

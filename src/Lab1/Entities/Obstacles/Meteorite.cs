@@ -1,13 +1,14 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 
 public class Meteorite : IObstacle
 {
     private const int MeteoritePhysicalDamage = 100;
-    public void DoDamage(ISpaceShip ship)
+    public ShipDeflectionResult Damage(ISpaceShip ship)
     {
-        ship.TakeDamage(new Damage(DamageType.Physical, MeteoritePhysicalDamage));
+        return ship.TakeDamage(new Damage(DamageType.Physical, MeteoritePhysicalDamage));
     }
 }

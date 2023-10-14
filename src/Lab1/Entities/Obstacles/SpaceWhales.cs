@@ -1,5 +1,6 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 
@@ -14,8 +15,8 @@ public class SpaceWhales : IObstacle
 
     private int Amount { get; set; }
 
-    public void DoDamage(ISpaceShip ship)
+    public ShipDeflectionResult Damage(ISpaceShip ship)
     {
-        ship.TakeDamage(new Damage(DamageType.Physical, SpaceWhalePhysicalDamage * Amount));
+        return ship.TakeDamage(new Damage(DamageType.Physical, SpaceWhalePhysicalDamage * Amount));
     }
 }
