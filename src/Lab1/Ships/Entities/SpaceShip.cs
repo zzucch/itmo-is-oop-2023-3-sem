@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Hull;
 using Itmo.ObjectOrientedProgramming.Lab1.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.FuelMarket.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Routes;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models.Results;
 using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Results;

@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 
-public class NormalSpaceRouteSegment : IRouteSegment
+public class NitriteNebulaRouteSegment : IRouteSegment
 {
-    public NormalSpaceRouteSegment(int distanceLightYear, IEnumerable<INormalSpaceObstacle> obstacles)
+    public NitriteNebulaRouteSegment(int distanceLightYear, IEnumerable<INitriteNebulaObstacle> obstacles)
     {
         DistanceLightYear = distanceLightYear;
         Obstacles = obstacles;
     }
 
     public IEnumerable<IObstacle> Obstacles { get; }
-    public EnvironmentType EnvironmentType => EnvironmentType.NormalSpace;
+    public EnvironmentType EnvironmentType => EnvironmentType.NitriteNebula;
     public int DistanceLightYear { get; }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 
 public class Route
 {

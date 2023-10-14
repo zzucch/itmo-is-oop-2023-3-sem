@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Routes;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;

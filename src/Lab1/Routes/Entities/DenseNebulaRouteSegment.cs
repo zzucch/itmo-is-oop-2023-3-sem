@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Damage.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Routes;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 
 public class DenseNebulaRouteSegment : IRouteSegment
 {
