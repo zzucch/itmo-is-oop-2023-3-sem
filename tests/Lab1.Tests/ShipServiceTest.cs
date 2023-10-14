@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
@@ -89,12 +88,12 @@ public class ShipServiceTest
         IEnumerable<RouteSegmentResult> secondRouteResults = launcher.LaunchShip(augurWithNotEnoughTravelDistance);
 
         // Assert
-        Assert.False(
-            condition: firstRouteResults.All(i => i.Success),
-            userMessage: "route should end in failure because shuttle doesn't have jump engine");
-        Assert.False(
-            condition: secondRouteResults.All(i => i.Success),
-            userMessage: "route should end in failure because augur's engine's max subspace travel distance is not enough");
+        Assert.Contains(
+            firstRouteResults,
+            filter: i => i.Success is false);
+        Assert.Contains(
+            secondRouteResults,
+            filter: i => i.Success is false);
     }
 
     [Theory]
@@ -125,10 +124,10 @@ public class ShipServiceTest
         // Assert
         Assert.Contains(
             firstRouteResults,
-            i => i.CrewLost);
+            filter: i => i.CrewLost);
         Assert.DoesNotContain(
             secondRouteResults,
-            i => i.Success is false);
+            filter: i => i.Success is false);
     }
 
     [Theory]

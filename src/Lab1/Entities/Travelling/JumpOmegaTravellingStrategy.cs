@@ -8,7 +8,7 @@ public class JumpOmegaTravellingStrategy : ITravellingStrategy
     private const double SpeedLightYearsPerHour = 100.0;
     private const int MaxTravelDistance = 5000;
 
-    private const EnvironmentType PassableEnvironment = EnvironmentType.NitriteNebula;
+    private const EnvironmentType PassableEnvironment = EnvironmentType.DenseNebula;
 
     public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {

@@ -25,13 +25,13 @@ public class ShipLauncher
 
             ShipTravelResult travelResult = ship.Travel(segment);
 
-            results.Add(To(travelResult, deflectionResults));
+            results.Add(ConvertToRouteSegmentResult(travelResult, deflectionResults));
         }
 
         return results;
     }
 
-    private static RouteSegmentResult To(ShipTravelResult travelResult, IReadOnlyCollection<ShipDeflectionResult> deflectionResults)
+    private static RouteSegmentResult ConvertToRouteSegmentResult(ShipTravelResult travelResult, IReadOnlyCollection<ShipDeflectionResult> deflectionResults)
     {
         return new RouteSegmentResult(
             Success: travelResult.TravelResult.Success &&

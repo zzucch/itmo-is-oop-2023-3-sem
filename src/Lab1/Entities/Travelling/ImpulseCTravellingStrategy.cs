@@ -1,4 +1,3 @@
-using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
@@ -6,19 +5,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 
 public class ImpulseCTravellingStrategy : ITravellingStrategy
 {
-    private const double SpeedLightYearsPerHour = 10.0;
+    private const double SpeedLightYearsPerHour = 100.0;
     private const double StartFuelConsumption = 100.0;
     private const double FuelConsumptionPerLightYear = 10.0;
 
-    private readonly EnvironmentType[] _passableEnvironments =
-    {
-        EnvironmentType.NormalSpace,
-        EnvironmentType.DenseNebula,
-    };
+    private const EnvironmentType PassableEnvironment = EnvironmentType.NormalSpace;
 
     public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
-        if (_passableEnvironments.Contains(environmentType) is false)
+        if (environmentType is not PassableEnvironment)
         {
             return new TravelResult(
                 Success: false,

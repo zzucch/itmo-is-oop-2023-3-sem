@@ -7,12 +7,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 public class ImpulseETravellingStrategy : INegativeAccelerationTolerantStrategy
 {
     private const double StartFuelConsumption = 100.0;
-    private const double FuelConsumptionPerLightYear = 100.0;
+    private const double FuelConsumptionPerLightYear = 1000.0;
 
     private readonly EnvironmentType[] _passableEnvironments =
     {
         EnvironmentType.NormalSpace,
-        EnvironmentType.DenseNebula,
+        EnvironmentType.NitriteNebula,
     };
 
     public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)

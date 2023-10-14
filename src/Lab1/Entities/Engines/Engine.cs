@@ -15,7 +15,7 @@ public class Engine
 
     public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
-        if ((environmentType is EnvironmentType.DenseNebula && TravellingStrategy is not INegativeAccelerationTolerantStrategy) is false)
+        if ((environmentType is EnvironmentType.NitriteNebula && TravellingStrategy is not INegativeAccelerationTolerantStrategy) is false)
         {
             return TravellingStrategy.TryTravel(distanceLightYear, environmentType);
         }

@@ -27,6 +27,7 @@ public class ShipChooser
     {
         var launcher = new ShipLauncher(Route);
         var market = new FuelMarket(ActivePlasmaCost, GravitonMatterCost);
+
         IEnumerable<RouteSegmentResult> firstResults = launcher.LaunchShip(first);
         IEnumerable<RouteSegmentResult> secondResults = launcher.LaunchShip(second);
 

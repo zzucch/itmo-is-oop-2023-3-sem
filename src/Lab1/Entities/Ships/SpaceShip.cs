@@ -35,17 +35,14 @@ public abstract class SpaceShip : ISpaceShip
         TravelResult? impulseTravelResult = ImpulseEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType);
         TravelResult? jumpTravelResult = JumpEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType);
 
-        if (impulseTravelResult is not null && impulseTravelResult.Success)
+        if (impulseTravelResult?.Success is true)
         {
-            if (jumpTravelResult?.Success is false)
+            if (jumpTravelResult is null || jumpTravelResult.Success is false)
             {
                 return new ShipTravelResult(impulseTravelResult, CrewState);
             }
 
-            if (jumpTravelResult is not null)
-            {
-                return new ShipTravelResult(jumpTravelResult, CrewState);
-            }
+            return new ShipTravelResult(jumpTravelResult, CrewState);
         }
 
         if (jumpTravelResult?.Success is true)
@@ -72,7 +69,7 @@ public abstract class SpaceShip : ISpaceShip
         }
 
         DeflectionResult hullResult = Hull.TryDeflect(damage);
-        if (hullResult.Success)
+        if (hullResult.Success is false)
         {
             CrewState = CrewState.Dead;
         }

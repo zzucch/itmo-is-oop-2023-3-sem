@@ -9,7 +9,7 @@ public class JumpAlphaTravellingStrategy : ITravellingStrategy
     private const double FuelConsumptionPerLightYear = 10.0;
     private const int MaxTravelDistance = 1000;
 
-    private const EnvironmentType PassableEnvironment = EnvironmentType.NitriteNebula;
+    private const EnvironmentType PassableEnvironment = EnvironmentType.DenseNebula;
 
     public TravelResult TryTravel(int distanceLightYear, EnvironmentType environmentType)
     {
