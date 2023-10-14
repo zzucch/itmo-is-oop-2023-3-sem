@@ -19,6 +19,7 @@ public class ShipChooser
     private decimal ActivePlasmaCost { get; }
     private decimal GravitonMatterCost { get; }
     private Route Route { get; }
+
     public ISpaceShip? ChooseShip(ISpaceShip first, ISpaceShip second)
     {
         var launcher = new ShipLauncher(Route);
@@ -26,27 +27,25 @@ public class ShipChooser
         IEnumerable<RouteSegmentResult> firstResults = launcher.LaunchShip(first);
         IEnumerable<RouteSegmentResult> secondResults = launcher.LaunchShip(second);
 
-        if (firstResults.All(i => i.Success))
+        RouteSegmentResult[] firstResults1 = firstResults.ToArray();
+        if (!firstResults1.All(i => i.Success))
         {
-            if (secondResults.All(i => i.Success))
-            {
-                decimal firstCost = 0, secondCost = 0;
-                foreach (RouteSegmentResult segmentResult in firstResults)
-                {
-                    firstCost += market.GetCost(segmentResult.FuelTypeConsumed, segmentResult.FuelConsumptionAmount);
-                }
-
-                foreach (RouteSegmentResult segmentResult in secondResults)
-                {
-                    secondCost += market.GetCost(segmentResult.FuelTypeConsumed, segmentResult.FuelConsumptionAmount);
-                }
-
-                return (firstCost < secondCost) ? first : second;
-            }
-
-            return first;
+            return secondResults.All(i => i.Success) ? second : null;
         }
 
-        return secondResults.All(i => i.Success) ? second : null;
+        {
+            RouteSegmentResult[] secondResults1 = secondResults.ToArray();
+            if (!secondResults1.All(i => i.Success))
+            {
+                return first;
+            }
+
+            decimal firstCost = 0, secondCost = 0;
+            firstCost += firstResults1.Sum(segmentResult => market.GetCost(segmentResult.FuelTypeConsumed, segmentResult.FuelConsumptionAmount));
+
+            secondCost += secondResults1.Sum(segmentResult => market.GetCost(segmentResult.FuelTypeConsumed, segmentResult.FuelConsumptionAmount));
+
+            return firstCost < secondCost ? first : second;
+        }
     }
 }
