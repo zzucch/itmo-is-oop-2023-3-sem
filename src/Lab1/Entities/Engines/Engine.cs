@@ -1,3 +1,4 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling.Results;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
@@ -23,7 +24,7 @@ public class Engine
 
         return new TravelResult(
             Success: false,
-            TravelTimeTaken: 0.0,
+            TravelTimeTaken: TimeSpan.Zero,
             FuelTypeConsumed: Fuel.ActivePlasma,
             TravelFuelConsumption: 0.0,
             ShipLost: true);

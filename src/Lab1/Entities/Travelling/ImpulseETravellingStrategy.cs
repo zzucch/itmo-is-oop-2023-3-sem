@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling.Results;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
@@ -22,7 +23,7 @@ public class ImpulseETravellingStrategy : INegativeAccelerationTolerantStrategy
         {
             return new TravelResult(
                 Success: false,
-                TravelTimeTaken: 0.0,
+                TravelTimeTaken: TimeSpan.Zero,
                 FuelTypeConsumed: Fuel.ActivePlasma,
                 TravelFuelConsumption: 0.0,
                 ShipLost: false);
@@ -34,7 +35,7 @@ public class ImpulseETravellingStrategy : INegativeAccelerationTolerantStrategy
         // time = ln(distance + 1)
         return new TravelResult(
             Success: true,
-            TravelTimeTaken: double.Log(distanceLightYear + 1),
+            TravelTimeTaken: new TimeSpan((int)double.Log(distanceLightYear + 1)),
             FuelTypeConsumed: Fuel.ActivePlasma,
             TravelFuelConsumption: StartFuelConsumption + (distanceLightYear * FuelConsumptionPerLightYear),
             ShipLost: false);

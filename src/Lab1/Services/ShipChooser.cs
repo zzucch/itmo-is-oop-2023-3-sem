@@ -10,8 +10,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Services;
 
 public class ShipChooser
 {
-    private const int TimeComparisonTolerance = 1;
-
     public ShipChooser(Route route, decimal activePlasmaCost, decimal gravitonMatterCost)
     {
         Route = route;
@@ -44,11 +42,13 @@ public class ShipChooser
                 return first;
             }
 
-            double firstTime = 0, secondTime = 0;
-            firstTime += firstResults1.Sum(segmentResult => segmentResult.TimeTaken);
-            secondTime += secondResults1.Sum(segmentResult => segmentResult.TimeTaken);
+            var firstTime = default(TimeSpan);
+            var secondTime = default(TimeSpan);
 
-            if (Math.Abs(firstTime - secondTime) > TimeComparisonTolerance)
+            firstTime = firstResults1.Aggregate(firstTime, (current, segmentResult) => current + segmentResult.TimeTaken);
+            secondTime = secondResults1.Aggregate(secondTime, (current, segmentResult) => current + segmentResult.TimeTaken);
+
+            if (firstTime != secondTime)
             {
                 return firstTime < secondTime ? first : second;
             }

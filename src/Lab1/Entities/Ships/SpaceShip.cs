@@ -1,3 +1,4 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
@@ -56,7 +57,7 @@ public abstract class SpaceShip : ISpaceShip
         return new ShipTravelResult(
             new TravelResult(
                 Success: false,
-                TravelTimeTaken: 0D,
+                TravelTimeTaken: TimeSpan.Zero,
                 FuelTypeConsumed: Fuel.ActivePlasma,
                 TravelFuelConsumption: 0D,
                 ShipLost: false),

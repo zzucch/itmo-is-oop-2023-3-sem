@@ -1,3 +1,4 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling.Results;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Fuels;
@@ -6,7 +7,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Travelling;
 
 public class JumpOmegaTravellingStrategy : ITravellingStrategy
 {
-    private const double SpeedLightYearsPerHour = 100.0;
+    private const int SpeedLightYearsPerHour = 100;
     private const int MaxTravelDistance = 5000;
 
     private const EnvironmentType PassableEnvironment = EnvironmentType.DenseNebula;
@@ -17,7 +18,7 @@ public class JumpOmegaTravellingStrategy : ITravellingStrategy
         {
             return new TravelResult(
                 Success: false,
-                TravelTimeTaken: 0.0,
+                TravelTimeTaken: TimeSpan.Zero,
                 FuelTypeConsumed: Fuel.GravitonMatter,
                 TravelFuelConsumption: 0.0,
                 ShipLost: false);
@@ -27,7 +28,7 @@ public class JumpOmegaTravellingStrategy : ITravellingStrategy
         {
             return new TravelResult(
                 Success: false,
-                TravelTimeTaken: MaxTravelDistance / SpeedLightYearsPerHour,
+                TravelTimeTaken: new TimeSpan(MaxTravelDistance / SpeedLightYearsPerHour),
                 FuelTypeConsumed: Fuel.GravitonMatter,
                 TravelFuelConsumption: MaxTravelDistance * double.Log(MaxTravelDistance),
                 ShipLost: true);
@@ -35,7 +36,7 @@ public class JumpOmegaTravellingStrategy : ITravellingStrategy
 
         return new TravelResult(
             Success: true,
-            TravelTimeTaken: distanceLightYear / SpeedLightYearsPerHour,
+            TravelTimeTaken: new TimeSpan(distanceLightYear / SpeedLightYearsPerHour),
             FuelTypeConsumed: Fuel.GravitonMatter,
             TravelFuelConsumption: distanceLightYear * double.Log(distanceLightYear),
             ShipLost: false);
