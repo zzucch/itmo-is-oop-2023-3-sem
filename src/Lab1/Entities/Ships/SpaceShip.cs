@@ -20,7 +20,7 @@ public abstract class SpaceShip : ISpaceShip
     private Engine? JumpEngine { get; }
     private IDeflector? Deflector { get; set; }
     private Hull.Hull Hull { get; }
-    private CrewState CrewState { get; } = CrewState.Alive;
+    private CrewState CrewState { get; set; } = CrewState.Alive;
 
     public void MakeDeflectorPhoton()
     {
@@ -66,12 +66,17 @@ public abstract class SpaceShip : ISpaceShip
     public ShipDeflectionResult TakeDamage(Damage damage)
     {
         DeflectionResult? deflectorResult = Deflector?.TryDeflect(damage);
-        if (deflectorResult is null || deflectorResult.Success is false)
+        if (deflectorResult?.Success is true)
         {
-            DeflectionResult hullResult = Hull.TryDeflect(damage);
-            return new ShipDeflectionResult(deflectorResult, hullResult);
+            return new ShipDeflectionResult(deflectorResult, HullResult: null);
         }
 
-        return new ShipDeflectionResult(deflectorResult, HullResult: null);
+        DeflectionResult hullResult = Hull.TryDeflect(damage);
+        if (hullResult.Success)
+        {
+            CrewState = CrewState.Dead;
+        }
+
+        return new ShipDeflectionResult(deflectorResult, hullResult);
     }
 }

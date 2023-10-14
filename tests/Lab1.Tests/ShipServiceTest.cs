@@ -77,10 +77,9 @@ public class ShipServiceTest
         var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
         {
             new(
-                distanceLightYear: 100,
+                distanceLightYear: 10000,
                 obstacles: new List<IObstacle>(),
-                EnvironmentType.DenseNebula,
-                environmentAcceleration: 0),
+                EnvironmentType.DenseNebula),
         }));
 
         var launcher = new ShipLauncher(route);
@@ -113,8 +112,7 @@ public class ShipServiceTest
                 {
                     new AntimatterFlash(),
                 },
-                EnvironmentType.DenseNebula,
-                environmentAcceleration: 0),
+                EnvironmentType.DenseNebula),
         }));
         vaklasWithPhotonDeflector.MakeDeflectorPhoton();
 
@@ -149,8 +147,7 @@ public class ShipServiceTest
                 {
                     new SpaceWhales(amount: 1),
                 },
-                EnvironmentType.NitriteNebula,
-                environmentAcceleration: 0),
+                EnvironmentType.NitriteNebula),
         }));
 
         var launcher = new ShipLauncher(route);
@@ -174,7 +171,7 @@ public class ShipServiceTest
 
     [Theory]
     [MemberData(nameof(FourthTestShips))]
-    public void LaunchShip_ShouldChooseOptimalShip_WhenShortRouteInNormalSpaceIsLaunched(
+    public void ChooseShip_ShouldReturnShuttle_WhenShortRouteInNormalSpaceIsLaunched(
         ISpaceShip shuttle,
         ISpaceShip vaklas)
     {
@@ -184,8 +181,7 @@ public class ShipServiceTest
             new(
                 distanceLightYear: 10,
                 obstacles: new List<IObstacle>(),
-                EnvironmentType.NormalSpace,
-                environmentAcceleration: 0),
+                EnvironmentType.NormalSpace),
         }));
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
@@ -196,12 +192,12 @@ public class ShipServiceTest
         ISpaceShip? chosenShip = chooser.ChooseShip(shuttle, vaklas);
 
         // Assert
-        Assert.True(chosenShip is Shuttle);
+        Assert.Equal(typeof(Shuttle), chosenShip?.GetType());
     }
 
     [Theory]
     [MemberData(nameof(FifthTestShips))]
-    public void LaunchShip_ShouldChooseShipWithEnoughSubspaceTravelDistance_WhenMediumRouteInDenseNebulaIsLaunched(
+    public void ChooseShip_ShouldReturnShipWithEnoughSubspaceTravelDistance_WhenMediumRouteInDenseNebulaIsLaunched(
         ISpaceShip augur,
         ISpaceShip stella)
     {
@@ -211,8 +207,7 @@ public class ShipServiceTest
             new(
                 distanceLightYear: 100,
                 obstacles: new List<IObstacle>(),
-                EnvironmentType.DenseNebula,
-                environmentAcceleration: 0),
+                EnvironmentType.DenseNebula),
         }));
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
@@ -228,7 +223,7 @@ public class ShipServiceTest
 
     [Theory]
     [MemberData(nameof(SixthTestShips))]
-    public void LaunchShip_ShouldChooseMoreAdvancedShip_WhenRouteInNitriteParticleNebulaIsLaunched(
+    public void ChooseShip_ShouldReturnMoreAdvancedShip_WhenRouteInNitriteParticleNebulaIsLaunched(
         ISpaceShip shuttle,
         ISpaceShip vaklas)
     {
@@ -238,8 +233,7 @@ public class ShipServiceTest
             new(
                 distanceLightYear: 100,
                 obstacles: new List<IObstacle>(),
-                EnvironmentType.NitriteNebula,
-                environmentAcceleration: -10),
+                EnvironmentType.NitriteNebula),
         }));
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
