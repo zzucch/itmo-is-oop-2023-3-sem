@@ -6,6 +6,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
 
 public interface ISpaceShip
 {
-    ShipTravelResult Travel(RouteSegment routeSegment);
+    ShipTravelResult Travel(IRouteSegment routeSegment);
     ShipDeflectionResult TakeDamage(Damage damage);
 }

@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 
-public class Meteorite : IObstacle
+public class Meteorite : INormalSpaceObstacle
 {
     private const int MeteoritePhysicalDamage = 100;
     public ShipDeflectionResult Damage(ISpaceShip ship)

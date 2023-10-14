@@ -19,7 +19,7 @@ public class ShipLauncher
     public IEnumerable<RouteSegmentResult> LaunchShip(ISpaceShip ship)
     {
         var results = new List<RouteSegmentResult>();
-        foreach (RouteSegment segment in Route.RouteSegments)
+        foreach (IRouteSegment segment in Route.RouteSegments)
         {
             var deflectionResults = segment.Obstacles.Select(obstacle => obstacle.Damage(ship)).ToList();
 

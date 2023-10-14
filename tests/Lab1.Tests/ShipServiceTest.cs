@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
-using Itmo.ObjectOrientedProgramming.Lab1.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 using Itmo.ObjectOrientedProgramming.Lab1.Services;
 using Xunit;
@@ -73,13 +72,12 @@ public class ShipServiceTest
         ISpaceShip augurWithNotEnoughTravelDistance)
     {
         // Arrange
-        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        var route = new Route(new List<IRouteSegment>
         {
-            new(
+            new DenseNebulaRouteSegment(
                 distanceLightYear: 10000,
-                obstacles: new List<IObstacle>(),
-                EnvironmentType.DenseNebula),
-        }));
+                obstacles: new List<IDenseNebulaObstacle>()),
+        });
 
         var launcher = new ShipLauncher(route);
 
@@ -103,16 +101,15 @@ public class ShipServiceTest
         SpaceShip vaklasWithPhotonDeflector)
     {
         // Arrange
-        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        var route = new Route(new List<IRouteSegment>
         {
-            new(
+            new DenseNebulaRouteSegment(
                 distanceLightYear: 100,
-                obstacles: new List<IObstacle>()
+                obstacles: new List<IDenseNebulaObstacle>()
                 {
                     new AntimatterFlash(),
-                },
-                EnvironmentType.DenseNebula),
-        }));
+                }),
+        });
         vaklasWithPhotonDeflector.MakeDeflectorPhoton();
 
         var launcher = new ShipLauncher(route);
@@ -138,16 +135,15 @@ public class ShipServiceTest
         ISpaceShip meridian)
     {
         // Arrange
-        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        var route = new Route(new List<IRouteSegment>
         {
-            new(
+            new NitriteNebulaRouteSegment(
                 distanceLightYear: 100,
-                obstacles: new List<IObstacle>()
+                obstacles: new List<INitriteNebulaObstacle>()
                 {
                     new SpaceWhales(amount: 1),
-                },
-                EnvironmentType.NitriteNebula),
-        }));
+                }),
+        });
 
         var launcher = new ShipLauncher(route);
 
@@ -175,13 +171,12 @@ public class ShipServiceTest
         ISpaceShip vaklas)
     {
         // Arrange
-        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        var route = new Route(new List<IRouteSegment>
         {
-            new(
+            new NormalSpaceRouteSegment(
                 distanceLightYear: 10,
-                obstacles: new List<IObstacle>(),
-                EnvironmentType.NormalSpace),
-        }));
+                obstacles: new List<INormalSpaceObstacle>()),
+        });
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
 
@@ -201,13 +196,12 @@ public class ShipServiceTest
         ISpaceShip stella)
     {
         // Arrange
-        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        var route = new Route(new List<IRouteSegment>
         {
-            new(
+            new DenseNebulaRouteSegment(
                 distanceLightYear: 100,
-                obstacles: new List<IObstacle>(),
-                EnvironmentType.DenseNebula),
-        }));
+                obstacles: new List<IDenseNebulaObstacle>()),
+        });
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
 
@@ -227,13 +221,12 @@ public class ShipServiceTest
         ISpaceShip vaklas)
     {
         // Arrange
-        var route = new Route(new List<RouteSegment>(new List<RouteSegment>()
+        var route = new Route(new List<IRouteSegment>
         {
-            new(
+            new NitriteNebulaRouteSegment(
                 distanceLightYear: 100,
-                obstacles: new List<IObstacle>(),
-                EnvironmentType.NitriteNebula),
-        }));
+                obstacles: new List<INitriteNebulaObstacle>()),
+        });
         const decimal activePlasmaCost = 100;
         const decimal gravitonMatterCost = 200;
 
@@ -254,42 +247,38 @@ public class ShipServiceTest
         ship.MakeDeflectorPhoton();
 
         var route = new Route(
-            new List<RouteSegment>(new List<RouteSegment>()
+            new List<IRouteSegment>
             {
-                new(
+                new NormalSpaceRouteSegment(
                     distanceLightYear: 10000000,
-                    obstacles: new List<IObstacle>
+                    obstacles: new List<INormalSpaceObstacle>
                     {
                         new Asteroid(),
-                    },
-                    EnvironmentType.NormalSpace),
-                new(
+                    }),
+                new DenseNebulaRouteSegment(
                     distanceLightYear: 10000,
-                    obstacles: new List<IObstacle>(),
-                    EnvironmentType.DenseNebula),
-                new(
+                    obstacles: new List<IDenseNebulaObstacle>()),
+                new NitriteNebulaRouteSegment(
                     distanceLightYear: 10000,
-                    obstacles: new List<IObstacle>(),
-                    EnvironmentType.NitriteNebula),
-                new(
+                    obstacles: new List<INitriteNebulaObstacle>()),
+                new NormalSpaceRouteSegment(
                     distanceLightYear: 1000000,
-                    obstacles: new List<IObstacle>
+                    obstacles: new List<INormalSpaceObstacle>
                     {
                         new Asteroid(),
-                    },
-                    EnvironmentType.NormalSpace),
-                new(
+                        new Asteroid(),
+                        new Meteorite(),
+                    }),
+                new DenseNebulaRouteSegment(
                     distanceLightYear: 10000,
-                    obstacles: new List<IObstacle>
+                    obstacles: new List<IDenseNebulaObstacle>
                     {
                         new AntimatterFlash(),
-                    },
-                    EnvironmentType.DenseNebula),
-                new(
+                    }),
+                new NitriteNebulaRouteSegment(
                     distanceLightYear: 10000,
-                    obstacles: new List<IObstacle>(),
-                    EnvironmentType.NitriteNebula),
-            }));
+                    obstacles: new List<INitriteNebulaObstacle>()),
+            });
         var launcher = new ShipLauncher(route);
 
         // Act

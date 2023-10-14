@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacles;
 
-public class AntimatterFlash : IObstacle
+public class AntimatterFlash : IDenseNebulaObstacle
 {
     private const int AntimatterPhotonDamage = 1;
 
