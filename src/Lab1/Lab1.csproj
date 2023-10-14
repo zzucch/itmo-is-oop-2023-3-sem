@@ -6,5 +6,9 @@
 
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Damage\Entities\" />
+    </ItemGroup>
+
 
 </Project>

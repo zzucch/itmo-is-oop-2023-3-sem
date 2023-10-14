@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Itmo.ObjectOrientedProgramming.Lab1.Entities.FuelMarket;
-using Itmo.ObjectOrientedProgramming.Lab1.Entities.Routes;
-using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ships;
-using Itmo.ObjectOrientedProgramming.Lab1.Models.Results;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes;
+using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services;
 
@@ -24,7 +23,7 @@ public class ShipChooser
     public ISpaceShip? ChooseShip(ISpaceShip first, ISpaceShip second)
     {
         var launcher = new ShipLauncher(Route);
-        var market = new FuelMarket(ActivePlasmaCost, GravitonMatterCost);
+        var market = new FuelMarket.FuelMarket(ActivePlasmaCost, GravitonMatterCost);
 
         IEnumerable<RouteSegmentResult> firstResults = launcher.LaunchShip(first);
         IEnumerable<RouteSegmentResult> secondResults = launcher.LaunchShip(second);
