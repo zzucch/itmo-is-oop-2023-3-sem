@@ -1,4 +1,5 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStrategies;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 
@@ -12,7 +13,7 @@ public class Deflector : IDeflector
     private int HitPointsLeft { get; set; } = 1000;
     private IDeflectionStrategy DeflectionStrategy { get; }
 
-    public DeflectionResult TryDeflect(Models.Damage damage)
+    public DeflectionResult TryDeflect(Damage damage)
     {
         (bool success, HitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
 

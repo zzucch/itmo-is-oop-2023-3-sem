@@ -1,7 +1,6 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hull;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hulls;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Sales.Models;

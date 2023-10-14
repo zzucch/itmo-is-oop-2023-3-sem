@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 
@@ -11,7 +11,7 @@ public abstract class DeflectorDecorator : IDeflector
 
     private IDeflector Deflector { get; }
 
-    public virtual DeflectionResult TryDeflect(Models.Damage damage)
+    public virtual DeflectionResult TryDeflect(Damage damage)
     {
         return Deflector.TryDeflect(damage);
     }

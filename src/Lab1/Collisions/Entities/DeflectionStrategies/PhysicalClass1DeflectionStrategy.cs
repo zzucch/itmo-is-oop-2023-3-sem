@@ -1,10 +1,11 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStrategies;
 
-public class PhysicalClass3DeflectionStrategy : IDeflectionStrategy
+public class PhysicalClass1DeflectionStrategy : IDeflectionStrategy
 {
     private const DamageType DeflectionType = DamageType.Physical;
+    private const int DeflectionCoefficient = 40;
 
     public DeflectionStrategyResult TryDeflect(Damage damage, int hitPoints)
     {
@@ -13,9 +14,9 @@ public class PhysicalClass3DeflectionStrategy : IDeflectionStrategy
             return new DeflectionStrategyResult(Success: false, hitPoints);
         }
 
-        if (hitPoints >= damage.Amount)
+        if (hitPoints >= damage.Amount * DeflectionCoefficient)
         {
-            hitPoints -= damage.Amount;
+            hitPoints -= damage.Amount * DeflectionCoefficient;
 
             return new DeflectionStrategyResult(Success: true, hitPoints);
         }

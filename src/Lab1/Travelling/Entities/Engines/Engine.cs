@@ -1,6 +1,7 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Sales.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.TravellingStrategies;
 using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.Engines;

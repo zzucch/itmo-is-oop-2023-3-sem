@@ -1,8 +1,8 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hull;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStrategies;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hulls;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.Engines;
+using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.TravellingStrategies;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 

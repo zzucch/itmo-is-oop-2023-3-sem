@@ -3,13 +3,12 @@ using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Sales.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.TravellingStrategies;
 
-public class JumpAlphaTravellingStrategy : IDenseNebulaExclusiveTravellingStrategy
+public class JumpGammaTravellingStrategy : IDenseNebulaExclusiveTravellingStrategy
 {
     private const int SpeedLightYearsPerHour = 100;
-    private const double FuelConsumptionPerLightYear = 10.0;
-    private const int MaxTravelDistance = 1000;
+    private const int MaxTravelDistance = 10000;
 
     private const EnvironmentType PassableEnvironment = EnvironmentType.DenseNebula;
 
@@ -29,14 +28,14 @@ public class JumpAlphaTravellingStrategy : IDenseNebulaExclusiveTravellingStrate
             return new TravelResult(
                 Success: false,
                 TravelTimeTaken: new TimeSpan(MaxTravelDistance / SpeedLightYearsPerHour),
-                FuelConsumed: new Fuel(FuelType.GravitonMatter, MaxTravelDistance * FuelConsumptionPerLightYear),
+                FuelConsumed: new Fuel(FuelType.GravitonMatter, MaxTravelDistance * MaxTravelDistance),
                 ShipLost: true);
         }
 
         return new TravelResult(
             Success: true,
             TravelTimeTaken: new TimeSpan(distanceLightYear / SpeedLightYearsPerHour),
-            FuelConsumed: new Fuel(FuelType.GravitonMatter, distanceLightYear * FuelConsumptionPerLightYear),
+            FuelConsumed: new Fuel(FuelType.GravitonMatter, distanceLightYear * distanceLightYear),
             ShipLost: false);
     }
 }

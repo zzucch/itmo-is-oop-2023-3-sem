@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 
 public record DeflectionResult(
     bool Success,

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStrategies;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;

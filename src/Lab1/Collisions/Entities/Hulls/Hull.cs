@@ -1,8 +1,8 @@
-using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflection;
+using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStrategies;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hull;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hulls;
 
 public class Hull
 {
