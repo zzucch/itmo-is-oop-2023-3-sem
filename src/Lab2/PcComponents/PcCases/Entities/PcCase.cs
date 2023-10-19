@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.PcCases.Models;
 
@@ -7,7 +8,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.PcCases.Entities;
 public class PcCase : IPcCase
 {
     private readonly GraphicsCardDimensions _maxGraphicsCardDimensions;
-    private readonly List<string> _motherboardFormFactors;
+    private readonly IReadOnlyList<string> _motherboardFormFactors;
     private readonly PcCaseDimensions _dimensions;
 
     public PcCase(
@@ -16,7 +17,7 @@ public class PcCase : IPcCase
         PcCaseDimensions dimensions)
     {
         _maxGraphicsCardDimensions = maxGraphicsCardDimensions;
-        _motherboardFormFactors = new List<string>(motherboardFormFactors);
+        _motherboardFormFactors = motherboardFormFactors.ToArray();
         _dimensions = dimensions;
     }
 

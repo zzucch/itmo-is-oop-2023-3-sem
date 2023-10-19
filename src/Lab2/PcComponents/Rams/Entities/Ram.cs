@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
 
@@ -7,8 +8,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 public class Ram : IRam
 {
     private readonly int _capacity;
-    private readonly List<JedecProfile> _jedecProfile;
-    private readonly List<IXmp> _xmp;
+    private readonly IReadOnlyList<JedecProfile> _jedecProfile;
+    private readonly IReadOnlyList<IXmp> _xmp;
     private readonly RamFormFactor _formFactor;
     private readonly int _ddrVersion;
     private readonly decimal _powerConsumption;
@@ -22,8 +23,8 @@ public class Ram : IRam
         decimal powerConsumption)
     {
         _capacity = capacity;
-        _jedecProfile = new List<JedecProfile>(jedecProfile);
-        _xmp = new List<IXmp>(xmp);
+        _jedecProfile = jedecProfile.ToArray();
+        _xmp = xmp.ToArray();
         _formFactor = formFactor;
         _ddrVersion = ddrVersion;
         _powerConsumption = powerConsumption;

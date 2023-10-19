@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
@@ -6,13 +7,13 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 public class CpuCoolingSystem : ICpuCoolingSystem
 {
     private readonly CoolingSystemDimensions _dimensions;
-    private readonly List<string> _sockets;
+    private readonly IReadOnlyList<string> _sockets;
     private readonly int _tdp;
 
     public CpuCoolingSystem(CoolingSystemDimensions dimensions, IEnumerable<string> sockets, int tdp)
     {
         _dimensions = dimensions;
-        _sockets = new List<string>(sockets);
+        _sockets = sockets.ToArray();
         _tdp = tdp;
     }
 

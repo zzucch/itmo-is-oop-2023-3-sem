@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
@@ -8,7 +9,7 @@ public class Cpu : ICpu
     private readonly int _coreAmount;
     private readonly string _socket;
     private readonly bool _integratedGraphicsProcessor;
-    private readonly List<int> _supportedMemoryFrequencies;
+    private readonly IReadOnlyList<int> _supportedMemoryFrequencies;
     private readonly int _tdp;
     private readonly int _powerConsumption;
 
@@ -25,7 +26,7 @@ public class Cpu : ICpu
         _coreAmount = coreAmount;
         _socket = socket;
         _integratedGraphicsProcessor = integratedGraphicsProcessor;
-        _supportedMemoryFrequencies = new List<int>(supportedMemoryFrequencies);
+        _supportedMemoryFrequencies = supportedMemoryFrequencies.ToArray();
         _tdp = tdp;
         _powerConsumption = powerConsumption;
     }
