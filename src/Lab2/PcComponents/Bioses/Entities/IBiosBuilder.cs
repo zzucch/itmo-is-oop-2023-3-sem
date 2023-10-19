@@ -1,4 +1,3 @@
-using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Entities;

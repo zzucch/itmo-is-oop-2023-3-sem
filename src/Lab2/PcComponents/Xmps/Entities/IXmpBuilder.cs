@@ -6,6 +6,6 @@ public interface IXmpBuilder
 {
     IXmpBuilder WithTimings(RamTimings timings);
     IXmpBuilder WithVoltage(decimal volts);
-    IXmpBuilder WithSpeed(int mHz);
+    IXmpBuilder WithFrequency(int mHz);
     IXmp Build();
 }

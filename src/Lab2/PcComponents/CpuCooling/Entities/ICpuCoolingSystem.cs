@@ -1,5 +1,5 @@
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 
-public interface ICpuCoolingSystem
+public interface ICpuCoolingSystem : ICpuCoolingSystemBuilderDirector
 {
 }

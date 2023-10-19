@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Hdds.Entities;
 
-public interface IHddBuilderDecorator
+public interface IHddBuilderDirector
 {
     IHddBuilder Direct(IHddBuilder builder);
 }

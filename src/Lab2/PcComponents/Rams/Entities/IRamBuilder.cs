@@ -1,14 +1,14 @@
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
-using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 
 public interface IRamBuilder
 {
     IRamBuilder WithCapacity(int gBytes);
-    IRamBuilder AddJedecProfile(int kHz, RamTimings timings);
+    IRamBuilder AddJedecProfile(JedecProfile jedecProfile);
     IRamBuilder AddXmpProfile(IXmp xmp);
-    IRamBuilder WithFormFactor();
+    IRamBuilder WithFormFactor(RamFormFactor formFactor);
     IRamBuilder WithDdrVersion(int version);
     IRamBuilder WithPowerConsumption(decimal watts);
     IRam Build();
