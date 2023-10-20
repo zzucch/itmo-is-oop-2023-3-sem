@@ -13,7 +13,7 @@ public class Cpu : ICpu
     private readonly int _tdp;
     private readonly int _powerConsumption;
 
-    public Cpu(
+    internal Cpu(
         int coreSpeed,
         int coreAmount,
         string socket,

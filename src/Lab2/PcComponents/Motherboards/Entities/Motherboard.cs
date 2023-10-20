@@ -14,7 +14,7 @@ public class Motherboard : IMotherboard
     private readonly string _formFactor;
     private readonly IBios _bios;
 
-    public Motherboard(
+    internal Motherboard(
         string cpuSocket,
         int pciEAmount,
         int sataAmount,

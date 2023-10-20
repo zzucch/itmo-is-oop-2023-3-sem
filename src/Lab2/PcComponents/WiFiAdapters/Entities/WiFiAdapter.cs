@@ -7,7 +7,7 @@ public class WiFiAdapter : IWiFiAdapter
     private readonly int _pciEVersion;
     private readonly int _powerConsumption;
 
-    public WiFiAdapter(
+    internal WiFiAdapter(
         int wifiVersion,
         bool builtInBluetooth,
         int pciEVersion,

@@ -9,7 +9,7 @@ public class Ssd : ISsd
     private readonly int _speed;
     private readonly int _powerConsumption;
 
-    public Ssd(
+    internal Ssd(
         SsdConnectionInterface connectionInterface,
         int capacity,
         int speed,

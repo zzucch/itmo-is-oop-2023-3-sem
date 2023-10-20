@@ -8,7 +8,7 @@ public class Xmp : IXmp
     private readonly decimal _voltage;
     private readonly int _frequency;
 
-    public Xmp(RamTimings timings, decimal voltage, int frequency)
+    internal Xmp(RamTimings timings, decimal voltage, int frequency)
     {
         _timings = timings;
         _voltage = voltage;

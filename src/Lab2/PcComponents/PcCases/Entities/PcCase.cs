@@ -11,7 +11,7 @@ public class PcCase : IPcCase
     private readonly IReadOnlyList<string> _motherboardFormFactors;
     private readonly PcCaseDimensions _dimensions;
 
-    public PcCase(
+    internal PcCase(
         GraphicsCardDimensions maxGraphicsCardDimensions,
         IEnumerable<string> motherboardFormFactors,
         PcCaseDimensions dimensions)

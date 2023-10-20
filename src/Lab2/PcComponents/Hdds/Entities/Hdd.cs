@@ -6,7 +6,7 @@ public class Hdd : IHdd
     private readonly int _speed;
     private readonly int _powerConsumption;
 
-    public Hdd(int powerConsumption, int capacity, int speed)
+    internal Hdd(int powerConsumption, int capacity, int speed)
     {
         _powerConsumption = powerConsumption;
         _capacity = capacity;

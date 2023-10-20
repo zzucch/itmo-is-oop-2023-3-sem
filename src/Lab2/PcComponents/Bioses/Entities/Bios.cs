@@ -10,7 +10,7 @@ public class Bios : IBios
     private readonly string _version;
     private readonly IReadOnlyList<ICpu> _cpus;
 
-    public Bios(string type, string version, IEnumerable<ICpu> cpus)
+    internal Bios(string type, string version, IEnumerable<ICpu> cpus)
     {
         _type = type;
         _version = version;

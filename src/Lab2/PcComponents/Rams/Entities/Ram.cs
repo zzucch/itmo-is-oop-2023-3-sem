@@ -14,17 +14,17 @@ public class Ram : IRam
     private readonly int _ddrVersion;
     private readonly decimal _powerConsumption;
 
-    public Ram(
+    internal Ram(
         int capacity,
-        IEnumerable<JedecProfile> jedecProfile,
-        IEnumerable<IXmp> xmp,
+        IEnumerable<JedecProfile> jedecProfiles,
+        IEnumerable<IXmp> xmps,
         RamFormFactor formFactor,
         int ddrVersion,
         decimal powerConsumption)
     {
         _capacity = capacity;
-        _jedecProfile = jedecProfile.ToArray();
-        _xmp = xmp.ToArray();
+        _jedecProfile = jedecProfiles.ToArray();
+        _xmp = xmps.ToArray();
         _formFactor = formFactor;
         _ddrVersion = ddrVersion;
         _powerConsumption = powerConsumption;

@@ -10,7 +10,7 @@ public class CpuCoolingSystem : ICpuCoolingSystem
     private readonly IReadOnlyList<string> _sockets;
     private readonly int _tdp;
 
-    public CpuCoolingSystem(CoolingSystemDimensions dimensions, IEnumerable<string> sockets, int tdp)
+    internal CpuCoolingSystem(CoolingSystemDimensions dimensions, IEnumerable<string> sockets, int tdp)
     {
         _dimensions = dimensions;
         _sockets = sockets.ToArray();

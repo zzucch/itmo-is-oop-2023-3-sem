@@ -10,7 +10,7 @@ public class GraphicsCard : IGraphicsCard
     private readonly int _clockFrequency;
     private readonly int _powerConsumption;
 
-    public GraphicsCard(
+    internal GraphicsCard(
         GraphicsCardDimensions dimensions,
         int videoMemory,
         int pciEVersion,
