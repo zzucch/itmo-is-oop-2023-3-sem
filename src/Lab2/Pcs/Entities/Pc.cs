@@ -9,6 +9,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.PcCases.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.WiFiAdapters.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
@@ -17,26 +18,26 @@ public class Pc : IPc
 {
     private readonly ICpuCoolingSystem _cpuCoolingSystem;
     private readonly ICpu _cpu;
-    private readonly IGraphicsCard _graphicsCard;
+    private readonly IGraphicsCard? _graphicsCard;
     private readonly IReadOnlyList<IHdd> _hdds;
     private readonly IMotherboard _motherboard;
     private readonly IPcCase _pcCase;
     private readonly IPsu _psu;
     private readonly IReadOnlyList<IRam> _rams;
     private readonly IReadOnlyList<ISsd> _ssds;
-    private readonly IWiFiAdapter _wifiAdapter;
+    private readonly IWiFiAdapter? _wifiAdapter;
 
-    public Pc(
+    internal Pc(
         ICpuCoolingSystem cpuCoolingSystem,
         ICpu cpu,
-        IGraphicsCard graphicsCard,
+        IGraphicsCard? graphicsCard,
         IEnumerable<IHdd> hdds,
         IMotherboard motherboard,
         IPcCase pcCase,
         IPsu psu,
         IEnumerable<IRam> rams,
         IEnumerable<ISsd> ssds,
-        IWiFiAdapter wifiAdapter)
+        IWiFiAdapter? wifiAdapter)
     {
         _cpuCoolingSystem = cpuCoolingSystem;
         _cpu = cpu;
@@ -55,11 +56,19 @@ public class Pc : IPc
         builder
             .WithCpuCooling(_cpuCoolingSystem)
             .WithCpu(_cpu)
-            .WithGraphicsCard(_graphicsCard)
             .WithMotherboard(_motherboard)
             .WithPcCase(_pcCase)
-            .WithPsu(_psu)
-            .WithWiFiAdapter(_wifiAdapter);
+            .WithPsu(_psu);
+
+        if (_graphicsCard is not null)
+        {
+            builder.WithGraphicsCard(_graphicsCard);
+        }
+
+        if (_wifiAdapter is not null)
+        {
+            builder.WithWiFiAdapter(_wifiAdapter);
+        }
 
         foreach (IHdd hdd in _hdds)
         {
@@ -77,5 +86,146 @@ public class Pc : IPc
         }
 
         return builder;
+    }
+
+    public bool IsSingleOrNoneWiFiModule()
+    {
+        return (_wifiAdapter is not null && _motherboard.WiFiModule) is false;
+    }
+
+    public bool IsAtLeastOneDiskDrivePresent()
+    {
+        return _hdds.Count > 0 || _ssds.Count > 0;
+    }
+
+    public bool IsCpuWithGpuOrPcWithGraphicsCard()
+    {
+        return _cpu.IntegratedGraphicsProcessor || _graphicsCard is not null;
+    }
+
+    public bool IsBiosAndCpuCompatible()
+    {
+        return _motherboard.Bios.IsCompatibleWithCpu(_cpu);
+    }
+
+    public bool IsCpuAndRamProfileCompatible()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool IsMotherboardAndRamXmpCompatible()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool IsMotherboardAndCpuSocketCompatible()
+    {
+        return _motherboard.IsCompatibleWithSocket(_cpu.Socket);
+    }
+
+    public bool IsMotherboardAndRamDdrVersionCompatible()
+    {
+        return _rams.All(ram => _motherboard.IsCompatibleWithDdrVersion(ram.DdrVersion));
+    }
+
+    public bool IsCpuCoolingSystemAndCpuSocketCompatible()
+    {
+        return _cpuCoolingSystem.IsCompatibleWithCpuSocket(_cpu.Socket);
+    }
+
+    public bool IsCpuCoolingSystemTdpAndCpuTdpCompatible()
+    {
+        return _cpuCoolingSystem.IsCompatibleWithCpuTdp(_cpu.Tdp);
+    }
+
+    public bool IsMotherboardPciEAmountEnough()
+    {
+        int pciECount = 0;
+
+        if (_graphicsCard is not null)
+        {
+            pciECount++;
+        }
+
+        if (_wifiAdapter is not null)
+        {
+            pciECount++;
+        }
+
+        pciECount += _ssds.Count(ssd => ssd.ConnectionInterface is SsdConnectionInterface.PciE);
+
+        return _motherboard.PciEAmount >= pciECount;
+    }
+
+    public bool IsMotherboardSataAmountEnough()
+    {
+        int sataCount = 0;
+
+        sataCount += _hdds.Count;
+        sataCount += _ssds.Count(ssd => ssd.ConnectionInterface is SsdConnectionInterface.Sata);
+
+        return _motherboard.SataAmount >= sataCount;
+    }
+
+    public bool IsMotherboardRamSocketsAmountEnough()
+    {
+        return _rams.Count <= _motherboard.RamSocketAmount;
+    }
+
+    public bool IsGpuSizeAndPcCaseCompatible()
+    {
+        if (_graphicsCard is null)
+        {
+            return true;
+        }
+
+        return _pcCase.Dimensions.GraphicsCardMaxHeight >= _graphicsCard.Dimensions.Height
+               && _pcCase.Dimensions.Length >= _graphicsCard.Dimensions.Length
+               && _pcCase.Dimensions.Width >= _graphicsCard.Dimensions.Width;
+    }
+
+    public bool IsCpuCoolingSystemSizeAndPcCaseCompatible()
+    {
+        return _pcCase.Dimensions.MaxCpuCoolingSystemUnitHeight >= _cpuCoolingSystem.Dimensions.Height
+               && _pcCase.Dimensions.MaxCpuCoolingSystemUnitLength >= _cpuCoolingSystem.Dimensions.Length
+               && _pcCase.Dimensions.GraphicsCardMaxWidth >= _cpuCoolingSystem.Dimensions.Width;
+    }
+
+    public bool IsMotherboardFormFactorAndPcCaseCompatible()
+    {
+        return _pcCase.IsCompatibleWithMotherboardFormFactor(_motherboard.FormFactor);
+    }
+
+    public bool IsPsuPowerEnough()
+    {
+        return _psu.IsPowerEnough(GetAllPowerConsumption());
+    }
+
+    public bool IsRecommendedPsuPower()
+    {
+        return _psu.IsPowerRecommended(GetAllPowerConsumption());
+    }
+
+    private int GetAllPowerConsumption()
+    {
+        int powerConsumption = 0;
+
+        powerConsumption += _cpu.PowerConsumption;
+
+        if (_graphicsCard != null)
+        {
+            powerConsumption += _graphicsCard.PowerConsumption;
+        }
+
+        if (_wifiAdapter != null)
+        {
+            powerConsumption += _wifiAdapter.PowerConsumption;
+        }
+
+        powerConsumption += _hdds.Sum(hdd => hdd.PowerConsumption);
+        powerConsumption += _ssds.Sum(ssd => ssd.PowerConsumption);
+        powerConsumption += decimal.ToInt32(decimal.Ceiling(_rams.Sum(ram => ram.PowerConsumption)));
+
+        return powerConsumption;
     }
 }

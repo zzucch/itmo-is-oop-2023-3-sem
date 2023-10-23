@@ -9,7 +9,6 @@ public class PcCase : IPcCase
 {
     private readonly GraphicsCardDimensions _maxGraphicsCardDimensions;
     private readonly IReadOnlyList<string> _motherboardFormFactors;
-    private readonly PcCaseDimensions _dimensions;
 
     internal PcCase(
         GraphicsCardDimensions maxGraphicsCardDimensions,
@@ -18,14 +17,16 @@ public class PcCase : IPcCase
     {
         _maxGraphicsCardDimensions = maxGraphicsCardDimensions;
         _motherboardFormFactors = motherboardFormFactors.ToArray();
-        _dimensions = dimensions;
+        Dimensions = dimensions;
     }
+
+    public PcCaseDimensions Dimensions { get; }
 
     public IPcCaseBuilder Direct(IPcCaseBuilder builder)
     {
         builder
             .WithMaxGraphicsCardDimensions(_maxGraphicsCardDimensions)
-            .WithDimensions(_dimensions);
+            .WithDimensions(Dimensions);
 
         foreach (string formFactor in _motherboardFormFactors)
         {
@@ -33,5 +34,10 @@ public class PcCase : IPcCase
         }
 
         return builder;
+    }
+
+    public bool IsCompatibleWithMotherboardFormFactor(string formFactor)
+    {
+        return _motherboardFormFactors.Contains(formFactor);
     }
 }

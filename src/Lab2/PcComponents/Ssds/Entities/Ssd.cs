@@ -4,10 +4,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
 
 public class Ssd : ISsd
 {
-    private readonly SsdConnectionInterface _connectionInterface;
     private readonly int _capacity;
     private readonly int _speed;
-    private readonly int _powerConsumption;
 
     internal Ssd(
         SsdConnectionInterface connectionInterface,
@@ -15,19 +13,22 @@ public class Ssd : ISsd
         int speed,
         int powerConsumption)
     {
-        _connectionInterface = connectionInterface;
+        ConnectionInterface = connectionInterface;
         _capacity = capacity;
         _speed = speed;
-        _powerConsumption = powerConsumption;
+        PowerConsumption = powerConsumption;
     }
+
+    public int PowerConsumption { get; }
+    public SsdConnectionInterface ConnectionInterface { get; }
 
     public ISsdBuilder Direct(ISsdBuilder builder)
     {
         builder
-            .WithInterface(_connectionInterface)
+            .WithInterface(ConnectionInterface)
             .WithCapacity(_capacity)
             .WithSpeed(_speed)
-            .WithPowerConsumption(_powerConsumption);
+            .WithPowerConsumption(PowerConsumption);
 
         return builder;
     }

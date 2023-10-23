@@ -5,7 +5,6 @@ public class WiFiAdapter : IWiFiAdapter
     private readonly int _wifiVersion;
     private readonly bool _builtInBluetooth;
     private readonly int _pciEVersion;
-    private readonly int _powerConsumption;
 
     internal WiFiAdapter(
         int wifiVersion,
@@ -16,8 +15,10 @@ public class WiFiAdapter : IWiFiAdapter
         _wifiVersion = wifiVersion;
         _builtInBluetooth = builtInBluetooth;
         _pciEVersion = pciEVersion;
-        _powerConsumption = powerConsumption;
+        PowerConsumption = powerConsumption;
     }
+
+    public int PowerConsumption { get; }
 
     public IWiFiAdapterBuilder Direct(IWiFiAdapterBuilder builder)
     {
@@ -25,7 +26,7 @@ public class WiFiAdapter : IWiFiAdapter
             .WithWiFiVersion(_wifiVersion)
             .WithBuiltInBluetooth(_builtInBluetooth)
             .WithPciEVersion(_pciEVersion)
-            .WithPowerConsumption(_powerConsumption);
+            .WithPowerConsumption(PowerConsumption);
 
         return builder;
     }

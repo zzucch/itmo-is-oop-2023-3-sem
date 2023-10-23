@@ -2,6 +2,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Entities;
 
 public class Psu : IPsu
 {
+    private const double RecommendedPowerMarginCoefficient = 1.2;
     private readonly int _peakLoad;
 
     internal Psu(int peakLoad)
@@ -14,5 +15,15 @@ public class Psu : IPsu
         builder.WithPeakLoad(_peakLoad);
 
         return builder;
+    }
+
+    public bool IsPowerEnough(int powerConsumption)
+    {
+        return _peakLoad >= powerConsumption;
+    }
+
+    public bool IsPowerRecommended(int powerConsumption)
+    {
+        return _peakLoad >= powerConsumption * RecommendedPowerMarginCoefficient;
     }
 }

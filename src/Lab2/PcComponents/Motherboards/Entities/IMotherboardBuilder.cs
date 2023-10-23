@@ -12,6 +12,7 @@ public interface IMotherboardBuilder
     IMotherboardBuilder WithDdrVersion(int version);
     IMotherboardBuilder WithRamSocketAmount(int amount);
     IMotherboardBuilder WithFormFactor(string formFactor);
+    IMotherboardBuilder WithWiFiModule(bool wifi);
     IMotherboardBuilder WithBios(IBios bios);
     IMotherboard Build();
 }

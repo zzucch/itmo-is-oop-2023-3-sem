@@ -7,11 +7,7 @@ public class Cpu : ICpu
 {
     private readonly int _coreSpeed;
     private readonly int _coreAmount;
-    private readonly string _socket;
-    private readonly bool _integratedGraphicsProcessor;
     private readonly IReadOnlyList<int> _supportedMemoryFrequencies;
-    private readonly int _tdp;
-    private readonly int _powerConsumption;
 
     internal Cpu(
         int coreSpeed,
@@ -24,22 +20,27 @@ public class Cpu : ICpu
     {
         _coreSpeed = coreSpeed;
         _coreAmount = coreAmount;
-        _socket = socket;
-        _integratedGraphicsProcessor = integratedGraphicsProcessor;
+        Socket = socket;
+        IntegratedGraphicsProcessor = integratedGraphicsProcessor;
         _supportedMemoryFrequencies = supportedMemoryFrequencies.ToArray();
-        _tdp = tdp;
-        _powerConsumption = powerConsumption;
+        Tdp = tdp;
+        PowerConsumption = powerConsumption;
     }
+
+    public int Tdp { get; }
+    public string Socket { get; }
+    public int PowerConsumption { get; }
+    public bool IntegratedGraphicsProcessor { get; }
 
     public ICpuBuilder Direct(ICpuBuilder builder)
     {
         builder
             .WithCoreSpeed(_coreSpeed)
             .WithCoreAmount(_coreAmount)
-            .WithSocket(_socket)
-            .WithIntegratedGraphicsProcessor(_integratedGraphicsProcessor)
-            .WithTdp(_tdp)
-            .WithPowerConsumption(_powerConsumption);
+            .WithSocket(Socket)
+            .WithIntegratedGraphicsProcessor(IntegratedGraphicsProcessor)
+            .WithTdp(Tdp)
+            .WithPowerConsumption(PowerConsumption);
 
         foreach (int frequency in _supportedMemoryFrequencies)
         {

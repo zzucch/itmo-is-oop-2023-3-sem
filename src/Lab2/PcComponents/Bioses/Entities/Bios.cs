@@ -30,4 +30,9 @@ public class Bios : IBios
 
         return builder;
     }
+
+    public bool IsCompatibleWithCpu(ICpu cpu)
+    {
+        return _cpus.Contains(cpu);
+    }
 }

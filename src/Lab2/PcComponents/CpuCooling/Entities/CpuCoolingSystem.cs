@@ -6,21 +6,22 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 
 public class CpuCoolingSystem : ICpuCoolingSystem
 {
-    private readonly CoolingSystemDimensions _dimensions;
     private readonly IReadOnlyList<string> _sockets;
     private readonly int _tdp;
 
     internal CpuCoolingSystem(CoolingSystemDimensions dimensions, IEnumerable<string> sockets, int tdp)
     {
-        _dimensions = dimensions;
+        Dimensions = dimensions;
         _sockets = sockets.ToArray();
         _tdp = tdp;
     }
 
+    public CoolingSystemDimensions Dimensions { get; }
+
     public ICpuCoolingSystemBuilder Direct(ICpuCoolingSystemBuilder builder)
     {
         builder
-            .WithDimensions(_dimensions)
+            .WithDimensions(Dimensions)
             .WithTdp(_tdp);
 
         foreach (string socket in _sockets)
@@ -29,5 +30,15 @@ public class CpuCoolingSystem : ICpuCoolingSystem
         }
 
         return builder;
+    }
+
+    public bool IsCompatibleWithCpuSocket(string socket)
+    {
+        return _sockets.Any(s => s == socket);
+    }
+
+    public bool IsCompatibleWithCpuTdp(int tdp)
+    {
+        return tdp <= _tdp;
     }
 }

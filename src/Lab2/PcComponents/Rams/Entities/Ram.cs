@@ -11,8 +11,6 @@ public class Ram : IRam
     private readonly IReadOnlyList<JedecProfile> _jedecProfile;
     private readonly IReadOnlyList<IXmp> _xmp;
     private readonly RamFormFactor _formFactor;
-    private readonly int _ddrVersion;
-    private readonly decimal _powerConsumption;
 
     internal Ram(
         int capacity,
@@ -26,17 +24,20 @@ public class Ram : IRam
         _jedecProfile = jedecProfiles.ToArray();
         _xmp = xmps.ToArray();
         _formFactor = formFactor;
-        _ddrVersion = ddrVersion;
-        _powerConsumption = powerConsumption;
+        DdrVersion = ddrVersion;
+        PowerConsumption = powerConsumption;
     }
+
+    public int DdrVersion { get; }
+    public decimal PowerConsumption { get; }
 
     public IRamBuilder Direct(IRamBuilder builder)
     {
         builder
             .WithCapacity(_capacity)
             .WithFormFactor(_formFactor)
-            .WithDdrVersion(_ddrVersion)
-            .WithPowerConsumption(_powerConsumption);
+            .WithDdrVersion(DdrVersion)
+            .WithPowerConsumption(PowerConsumption);
 
         foreach (JedecProfile profile in _jedecProfile)
         {

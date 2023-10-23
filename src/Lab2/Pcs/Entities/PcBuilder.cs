@@ -103,13 +103,13 @@ public class PcBuilder : IPcBuilder
         return new Pc(
             _cpuCoolingSystem ?? throw new ArgumentNullException(nameof(_cpuCoolingSystem)),
             _cpu ?? throw new ArgumentNullException(nameof(_cpu)),
-            _graphicsCard ?? throw new ArgumentNullException(nameof(_graphicsCard)),
+            _graphicsCard,
             _hdds,
             _motherboard ?? throw new ArgumentNullException(nameof(_motherboard)),
             _pcCase ?? throw new ArgumentNullException(nameof(_pcCase)),
             _psu ?? throw new ArgumentNullException(nameof(_psu)),
             _rams,
             _ssds,
-            _wifiAdapter ?? throw new ArgumentNullException(nameof(_wifiAdapter)));
+            _wifiAdapter);
     }
 }

@@ -6,13 +6,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities
 public class Motherboard : IMotherboard
 {
     private readonly string _cpuSocket;
-    private readonly int _pciEAmount;
-    private readonly int _sataAmount;
     private readonly Chipset _chipset;
     private readonly int _ddrVersion;
-    private readonly int _ramSocketAmount;
-    private readonly string _formFactor;
-    private readonly IBios _bios;
 
     internal Motherboard(
         string cpuSocket,
@@ -22,29 +17,49 @@ public class Motherboard : IMotherboard
         int ddrVersion,
         int ramSocketAmount,
         string formFactor,
+        bool wiFiModule,
         IBios bios)
     {
         _cpuSocket = cpuSocket;
-        _pciEAmount = pciEAmount;
-        _sataAmount = sataAmount;
+        PciEAmount = pciEAmount;
+        SataAmount = sataAmount;
         _chipset = chipset;
         _ddrVersion = ddrVersion;
-        _ramSocketAmount = ramSocketAmount;
-        _formFactor = formFactor;
-        _bios = bios;
+        RamSocketAmount = ramSocketAmount;
+        FormFactor = formFactor;
+        WiFiModule = wiFiModule;
+        Bios = bios;
+    }
+
+    public IBios Bios { get; }
+    public int SataAmount { get; }
+    public int PciEAmount { get; }
+    public bool WiFiModule { get; }
+    public string FormFactor { get; }
+    public int RamSocketAmount { get; }
+
+    public bool IsCompatibleWithSocket(string socket)
+    {
+        return socket == _cpuSocket;
+    }
+
+    public bool IsCompatibleWithDdrVersion(int ddrVersion)
+    {
+        return ddrVersion == _ddrVersion;
     }
 
     public IMotherboardBuilder Direct(IMotherboardBuilder builder)
     {
         builder
             .WithCpuSocket(_cpuSocket)
-            .WithPciEAmount(_pciEAmount)
-            .WithSataAmount(_sataAmount)
+            .WithPciEAmount(PciEAmount)
+            .WithSataAmount(SataAmount)
             .WithChipset(_chipset)
             .WithDdrVersion(_ddrVersion)
-            .WithRamSocketAmount(_ramSocketAmount)
-            .WithFormFactor(_formFactor)
-            .WithBios(_bios);
+            .WithRamSocketAmount(RamSocketAmount)
+            .WithFormFactor(FormFactor)
+            .WithWiFiModule(WiFiModule)
+            .WithBios(Bios);
 
         return builder;
     }

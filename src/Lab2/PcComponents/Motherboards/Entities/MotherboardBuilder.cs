@@ -13,6 +13,7 @@ public class MotherboardBuilder : IMotherboardBuilder
     private int? _ddrVersion;
     private int? _ramSocketAmount;
     private string? _formFactor;
+    private bool? _wifiModule;
     private IBios? _bios;
 
     public IMotherboardBuilder WithCpuSocket(string socket)
@@ -57,6 +58,12 @@ public class MotherboardBuilder : IMotherboardBuilder
         return this;
     }
 
+    public IMotherboardBuilder WithWiFiModule(bool wifi)
+    {
+        _wifiModule = wifi;
+        return this;
+    }
+
     public IMotherboardBuilder WithBios(IBios bios)
     {
         _bios = bios;
@@ -73,6 +80,7 @@ public class MotherboardBuilder : IMotherboardBuilder
             _ddrVersion ?? throw new ArgumentNullException(nameof(_ddrVersion)),
             _ramSocketAmount ?? throw new ArgumentNullException(nameof(_ramSocketAmount)),
             _formFactor ?? throw new ArgumentNullException(nameof(_formFactor)),
+            _wifiModule ?? throw new ArgumentNullException(nameof(_wifiModule)),
             _bios ?? throw new ArgumentNullException(nameof(_bios)));
     }
 }

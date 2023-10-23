@@ -4,11 +4,9 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Entitie
 
 public class GraphicsCard : IGraphicsCard
 {
-    private readonly GraphicsCardDimensions _dimensions;
     private readonly int _videoMemory;
     private readonly int _pciEVersion;
     private readonly int _clockFrequency;
-    private readonly int _powerConsumption;
 
     internal GraphicsCard(
         GraphicsCardDimensions dimensions,
@@ -17,21 +15,24 @@ public class GraphicsCard : IGraphicsCard
         int clockFrequency,
         int powerConsumption)
     {
-        _dimensions = dimensions;
+        Dimensions = dimensions;
         _videoMemory = videoMemory;
         _pciEVersion = pciEVersion;
         _clockFrequency = clockFrequency;
-        _powerConsumption = powerConsumption;
+        PowerConsumption = powerConsumption;
     }
+
+    public int PowerConsumption { get; }
+    public GraphicsCardDimensions Dimensions { get; }
 
     public IGraphicsCardBuilder Direct(IGraphicsCardBuilder builder)
     {
         builder
-            .WithDimensions(_dimensions)
+            .WithDimensions(Dimensions)
             .WithVideoMemory(_videoMemory)
             .WithPciEVersion(_pciEVersion)
             .WithClockFrequency(_clockFrequency)
-            .WithPowerConsumption(_powerConsumption);
+            .WithPowerConsumption(PowerConsumption);
 
         return builder;
     }
