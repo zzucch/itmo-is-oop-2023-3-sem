@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,10 +28,35 @@ public class Cpu : ICpu
     }
 
     public int Tdp { get; }
+
     public string Socket { get; }
+
     public int PowerConsumption { get; }
+
     public bool IntegratedGraphicsProcessor { get; }
+
     public IReadOnlyList<int> SupportedMemoryFrequencies { get; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Cpu other)
+        {
+            return false;
+        }
+
+        return _coreSpeed == other._coreSpeed
+               && _coreAmount == other._coreAmount
+               && Socket == other.Socket
+               && IntegratedGraphicsProcessor == other.IntegratedGraphicsProcessor
+               && Equals(SupportedMemoryFrequencies, other.SupportedMemoryFrequencies)
+               && Tdp == other.Tdp
+               && PowerConsumption == other.PowerConsumption;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_coreSpeed, _coreAmount, Tdp, Socket, PowerConsumption, IntegratedGraphicsProcessor, SupportedMemoryFrequencies);
+    }
 
     public ICpuBuilder Direct(ICpuBuilder builder)
     {
@@ -48,5 +74,16 @@ public class Cpu : ICpu
         }
 
         return builder;
+    }
+
+    protected bool Equals(Cpu other)
+    {
+        return _coreSpeed == other._coreSpeed
+               && _coreAmount == other._coreAmount
+               && Tdp == other.Tdp
+               && Socket == other.Socket
+               && PowerConsumption == other.PowerConsumption
+               && IntegratedGraphicsProcessor == other.IntegratedGraphicsProcessor
+               && SupportedMemoryFrequencies.Equals(other.SupportedMemoryFrequencies);
     }
 }

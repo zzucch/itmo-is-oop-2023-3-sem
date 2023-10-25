@@ -128,7 +128,7 @@ public class PcCompatibilityValidator
             comments.Add("incompatible motherboard form factor and PC case");
         }
 
-        if (_pc.IsRecommendedPsuPower())
+        if (_pc.IsRecommendedPsuPower() is false)
         {
             if (_pc.IsPsuPowerEnough())
             {
