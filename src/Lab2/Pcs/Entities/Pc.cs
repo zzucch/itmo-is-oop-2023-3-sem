@@ -244,7 +244,7 @@ public class Pc : IPc
     {
         return _pcCase.Dimensions.MaxCpuCoolingSystemUnitHeight >= _cpuCoolingSystem.Dimensions.Height
                && _pcCase.Dimensions.MaxCpuCoolingSystemUnitLength >= _cpuCoolingSystem.Dimensions.Length
-               && _pcCase.Dimensions.GraphicsCardMaxWidth >= _cpuCoolingSystem.Dimensions.Width;
+               && _pcCase.Dimensions.MaxCpuCoolingSystemUnitWidth >= _cpuCoolingSystem.Dimensions.Width;
     }
 
     public bool IsMotherboardFormFactorAndPcCaseCompatible()
