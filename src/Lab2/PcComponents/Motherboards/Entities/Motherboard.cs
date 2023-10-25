@@ -6,7 +6,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities
 public class Motherboard : IMotherboard
 {
     private readonly string _cpuSocket;
-    private readonly Chipset _chipset;
     private readonly int _ddrVersion;
 
     internal Motherboard(
@@ -23,7 +22,7 @@ public class Motherboard : IMotherboard
         _cpuSocket = cpuSocket;
         PciEAmount = pciEAmount;
         SataAmount = sataAmount;
-        _chipset = chipset;
+        Chipset = chipset;
         _ddrVersion = ddrVersion;
         RamSocketAmount = ramSocketAmount;
         FormFactor = formFactor;
@@ -34,6 +33,7 @@ public class Motherboard : IMotherboard
     public IBios Bios { get; }
     public int SataAmount { get; }
     public int PciEAmount { get; }
+    public Chipset Chipset { get; }
     public bool WiFiModule { get; }
     public string FormFactor { get; }
     public int RamSocketAmount { get; }
@@ -54,7 +54,7 @@ public class Motherboard : IMotherboard
             .WithCpuSocket(_cpuSocket)
             .WithPciEAmount(PciEAmount)
             .WithSataAmount(SataAmount)
-            .WithChipset(_chipset)
+            .WithChipset(Chipset)
             .WithDdrVersion(_ddrVersion)
             .WithRamSocketAmount(RamSocketAmount)
             .WithFormFactor(FormFactor)

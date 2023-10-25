@@ -8,8 +8,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 public class Ram : IRam
 {
     private readonly int _capacity;
-    private readonly IReadOnlyList<JedecProfile> _jedecProfile;
-    private readonly IReadOnlyList<IXmp> _xmp;
     private readonly RamFormFactor _formFactor;
 
     internal Ram(
@@ -21,15 +19,17 @@ public class Ram : IRam
         decimal powerConsumption)
     {
         _capacity = capacity;
-        _jedecProfile = jedecProfiles.ToArray();
-        _xmp = xmps.ToArray();
+        JedecProfiles = jedecProfiles.ToArray();
+        Xmps = xmps.ToArray();
         _formFactor = formFactor;
         DdrVersion = ddrVersion;
         PowerConsumption = powerConsumption;
     }
 
     public int DdrVersion { get; }
+    public IReadOnlyList<IXmp> Xmps { get; }
     public decimal PowerConsumption { get; }
+    public IReadOnlyList<JedecProfile> JedecProfiles { get; }
 
     public IRamBuilder Direct(IRamBuilder builder)
     {
@@ -39,12 +39,12 @@ public class Ram : IRam
             .WithDdrVersion(DdrVersion)
             .WithPowerConsumption(PowerConsumption);
 
-        foreach (JedecProfile profile in _jedecProfile)
+        foreach (JedecProfile profile in JedecProfiles)
         {
             builder.AddJedecProfile(profile);
         }
 
-        foreach (IXmp xmp in _xmp)
+        foreach (IXmp xmp in Xmps)
         {
             builder.AddXmpProfile(xmp);
         }

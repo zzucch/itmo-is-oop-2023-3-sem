@@ -6,8 +6,10 @@ public interface IPc : IPcBuilderDirector
     public bool IsAtLeastOneDiskDrivePresent();
     public bool IsCpuWithGpuOrPcWithGraphicsCard();
 
+    public bool IsRamXmpSupportedOrNoXmp();
     public bool IsBiosAndCpuCompatible();
     public bool IsCpuAndRamProfileCompatible();
+    public bool IsMotherboardAndRamProfileCompatible();
     public bool IsMotherboardAndRamXmpCompatible();
     public bool IsMotherboardAndCpuSocketCompatible();
     public bool IsMotherboardAndRamDdrVersionCompatible();
@@ -18,7 +20,7 @@ public interface IPc : IPcBuilderDirector
     public bool IsMotherboardSataAmountEnough();
     public bool IsMotherboardRamSocketsAmountEnough();
 
-    public bool IsGpuSizeAndPcCaseCompatible();
+    public bool IsGraphicsCardSizeAndPcCaseCompatible();
     public bool IsCpuCoolingSystemSizeAndPcCaseCompatible();
     public bool IsMotherboardFormFactorAndPcCaseCompatible();
 

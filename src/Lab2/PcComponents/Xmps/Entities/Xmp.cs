@@ -6,21 +6,22 @@ public class Xmp : IXmp
 {
     private readonly RamTimings _timings;
     private readonly decimal _voltage;
-    private readonly int _frequency;
 
     internal Xmp(RamTimings timings, decimal voltage, int frequency)
     {
         _timings = timings;
         _voltage = voltage;
-        _frequency = frequency;
+        Frequency = frequency;
     }
+
+    public int Frequency { get; }
 
     public IXmpBuilder Direct(IXmpBuilder builder)
     {
         builder
             .WithTimings(_timings)
             .WithVoltage(_voltage)
-            .WithFrequency(_frequency);
+            .WithFrequency(Frequency);
 
         return builder;
     }

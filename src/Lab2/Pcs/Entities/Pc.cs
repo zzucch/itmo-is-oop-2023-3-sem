@@ -103,6 +103,35 @@ public class Pc : IPc
         return _cpu.IntegratedGraphicsProcessor || _graphicsCard is not null;
     }
 
+    public bool IsRamXmpSupportedOrNoXmp()
+    {
+        foreach (IRam ram in _rams)
+        {
+            if (ram.Xmps.Count <= 0)
+            {
+                continue;
+            }
+
+            if (_motherboard.Chipset.SupportsXmp is false)
+            {
+                return false;
+            }
+
+            bool any = ram.Xmps.Where(
+                xmp => _cpu.SupportedMemoryFrequencies.Any(
+                    i => i == xmp.Frequency)).Any(
+                xmp => _motherboard.Chipset.SupportedRamSpeeds.Any(
+                    i => i == xmp.Frequency));
+
+            if (any is false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public bool IsBiosAndCpuCompatible()
     {
         return _motherboard.Bios.IsCompatibleWithCpu(_cpu);
@@ -110,12 +139,39 @@ public class Pc : IPc
 
     public bool IsCpuAndRamProfileCompatible()
     {
-        throw new System.NotImplementedException();
+        return _rams.Any(ram => ram.JedecProfiles.Any(
+            profile => _cpu.SupportedMemoryFrequencies.Any(
+                i => i == profile.FrequencyKHz)));
+    }
+
+    public bool IsMotherboardAndRamProfileCompatible()
+    {
+        return _rams.Any(ram => ram.JedecProfiles.Any(
+            profile => _motherboard.Chipset.SupportedRamSpeeds.Any(
+                i => i == profile.FrequencyKHz)));
     }
 
     public bool IsMotherboardAndRamXmpCompatible()
     {
-        throw new System.NotImplementedException();
+        foreach (IRam ram in _rams)
+        {
+            if (ram.Xmps.Count <= 0)
+            {
+                continue;
+            }
+
+            if (_motherboard.Chipset.SupportsXmp is false)
+            {
+                return false;
+            }
+
+            if (ram.Xmps.Any(xmp => _motherboard.Chipset.SupportedRamSpeeds.Any(i => i == xmp.Frequency)) is false)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public bool IsMotherboardAndCpuSocketCompatible()
@@ -172,7 +228,7 @@ public class Pc : IPc
         return _rams.Count <= _motherboard.RamSocketAmount;
     }
 
-    public bool IsGpuSizeAndPcCaseCompatible()
+    public bool IsGraphicsCardSizeAndPcCaseCompatible()
     {
         if (_graphicsCard is null)
         {
