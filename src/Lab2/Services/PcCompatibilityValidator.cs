@@ -88,8 +88,8 @@ public class PcCompatibilityValidator
 
         if (_pc.IsCpuCoolingSystemTdpAndCpuTdpCompatible() is false)
         {
-            success = false;
             comments.Add("incompatible CPU cooling system and CPU TDP");
+            warrantyDisclaimer = true;
         }
 
         if (_pc.IsMotherboardPciEAmountEnough() is false)
