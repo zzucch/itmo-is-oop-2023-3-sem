@@ -1,19 +1,15 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hulls;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Sales.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models.Results;
 using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Entities.Engines;
-using Itmo.ObjectOrientedProgramming.Lab1.Travelling.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 
 public abstract class SpaceShip : ISpaceShip
 {
-    protected SpaceShip(Engine? impulseEngine, Engine? jumpEngine, IDeflector? deflector, Hull hull)
+    protected SpaceShip(Engine? impulseEngine, Engine? jumpEngine, IDeflector? deflector, IHull hull)
     {
         ImpulseEngine = impulseEngine;
         JumpEngine = jumpEngine;
@@ -21,40 +17,11 @@ public abstract class SpaceShip : ISpaceShip
         Hull = hull;
     }
 
-    private Engine? ImpulseEngine { get; }
-    private Engine? JumpEngine { get; }
+    public Engine? ImpulseEngine { get; }
+    public Engine? JumpEngine { get; }
+    public CrewState CrewState { get; set; } = CrewState.Alive;
     private IDeflector? Deflector { get; }
-    private Hull Hull { get; }
-    private CrewState CrewState { get; set; } = CrewState.Alive;
-
-    public ShipTravelResult Travel(IRouteSegment routeSegment)
-    {
-        TravelResult? impulseTravelResult = ImpulseEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.Acceleration);
-        TravelResult? jumpTravelResult = JumpEngine?.TryTravel(routeSegment.DistanceLightYear, routeSegment.EnvironmentType, routeSegment.Acceleration);
-
-        if (impulseTravelResult?.Success is true)
-        {
-            if (jumpTravelResult is null || jumpTravelResult.Success is false)
-            {
-                return new ShipTravelResult(impulseTravelResult, CrewState);
-            }
-
-            return new ShipTravelResult(jumpTravelResult, CrewState);
-        }
-
-        if (jumpTravelResult?.Success is true)
-        {
-            return new ShipTravelResult(jumpTravelResult, CrewState);
-        }
-
-        return new ShipTravelResult(
-            new TravelResult(
-                Success: false,
-                TravelTimeTaken: TimeSpan.Zero,
-                FuelConsumed: new Fuel(FuelType.None, 0.0),
-                ShipLost: false),
-            CrewState);
-    }
+    private IHull Hull { get; }
 
     public ShipDeflectionResult TakeDamage(Damage damage)
     {
