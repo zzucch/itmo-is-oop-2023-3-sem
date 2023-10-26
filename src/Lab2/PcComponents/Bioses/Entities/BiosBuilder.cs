@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Entities;
@@ -7,16 +8,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Entities;
 public class BiosBuilder : IBiosBuilder
 {
     private readonly List<ICpu> _cpus = new();
-    private string? _type;
-    private string? _version;
+    private BiosType? _type;
+    private BiosVersion? _version;
 
-    public IBiosBuilder WithType(string type)
+    public IBiosBuilder WithType(BiosType type)
     {
         _type = type;
         return this;
     }
 
-    public IBiosBuilder WithVersion(string version)
+    public IBiosBuilder WithVersion(BiosVersion version)
     {
         _version = version;
         return this;

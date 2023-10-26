@@ -1,14 +1,15 @@
 using System;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Entities;
 
 public class PsuBuilder : IPsuBuilder
 {
-    private int? _peakLoad;
+    private PowerConsumption? _peakLoad;
 
-    public IPsuBuilder WithPeakLoad(int watts)
+    public IPsuBuilder WithPeakLoad(PowerConsumption powerConsumption)
     {
-        _peakLoad = watts;
+        _peakLoad = powerConsumption;
         return this;
     }
 

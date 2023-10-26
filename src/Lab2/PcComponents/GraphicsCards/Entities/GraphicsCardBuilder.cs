@@ -1,15 +1,16 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Entities;
 
 public class GraphicsCardBuilder : IGraphicsCardBuilder
 {
     private GraphicsCardDimensions? _dimensions;
-    private int? _videoMemory;
+    private GraphicsCardVideoMemory? _videoMemory;
     private int? _pciEVersion;
-    private int? _clockFrequency;
-    private int? _powerConsumption;
+    private GraphicsCardClockFrequency? _clockFrequency;
+    private PowerConsumption? _powerConsumption;
 
     public IGraphicsCardBuilder WithDimensions(GraphicsCardDimensions dimensions)
     {
@@ -17,9 +18,9 @@ public class GraphicsCardBuilder : IGraphicsCardBuilder
         return this;
     }
 
-    public IGraphicsCardBuilder WithVideoMemory(int gBytes)
+    public IGraphicsCardBuilder WithVideoMemory(GraphicsCardVideoMemory memory)
     {
-        _videoMemory = gBytes;
+        _videoMemory = memory;
         return this;
     }
 
@@ -29,15 +30,15 @@ public class GraphicsCardBuilder : IGraphicsCardBuilder
         return this;
     }
 
-    public IGraphicsCardBuilder WithClockFrequency(int hertz)
+    public IGraphicsCardBuilder WithClockFrequency(GraphicsCardClockFrequency clockFrequency)
     {
-        _clockFrequency = hertz;
+        _clockFrequency = clockFrequency;
         return this;
     }
 
-    public IGraphicsCardBuilder WithPowerConsumption(int watts)
+    public IGraphicsCardBuilder WithPowerConsumption(PowerConsumption powerConsumption)
     {
-        _powerConsumption = watts;
+        _powerConsumption = powerConsumption;
         return this;
     }
 

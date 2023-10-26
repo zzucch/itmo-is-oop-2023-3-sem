@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
 
@@ -9,14 +10,14 @@ public class RamBuilder : IRamBuilder
 {
     private readonly List<JedecProfile> _jedecProfiles = new();
     private readonly List<IXmp> _xmps = new();
-    private int? _capacity;
+    private RamCapacity? _capacity;
     private RamFormFactor? _formFactor;
-    private int? _ddrVersion;
-    private decimal? _powerConsumption;
+    private RamDdrVersion? _ddrVersion;
+    private PowerConsumption? _powerConsumption;
 
-    public IRamBuilder WithCapacity(int gBytes)
+    public IRamBuilder WithCapacity(RamCapacity capacity)
     {
-        _capacity = gBytes;
+        _capacity = capacity;
         return this;
     }
 
@@ -38,15 +39,15 @@ public class RamBuilder : IRamBuilder
         return this;
     }
 
-    public IRamBuilder WithDdrVersion(int version)
+    public IRamBuilder WithDdrVersion(RamDdrVersion version)
     {
         _ddrVersion = version;
         return this;
     }
 
-    public IRamBuilder WithPowerConsumption(decimal watts)
+    public IRamBuilder WithPowerConsumption(PowerConsumption powerConsumption)
     {
-        _powerConsumption = watts;
+        _powerConsumption = powerConsumption;
         return this;
     }
 

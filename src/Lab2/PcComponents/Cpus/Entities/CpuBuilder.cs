@@ -1,31 +1,35 @@
 using System;
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
 public class CpuBuilder : ICpuBuilder
 {
-    private readonly List<int> _supportedMemoryFrequencies = new();
-    private int? _coreSpeed;
-    private int? _coreAmount;
-    private string? _socket;
+    private readonly List<RamFrequency> _supportedMemoryFrequencies = new();
+    private CpuCoreSpeed? _coreSpeed;
+    private CpuCoreAmount? _coreAmount;
+    private CpuSocket? _socket;
     private bool? _integratedGraphicsProcessor;
-    private int? _tdp;
-    private int? _powerConsumption;
+    private Tdp? _tdp;
+    private PowerConsumption? _powerConsumption;
 
-    public ICpuBuilder WithCoreSpeed(int mHz)
+    public ICpuBuilder WithCoreSpeed(CpuCoreSpeed speed)
     {
-        _coreSpeed = mHz;
+        _coreSpeed = speed;
         return this;
     }
 
-    public ICpuBuilder WithCoreAmount(int cores)
+    public ICpuBuilder WithCoreAmount(CpuCoreAmount cores)
     {
         _coreAmount = cores;
         return this;
     }
 
-    public ICpuBuilder WithSocket(string socket)
+    public ICpuBuilder WithSocket(CpuSocket socket)
     {
         _socket = socket;
         return this;
@@ -37,21 +41,21 @@ public class CpuBuilder : ICpuBuilder
         return this;
     }
 
-    public ICpuBuilder AddSupportedMemoryFrequency(int speed)
+    public ICpuBuilder AddSupportedMemoryFrequency(RamFrequency frequency)
     {
-        _supportedMemoryFrequencies.Add(speed);
+        _supportedMemoryFrequencies.Add(frequency);
         return this;
     }
 
-    public ICpuBuilder WithTdp(int tdp)
+    public ICpuBuilder WithTdp(Tdp tdp)
     {
         _tdp = tdp;
         return this;
     }
 
-    public ICpuBuilder WithPowerConsumption(int watts)
+    public ICpuBuilder WithPowerConsumption(PowerConsumption powerConsumption)
     {
-        _powerConsumption = watts;
+        _powerConsumption = powerConsumption;
         return this;
     }
 

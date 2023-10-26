@@ -1,3 +1,4 @@
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
@@ -11,7 +12,7 @@ public class Ssd : ISsd
         SsdConnectionInterface connectionInterface,
         int capacity,
         int speed,
-        int powerConsumption)
+        PowerConsumption powerConsumption)
     {
         ConnectionInterface = connectionInterface;
         _capacity = capacity;
@@ -19,7 +20,7 @@ public class Ssd : ISsd
         PowerConsumption = powerConsumption;
     }
 
-    public int PowerConsumption { get; }
+    public PowerConsumption PowerConsumption { get; }
     public SsdConnectionInterface ConnectionInterface { get; }
 
     public ISsdBuilder Direct(ISsdBuilder builder)

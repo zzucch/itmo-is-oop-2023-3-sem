@@ -7,6 +7,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Hdds.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.PcCases.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Entities;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Models;
@@ -120,7 +121,7 @@ public class Pc : IPc
             bool any = ram.Xmps.Where(
                 xmp => _cpu.SupportedMemoryFrequencies.Any(
                     i => i == xmp.Frequency)).Any(
-                xmp => _motherboard.Chipset.SupportedRamSpeeds.Any(
+                xmp => _motherboard.Chipset.SupportedRamFrequencies.Any(
                     i => i == xmp.Frequency));
 
             if (any is false)
@@ -141,14 +142,14 @@ public class Pc : IPc
     {
         return _rams.Any(ram => ram.JedecProfiles.Any(
             profile => _cpu.SupportedMemoryFrequencies.Any(
-                i => i == profile.FrequencyKHz)));
+                i => i == profile.Frequency)));
     }
 
     public bool IsMotherboardAndRamProfileCompatible()
     {
         return _rams.Any(ram => ram.JedecProfiles.Any(
-            profile => _motherboard.Chipset.SupportedRamSpeeds.Any(
-                i => i == profile.FrequencyKHz)));
+            profile => _motherboard.Chipset.SupportedRamFrequencies.Any(
+                i => i == profile.Frequency)));
     }
 
     public bool IsMotherboardAndRamXmpCompatible()
@@ -165,7 +166,7 @@ public class Pc : IPc
                 return false;
             }
 
-            if (ram.Xmps.Any(xmp => _motherboard.Chipset.SupportedRamSpeeds.Any(i => i == xmp.Frequency)) is false)
+            if (ram.Xmps.Any(xmp => _motherboard.Chipset.SupportedRamFrequencies.Any(i => i == xmp.Frequency)) is false)
             {
                 return false;
             }
@@ -210,7 +211,7 @@ public class Pc : IPc
 
         pciECount += _ssds.Count(ssd => ssd.ConnectionInterface is SsdConnectionInterface.PciE);
 
-        return _motherboard.PciEAmount >= pciECount;
+        return _motherboard.PciEAmount.Amount >= pciECount;
     }
 
     public bool IsMotherboardSataAmountEnough()
@@ -220,12 +221,12 @@ public class Pc : IPc
         sataCount += _hdds.Count;
         sataCount += _ssds.Count(ssd => ssd.ConnectionInterface is SsdConnectionInterface.Sata);
 
-        return _motherboard.SataAmount >= sataCount;
+        return _motherboard.SataAmount.Amount >= sataCount;
     }
 
     public bool IsMotherboardRamSocketsAmountEnough()
     {
-        return _rams.Count <= _motherboard.RamSocketAmount;
+        return _rams.Count <= _motherboard.RamSocketAmount.Amount;
     }
 
     public bool IsGraphicsCardSizeAndPcCaseCompatible()
@@ -262,26 +263,26 @@ public class Pc : IPc
         return _psu.IsPowerRecommended(GetAllPowerConsumption());
     }
 
-    private int GetAllPowerConsumption()
+    private PowerConsumption GetAllPowerConsumption()
     {
-        int powerConsumption = 0;
+        decimal powerConsumption = decimal.Zero;
 
-        powerConsumption += _cpu.PowerConsumption;
+        powerConsumption += _cpu.PowerConsumption.PowerConsumed;
 
         if (_graphicsCard != null)
         {
-            powerConsumption += _graphicsCard.PowerConsumption;
+            powerConsumption += _graphicsCard.PowerConsumption.PowerConsumed;
         }
 
         if (_wifiAdapter != null)
         {
-            powerConsumption += _wifiAdapter.PowerConsumption;
+            powerConsumption += _wifiAdapter.PowerConsumption.PowerConsumed;
         }
 
-        powerConsumption += _hdds.Sum(hdd => hdd.PowerConsumption);
-        powerConsumption += _ssds.Sum(ssd => ssd.PowerConsumption);
-        powerConsumption += decimal.ToInt32(decimal.Ceiling(_rams.Sum(ram => ram.PowerConsumption)));
+        powerConsumption += _hdds.Sum(hdd => hdd.PowerConsumption.PowerConsumed);
+        powerConsumption += _ssds.Sum(ssd => ssd.PowerConsumption.PowerConsumed);
+        powerConsumption += decimal.ToInt32(decimal.Ceiling(_rams.Sum(ram => ram.PowerConsumption.PowerConsumed)));
 
-        return powerConsumption;
+        return new PowerConsumption(powerConsumption);
     }
 }

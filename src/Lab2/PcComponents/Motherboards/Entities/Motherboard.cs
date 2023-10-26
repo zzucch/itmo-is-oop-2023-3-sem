@@ -1,21 +1,23 @@
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities;
 
 public class Motherboard : IMotherboard
 {
-    private readonly string _cpuSocket;
-    private readonly int _ddrVersion;
+    private readonly CpuSocket _cpuSocket;
+    private readonly RamDdrVersion _ddrVersion;
 
     internal Motherboard(
-        string cpuSocket,
-        int pciEAmount,
-        int sataAmount,
+        CpuSocket cpuSocket,
+        MotherboardPciEAmount pciEAmount,
+        MotherboardSataAmount sataAmount,
         Chipset chipset,
-        int ddrVersion,
-        int ramSocketAmount,
-        string formFactor,
+        RamDdrVersion ddrVersion,
+        MotherboardRamAmount ramSocketAmount,
+        MotherboardFormFactor formFactor,
         bool wiFiModule,
         IBios bios)
     {
@@ -31,19 +33,19 @@ public class Motherboard : IMotherboard
     }
 
     public IBios Bios { get; }
-    public int SataAmount { get; }
-    public int PciEAmount { get; }
+    public MotherboardSataAmount SataAmount { get; }
+    public MotherboardPciEAmount PciEAmount { get; }
     public Chipset Chipset { get; }
     public bool WiFiModule { get; }
-    public string FormFactor { get; }
-    public int RamSocketAmount { get; }
+    public MotherboardFormFactor FormFactor { get; }
+    public MotherboardRamAmount RamSocketAmount { get; }
 
-    public bool IsCompatibleWithSocket(string socket)
+    public bool IsCompatibleWithSocket(CpuSocket socket)
     {
         return socket == _cpuSocket;
     }
 
-    public bool IsCompatibleWithDdrVersion(int ddrVersion)
+    public bool IsCompatibleWithDdrVersion(RamDdrVersion ddrVersion)
     {
         return ddrVersion == _ddrVersion;
     }

@@ -1,34 +1,36 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities;
 
 public class MotherboardBuilder : IMotherboardBuilder
 {
-    private string? _cpuSocket;
-    private int? _pciEAmount;
-    private int? _sataAmount;
+    private CpuSocket? _cpuSocket;
+    private MotherboardPciEAmount? _pciEAmount;
+    private MotherboardSataAmount? _sataAmount;
     private Chipset? _chipset;
-    private int? _ddrVersion;
-    private int? _ramSocketAmount;
-    private string? _formFactor;
+    private RamDdrVersion? _ddrVersion;
+    private MotherboardRamAmount? _ramSocketAmount;
+    private MotherboardFormFactor? _formFactor;
     private bool? _wifiModule;
     private IBios? _bios;
 
-    public IMotherboardBuilder WithCpuSocket(string socket)
+    public IMotherboardBuilder WithCpuSocket(CpuSocket socket)
     {
         _cpuSocket = socket;
         return this;
     }
 
-    public IMotherboardBuilder WithPciEAmount(int amount)
+    public IMotherboardBuilder WithPciEAmount(MotherboardPciEAmount amount)
     {
         _pciEAmount = amount;
         return this;
     }
 
-    public IMotherboardBuilder WithSataAmount(int amount)
+    public IMotherboardBuilder WithSataAmount(MotherboardSataAmount amount)
     {
         _sataAmount = amount;
         return this;
@@ -40,19 +42,19 @@ public class MotherboardBuilder : IMotherboardBuilder
         return this;
     }
 
-    public IMotherboardBuilder WithDdrVersion(int version)
+    public IMotherboardBuilder WithDdrVersion(RamDdrVersion version)
     {
         _ddrVersion = version;
         return this;
     }
 
-    public IMotherboardBuilder WithRamSocketAmount(int amount)
+    public IMotherboardBuilder WithRamSocketAmount(MotherboardRamAmount amount)
     {
         _ramSocketAmount = amount;
         return this;
     }
 
-    public IMotherboardBuilder WithFormFactor(string formFactor)
+    public IMotherboardBuilder WithFormFactor(MotherboardFormFactor formFactor)
     {
         _formFactor = formFactor;
         return this;

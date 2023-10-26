@@ -1,13 +1,18 @@
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
+
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
 public interface ICpuBuilder
 {
-    ICpuBuilder WithCoreSpeed(int mHz);
-    ICpuBuilder WithCoreAmount(int cores);
-    ICpuBuilder WithSocket(string socket);
+    ICpuBuilder WithCoreSpeed(CpuCoreSpeed speed);
+    ICpuBuilder WithCoreAmount(CpuCoreAmount cores);
+    ICpuBuilder WithSocket(CpuSocket socket);
     ICpuBuilder WithIntegratedGraphicsProcessor(bool igp);
-    ICpuBuilder AddSupportedMemoryFrequency(int speed);
-    ICpuBuilder WithTdp(int tdp);
-    ICpuBuilder WithPowerConsumption(int watts);
+    ICpuBuilder AddSupportedMemoryFrequency(RamFrequency frequency);
+    ICpuBuilder WithTdp(Tdp tdp);
+    ICpuBuilder WithPowerConsumption(PowerConsumption powerConsumption);
     ICpu Build();
 }

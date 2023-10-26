@@ -1,19 +1,20 @@
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Entities;
 
 public class GraphicsCard : IGraphicsCard
 {
-    private readonly int _videoMemory;
+    private readonly GraphicsCardVideoMemory _videoMemory;
     private readonly int _pciEVersion;
-    private readonly int _clockFrequency;
+    private readonly GraphicsCardClockFrequency _clockFrequency;
 
     internal GraphicsCard(
         GraphicsCardDimensions dimensions,
-        int videoMemory,
+        GraphicsCardVideoMemory videoMemory,
         int pciEVersion,
-        int clockFrequency,
-        int powerConsumption)
+        GraphicsCardClockFrequency clockFrequency,
+        PowerConsumption powerConsumption)
     {
         Dimensions = dimensions;
         _videoMemory = videoMemory;
@@ -22,7 +23,7 @@ public class GraphicsCard : IGraphicsCard
         PowerConsumption = powerConsumption;
     }
 
-    public int PowerConsumption { get; }
+    public PowerConsumption PowerConsumption { get; }
     public GraphicsCardDimensions Dimensions { get; }
 
     public IGraphicsCardBuilder Direct(IGraphicsCardBuilder builder)

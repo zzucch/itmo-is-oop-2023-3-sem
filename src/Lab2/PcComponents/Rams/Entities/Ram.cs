@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
 
@@ -7,16 +8,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 
 public class Ram : IRam
 {
-    private readonly int _capacity;
+    private readonly RamCapacity _capacity;
     private readonly RamFormFactor _formFactor;
 
     internal Ram(
-        int capacity,
+        RamCapacity capacity,
         IEnumerable<JedecProfile> jedecProfiles,
         IEnumerable<IXmp> xmps,
         RamFormFactor formFactor,
-        int ddrVersion,
-        decimal powerConsumption)
+        RamDdrVersion ddrVersion,
+        PowerConsumption powerConsumption)
     {
         _capacity = capacity;
         JedecProfiles = jedecProfiles.ToArray();
@@ -26,9 +27,9 @@ public class Ram : IRam
         PowerConsumption = powerConsumption;
     }
 
-    public int DdrVersion { get; }
+    public RamDdrVersion DdrVersion { get; }
     public IReadOnlyList<IXmp> Xmps { get; }
-    public decimal PowerConsumption { get; }
+    public PowerConsumption PowerConsumption { get; }
     public IReadOnlyList<JedecProfile> JedecProfiles { get; }
 
     public IRamBuilder Direct(IRamBuilder builder)

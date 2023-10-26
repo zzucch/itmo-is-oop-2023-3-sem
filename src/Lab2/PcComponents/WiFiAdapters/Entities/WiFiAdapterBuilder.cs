@@ -1,4 +1,5 @@
 using System;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.WiFiAdapters.Entities;
 
@@ -7,7 +8,7 @@ public class WiFiAdapterBuilder : IWiFiAdapterBuilder
     private int? _wifiVersion;
     private bool? _builtInBluetooth;
     private int? _pciEVersion;
-    private int? _powerConsumption;
+    private PowerConsumption? _powerConsumption;
 
     public IWiFiAdapterBuilder WithWiFiVersion(int version)
     {
@@ -27,9 +28,9 @@ public class WiFiAdapterBuilder : IWiFiAdapterBuilder
         return this;
     }
 
-    public IWiFiAdapterBuilder WithPowerConsumption(int watts)
+    public IWiFiAdapterBuilder WithPowerConsumption(PowerConsumption powerConsumption)
     {
-        _powerConsumption = watts;
+        _powerConsumption = powerConsumption;
         return this;
     }
 

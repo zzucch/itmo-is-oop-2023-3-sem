@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.PcCases.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.PcCases.Entities;
 
 public class PcCase : IPcCase
 {
-    private readonly IReadOnlyList<string> _motherboardFormFactors;
+    private readonly IReadOnlyList<MotherboardFormFactor> _motherboardFormFactors;
 
     internal PcCase(
-        IEnumerable<string> motherboardFormFactors,
+        IEnumerable<MotherboardFormFactor> motherboardFormFactors,
         PcCaseDimensions dimensions)
     {
         _motherboardFormFactors = motherboardFormFactors.ToArray();
@@ -23,7 +24,7 @@ public class PcCase : IPcCase
         builder
             .WithDimensions(Dimensions);
 
-        foreach (string formFactor in _motherboardFormFactors)
+        foreach (MotherboardFormFactor formFactor in _motherboardFormFactors)
         {
             builder.AddSupportedMotherboardFormFactors(formFactor);
         }
@@ -31,7 +32,7 @@ public class PcCase : IPcCase
         return builder;
     }
 
-    public bool IsCompatibleWithMotherboardFormFactor(string formFactor)
+    public bool IsCompatibleWithMotherboardFormFactor(MotherboardFormFactor formFactor)
     {
         return _motherboardFormFactors.Contains(formFactor);
     }

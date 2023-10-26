@@ -1,3 +1,5 @@
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
+
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Hdds.Entities;
 
 public class Hdd : IHdd
@@ -5,14 +7,14 @@ public class Hdd : IHdd
     private readonly int _capacity;
     private readonly int _speed;
 
-    internal Hdd(int powerConsumption, int capacity, int speed)
+    internal Hdd(PowerConsumption powerConsumption, int capacity, int speed)
     {
         PowerConsumption = powerConsumption;
         _capacity = capacity;
         _speed = speed;
     }
 
-    public int PowerConsumption { get; }
+    public PowerConsumption PowerConsumption { get; }
 
     public IHddBuilder Direct(IHddBuilder builder)
     {

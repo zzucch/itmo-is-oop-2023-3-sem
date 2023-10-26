@@ -1,4 +1,5 @@
 using System;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
@@ -6,8 +7,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
 public class XmpBuilder : IXmpBuilder
 {
     private RamTimings? _timings;
-    private decimal? _voltage;
-    private int? _frequency;
+    private XmpVoltage? _voltage;
+    private RamFrequency? _frequency;
 
     public IXmpBuilder WithTimings(RamTimings timings)
     {
@@ -15,15 +16,15 @@ public class XmpBuilder : IXmpBuilder
         return this;
     }
 
-    public IXmpBuilder WithVoltage(decimal volts)
+    public IXmpBuilder WithVoltage(XmpVoltage volts)
     {
         _voltage = volts;
         return this;
     }
 
-    public IXmpBuilder WithFrequency(int mHz)
+    public IXmpBuilder WithFrequency(RamFrequency frequency)
     {
-        _frequency = mHz;
+        _frequency = frequency;
         return this;
     }
 

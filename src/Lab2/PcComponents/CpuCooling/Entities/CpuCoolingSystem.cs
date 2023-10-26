@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 
 public class CpuCoolingSystem : ICpuCoolingSystem
 {
-    private readonly IReadOnlyList<string> _sockets;
-    private readonly int _tdp;
+    private readonly IReadOnlyList<CpuSocket> _sockets;
+    private readonly Tdp _tdp;
 
-    internal CpuCoolingSystem(CoolingSystemDimensions dimensions, IEnumerable<string> sockets, int tdp)
+    internal CpuCoolingSystem(
+        CoolingSystemDimensions dimensions,
+        IEnumerable<CpuSocket> sockets,
+        Tdp tdp)
     {
         Dimensions = dimensions;
         _sockets = sockets.ToArray();
@@ -24,7 +28,7 @@ public class CpuCoolingSystem : ICpuCoolingSystem
             .WithDimensions(Dimensions)
             .WithTdp(_tdp);
 
-        foreach (string socket in _sockets)
+        foreach (CpuSocket socket in _sockets)
         {
             builder.AddSocket(socket);
         }
@@ -32,13 +36,13 @@ public class CpuCoolingSystem : ICpuCoolingSystem
         return builder;
     }
 
-    public bool IsCompatibleWithCpuSocket(string socket)
+    public bool IsCompatibleWithCpuSocket(CpuSocket socket)
     {
         return _sockets.Any(s => s == socket);
     }
 
-    public bool IsCompatibleWithCpuTdp(int tdp)
+    public bool IsCompatibleWithCpuTdp(Tdp tdp)
     {
-        return tdp <= _tdp;
+        return tdp.Watts <= _tdp.Watts;
     }
 }

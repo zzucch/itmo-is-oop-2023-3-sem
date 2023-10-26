@@ -1,5 +1,6 @@
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
 
-public record Chipset(IReadOnlyCollection<int> SupportedRamSpeeds, bool SupportsXmp);
+public record Chipset(IReadOnlyCollection<RamFrequency> SupportedRamFrequencies, bool SupportsXmp);

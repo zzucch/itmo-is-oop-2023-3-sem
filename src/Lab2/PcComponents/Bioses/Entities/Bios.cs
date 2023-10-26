@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Entities;
 
 public class Bios : IBios
 {
-    private readonly string _type;
-    private readonly string _version;
+    private readonly BiosType _type;
+    private readonly BiosVersion _version;
     private readonly IReadOnlyList<ICpu> _cpus;
 
-    internal Bios(string type, string version, IEnumerable<ICpu> cpus)
+    internal Bios(BiosType type, BiosVersion version, IEnumerable<ICpu> cpus)
     {
         _type = type;
         _version = version;

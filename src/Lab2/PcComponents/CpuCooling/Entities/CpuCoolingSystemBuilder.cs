@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 
 public class CpuCoolingSystemBuilder : ICpuCoolingSystemBuilder
 {
-    private readonly List<string> _sockets = new();
+    private readonly List<CpuSocket> _sockets = new();
     private CoolingSystemDimensions? _dimensions;
-    private int? _tdp;
+    private Tdp? _tdp;
 
     public ICpuCoolingSystemBuilder WithDimensions(CoolingSystemDimensions dimensions)
     {
@@ -16,13 +17,13 @@ public class CpuCoolingSystemBuilder : ICpuCoolingSystemBuilder
         return this;
     }
 
-    public ICpuCoolingSystemBuilder AddSocket(string socket)
+    public ICpuCoolingSystemBuilder AddSocket(CpuSocket socket)
     {
         _sockets.Add(socket);
         return this;
     }
 
-    public ICpuCoolingSystemBuilder WithTdp(int watts)
+    public ICpuCoolingSystemBuilder WithTdp(Tdp watts)
     {
         _tdp = watts;
         return this;

@@ -1,4 +1,5 @@
 using System;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Hdds.Entities;
 
@@ -6,7 +7,7 @@ public class HddBuilder : IHddBuilder
 {
     private int? _capacity;
     private int? _speed;
-    private int? _powerConsumption;
+    private PowerConsumption? _powerConsumption;
 
     public IHddBuilder WithCapacity(int gBytes)
     {
@@ -20,9 +21,9 @@ public class HddBuilder : IHddBuilder
         return this;
     }
 
-    public IHddBuilder WithPowerConsumption(int watts)
+    public IHddBuilder WithPowerConsumption(PowerConsumption powerConsumption)
     {
-        _powerConsumption = watts;
+        _powerConsumption = powerConsumption;
         return this;
     }
 

@@ -1,22 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
 public class Cpu : ICpu
 {
-    private readonly int _coreSpeed;
-    private readonly int _coreAmount;
+    private readonly CpuCoreSpeed _coreSpeed;
+    private readonly CpuCoreAmount _coreAmount;
 
     internal Cpu(
-        int coreSpeed,
-        int coreAmount,
-        string socket,
+        CpuCoreSpeed coreSpeed,
+        CpuCoreAmount coreAmount,
+        CpuSocket socket,
         bool integratedGraphicsProcessor,
-        IEnumerable<int> supportedMemoryFrequencies,
-        int tdp,
-        int powerConsumption)
+        IEnumerable<RamFrequency> supportedMemoryFrequencies,
+        Tdp tdp,
+        PowerConsumption powerConsumption)
     {
         _coreSpeed = coreSpeed;
         _coreAmount = coreAmount;
@@ -27,15 +31,15 @@ public class Cpu : ICpu
         PowerConsumption = powerConsumption;
     }
 
-    public int Tdp { get; }
+    public Tdp Tdp { get; }
 
-    public string Socket { get; }
+    public CpuSocket Socket { get; }
 
-    public int PowerConsumption { get; }
+    public PowerConsumption PowerConsumption { get; }
 
     public bool IntegratedGraphicsProcessor { get; }
 
-    public IReadOnlyList<int> SupportedMemoryFrequencies { get; }
+    public IReadOnlyList<RamFrequency> SupportedMemoryFrequencies { get; }
 
     public override bool Equals(object? obj)
     {
@@ -68,7 +72,7 @@ public class Cpu : ICpu
             .WithTdp(Tdp)
             .WithPowerConsumption(PowerConsumption);
 
-        foreach (int frequency in SupportedMemoryFrequencies)
+        foreach (RamFrequency frequency in SupportedMemoryFrequencies)
         {
             builder.AddSupportedMemoryFrequency(frequency);
         }
