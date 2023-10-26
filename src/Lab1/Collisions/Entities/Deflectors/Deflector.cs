@@ -5,18 +5,18 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 
 public class Deflector : IDeflector
 {
-    public Deflector(IDeflectionStrategy deflectionStrategy)
-    {
-        DeflectionStrategy = deflectionStrategy;
-    }
+    private readonly IDeflectionStrategy _deflectionStrategy;
+    private int _hitPointsLeft = 1000;
 
-    private int HitPointsLeft { get; set; } = 1000;
-    private IDeflectionStrategy DeflectionStrategy { get; }
+    public Deflector(IPhysicalDeflectionStrategy deflectionStrategy)
+    {
+        _deflectionStrategy = deflectionStrategy;
+    }
 
     public DeflectionResult TryDeflect(Damage damage)
     {
-        (bool success, HitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
+        (bool success, _hitPointsLeft) = _deflectionStrategy.TryDeflect(damage, _hitPointsLeft);
 
-        return new DeflectionResult(success, DeflectingEntityDestroyed: HitPointsLeft == 0);
+        return new DeflectionResult(success, DeflectingEntityDestroyed: _hitPointsLeft == 0);
     }
 }

@@ -2,7 +2,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStrategies;
 
-public class PhysicalClass2DeflectionStrategy : IDeflectionStrategy
+public class PhysicalClass2DeflectionStrategy : IPhysicalDeflectionStrategy
 {
     private const DamageType DeflectionType = DamageType.Physical;
     private const int LowDamage = 50;
