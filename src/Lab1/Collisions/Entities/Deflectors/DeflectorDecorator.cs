@@ -4,15 +4,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 
 public abstract class DeflectorDecorator : IDeflector
 {
+    private readonly IDeflector _deflector;
+
     protected DeflectorDecorator(IDeflector deflector)
     {
-        Deflector = deflector;
+        _deflector = deflector;
     }
-
-    private IDeflector Deflector { get; }
 
     public virtual DeflectionResult TryDeflect(Damage damage)
     {
-        return Deflector.TryDeflect(damage);
+        return _deflector.TryDeflect(damage);
     }
 }
