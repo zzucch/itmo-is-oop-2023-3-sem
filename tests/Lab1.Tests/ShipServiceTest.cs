@@ -4,8 +4,6 @@ using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Routes.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Sales.Entities.CostStrategies;
-using Itmo.ObjectOrientedProgramming.Lab1.Sales.Entities.Markets;
 using Itmo.ObjectOrientedProgramming.Lab1.Services;
 using Itmo.ObjectOrientedProgramming.Lab1.Ships.Entities;
 using Xunit;
@@ -181,13 +179,7 @@ public class ShipServiceTest
                 obstacles: new List<INormalSpaceObstacle>()),
         });
 
-        const decimal activePlasmaCost = 100;
-        const decimal gravitonMatterCost = 200;
-        var market = new GravitonMatterFuelMarketDecorator(
-            new FuelMarket(new ActivePlasmaCostStrategy(activePlasmaCost)),
-            new GravitonMatterCostStrategy(gravitonMatterCost));
-
-        var chooser = new OptimalShipChooser(route, market);
+        var chooser = new OptimalShipChooserByTime(route);
 
         // Act
         ISpaceShip? chosenShip = chooser.ChooseOptimalShip(shuttle, vaklas);
@@ -210,13 +202,7 @@ public class ShipServiceTest
                 obstacles: new List<IDenseNebulaObstacle>()),
         });
 
-        const decimal activePlasmaCost = 100;
-        const decimal gravitonMatterCost = 200;
-        var market = new GravitonMatterFuelMarketDecorator(
-            new FuelMarket(new ActivePlasmaCostStrategy(activePlasmaCost)),
-            new GravitonMatterCostStrategy(gravitonMatterCost));
-
-        var chooser = new OptimalShipChooser(route, market);
+        var chooser = new OptimalShipChooserByTime(route);
 
         // Act
         ISpaceShip? chosenShip = chooser.ChooseOptimalShip(augur, stella);
@@ -237,13 +223,7 @@ public class ShipServiceTest
             new NitriteNebulaRouteSegment(distanceLightYear: 100, obstacles: new List<INitriteNebulaObstacle>()),
         });
 
-        const decimal activePlasmaCost = 100;
-        const decimal gravitonMatterCost = 200;
-        var market = new GravitonMatterFuelMarketDecorator(
-            new FuelMarket(new ActivePlasmaCostStrategy(activePlasmaCost)),
-            new GravitonMatterCostStrategy(gravitonMatterCost));
-
-        var chooser = new OptimalShipChooser(route, market);
+        var chooser = new OptimalShipChooserByTime(route);
 
         // Act
         ISpaceShip? chosenShip = chooser.ChooseOptimalShip(shuttle, vaklas);
