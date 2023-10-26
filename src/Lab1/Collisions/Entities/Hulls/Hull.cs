@@ -4,9 +4,9 @@ using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hulls;
 
-public class Hull
+public class Hull : IHull
 {
-    public Hull(IDeflectionStrategy deflectionStrategy, MassDimensional massDimensional)
+    public Hull(IPhysicalDeflectionStrategy deflectionStrategy, MassDimensional massDimensional)
     {
         DeflectionStrategy = deflectionStrategy;
         MassDimensional = massDimensional;
