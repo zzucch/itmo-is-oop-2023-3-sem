@@ -10,12 +10,19 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 public class CpuBuilder : ICpuBuilder
 {
     private readonly List<RamFrequency> _supportedMemoryFrequencies = new();
+    private PcComponentName? _name;
     private CpuCoreSpeed? _coreSpeed;
     private CpuCoreAmount? _coreAmount;
     private CpuSocket? _socket;
     private bool? _integratedGraphicsProcessor;
     private Tdp? _tdp;
     private PowerConsumption? _powerConsumption;
+
+    public ICpuBuilder WithName(PcComponentName name)
+    {
+        _name = name;
+        return this;
+    }
 
     public ICpuBuilder WithCoreSpeed(CpuCoreSpeed speed)
     {
@@ -68,6 +75,7 @@ public class CpuBuilder : ICpuBuilder
             _integratedGraphicsProcessor ?? throw new ArgumentNullException(nameof(_integratedGraphicsProcessor)),
             _supportedMemoryFrequencies,
             _tdp ?? throw new ArgumentNullException(nameof(_tdp)),
-            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)));
+            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)),
+            _name ?? throw new ArgumentNullException(nameof(_name)));
     }
 }

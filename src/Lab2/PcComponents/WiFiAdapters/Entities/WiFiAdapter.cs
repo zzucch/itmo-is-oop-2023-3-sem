@@ -12,14 +12,17 @@ public class WiFiAdapter : IWiFiAdapter
         int wifiVersion,
         bool builtInBluetooth,
         int pciEVersion,
-        PowerConsumption powerConsumption)
+        PowerConsumption powerConsumption,
+        PcComponentName name)
     {
         _wifiVersion = wifiVersion;
         _builtInBluetooth = builtInBluetooth;
         _pciEVersion = pciEVersion;
         PowerConsumption = powerConsumption;
+        Name = name;
     }
 
+    public PcComponentName Name { get; }
     public PowerConsumption PowerConsumption { get; }
 
     public IWiFiAdapterBuilder Direct(IWiFiAdapterBuilder builder)

@@ -7,13 +7,15 @@ public class Hdd : IHdd
     private readonly int _capacity;
     private readonly int _speed;
 
-    internal Hdd(PowerConsumption powerConsumption, int capacity, int speed)
+    internal Hdd(PowerConsumption powerConsumption, int capacity, int speed, PcComponentName name)
     {
         PowerConsumption = powerConsumption;
         _capacity = capacity;
         _speed = speed;
+        Name = name;
     }
 
+    public PcComponentName Name { get; }
     public PowerConsumption PowerConsumption { get; }
 
     public IHddBuilder Direct(IHddBuilder builder)

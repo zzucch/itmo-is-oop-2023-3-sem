@@ -5,6 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
 
 public interface ISsdBuilder
 {
+    ISsdBuilder WithName(PcComponentName name);
     ISsdBuilder WithInterface(SsdConnectionInterface connectionInterface);
     ISsdBuilder WithCapacity(int gBytes);
     ISsdBuilder WithSpeed(int mbps);

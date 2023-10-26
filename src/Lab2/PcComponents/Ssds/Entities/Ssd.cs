@@ -12,14 +12,17 @@ public class Ssd : ISsd
         SsdConnectionInterface connectionInterface,
         int capacity,
         int speed,
-        PowerConsumption powerConsumption)
+        PowerConsumption powerConsumption,
+        PcComponentName name)
     {
         ConnectionInterface = connectionInterface;
         _capacity = capacity;
         _speed = speed;
         PowerConsumption = powerConsumption;
+        Name = name;
     }
 
+    public PcComponentName Name { get; }
     public PowerConsumption PowerConsumption { get; }
     public SsdConnectionInterface ConnectionInterface { get; }
 

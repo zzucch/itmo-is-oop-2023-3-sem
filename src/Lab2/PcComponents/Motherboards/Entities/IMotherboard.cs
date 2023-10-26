@@ -5,7 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities;
 
-public interface IMotherboard : IMotherboardBuilderDirector
+public interface IMotherboard : IMotherboardBuilderDirector, IPcComponent
 {
     public IBios Bios { get; }
     public MotherboardSataAmount SataAmount { get; }

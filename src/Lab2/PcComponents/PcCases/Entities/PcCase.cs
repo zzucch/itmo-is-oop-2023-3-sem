@@ -11,12 +11,15 @@ public class PcCase : IPcCase
 
     internal PcCase(
         IEnumerable<MotherboardFormFactor> motherboardFormFactors,
-        PcCaseDimensions dimensions)
+        PcCaseDimensions dimensions,
+        PcComponentName name)
     {
         _motherboardFormFactors = motherboardFormFactors.ToArray();
         Dimensions = dimensions;
+        Name = name;
     }
 
+    public PcComponentName Name { get; }
     public PcCaseDimensions Dimensions { get; }
 
     public IPcCaseBuilder Direct(IPcCaseBuilder builder)

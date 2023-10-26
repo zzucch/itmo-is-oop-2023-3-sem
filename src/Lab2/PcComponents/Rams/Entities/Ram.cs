@@ -17,7 +17,8 @@ public class Ram : IRam
         IEnumerable<IXmp> xmps,
         RamFormFactor formFactor,
         RamDdrVersion ddrVersion,
-        PowerConsumption powerConsumption)
+        PowerConsumption powerConsumption,
+        PcComponentName name)
     {
         _capacity = capacity;
         JedecProfiles = jedecProfiles.ToArray();
@@ -25,8 +26,10 @@ public class Ram : IRam
         _formFactor = formFactor;
         DdrVersion = ddrVersion;
         PowerConsumption = powerConsumption;
+        Name = name;
     }
 
+    public PcComponentName Name { get; }
     public RamDdrVersion DdrVersion { get; }
     public IReadOnlyList<IXmp> Xmps { get; }
     public PowerConsumption PowerConsumption { get; }

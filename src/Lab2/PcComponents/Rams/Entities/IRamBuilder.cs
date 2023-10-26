@@ -6,6 +6,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 
 public interface IRamBuilder
 {
+    IRamBuilder WithName(PcComponentName name);
     IRamBuilder WithCapacity(RamCapacity capacity);
     IRamBuilder AddJedecProfile(JedecProfile jedecProfile);
     IRamBuilder AddXmpProfile(IXmp xmp);

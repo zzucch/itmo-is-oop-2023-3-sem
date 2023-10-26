@@ -20,7 +20,8 @@ public class Cpu : ICpu
         bool integratedGraphicsProcessor,
         IEnumerable<RamFrequency> supportedMemoryFrequencies,
         Tdp tdp,
-        PowerConsumption powerConsumption)
+        PowerConsumption powerConsumption,
+        PcComponentName name)
     {
         _coreSpeed = coreSpeed;
         _coreAmount = coreAmount;
@@ -29,16 +30,14 @@ public class Cpu : ICpu
         SupportedMemoryFrequencies = supportedMemoryFrequencies.ToArray();
         Tdp = tdp;
         PowerConsumption = powerConsumption;
+        Name = name;
     }
 
     public Tdp Tdp { get; }
-
+    public PcComponentName Name { get; }
     public CpuSocket Socket { get; }
-
     public PowerConsumption PowerConsumption { get; }
-
     public bool IntegratedGraphicsProcessor { get; }
-
     public IReadOnlyList<RamFrequency> SupportedMemoryFrequencies { get; }
 
     public override bool Equals(object? obj)

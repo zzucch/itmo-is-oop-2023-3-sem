@@ -6,7 +6,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
-public interface ICpu : ICpuBuilderDirector
+public interface ICpu : ICpuBuilderDirector, IPcComponent
 {
     public Tdp Tdp { get; }
     public CpuSocket Socket { get; }

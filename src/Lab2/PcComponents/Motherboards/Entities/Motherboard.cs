@@ -19,7 +19,8 @@ public class Motherboard : IMotherboard
         MotherboardRamAmount ramSocketAmount,
         MotherboardFormFactor formFactor,
         bool wiFiModule,
-        IBios bios)
+        IBios bios,
+        PcComponentName name)
     {
         _cpuSocket = cpuSocket;
         PciEAmount = pciEAmount;
@@ -30,9 +31,11 @@ public class Motherboard : IMotherboard
         FormFactor = formFactor;
         WiFiModule = wiFiModule;
         Bios = bios;
+        Name = name;
     }
 
     public IBios Bios { get; }
+    public PcComponentName Name { get; }
     public MotherboardSataAmount SataAmount { get; }
     public MotherboardPciEAmount PciEAmount { get; }
     public Chipset Chipset { get; }

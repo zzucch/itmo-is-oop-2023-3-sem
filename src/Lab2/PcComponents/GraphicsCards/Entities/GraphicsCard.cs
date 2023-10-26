@@ -14,15 +14,18 @@ public class GraphicsCard : IGraphicsCard
         GraphicsCardVideoMemory videoMemory,
         int pciEVersion,
         GraphicsCardClockFrequency clockFrequency,
-        PowerConsumption powerConsumption)
+        PowerConsumption powerConsumption,
+        PcComponentName name)
     {
         Dimensions = dimensions;
         _videoMemory = videoMemory;
         _pciEVersion = pciEVersion;
         _clockFrequency = clockFrequency;
         PowerConsumption = powerConsumption;
+        Name = name;
     }
 
+    public PcComponentName Name { get; }
     public PowerConsumption PowerConsumption { get; }
     public GraphicsCardDimensions Dimensions { get; }
 

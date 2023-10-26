@@ -5,6 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Entitie
 
 public interface IGraphicsCardBuilder
 {
+    IGraphicsCardBuilder WithName(PcComponentName name);
     IGraphicsCardBuilder WithDimensions(GraphicsCardDimensions dimensions);
     IGraphicsCardBuilder WithVideoMemory(GraphicsCardVideoMemory memory);
     IGraphicsCardBuilder WithPciEVersion(int version);

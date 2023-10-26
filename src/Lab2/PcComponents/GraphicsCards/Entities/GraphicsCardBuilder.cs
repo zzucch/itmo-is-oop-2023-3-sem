@@ -6,11 +6,18 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Entitie
 
 public class GraphicsCardBuilder : IGraphicsCardBuilder
 {
+    private PcComponentName? _name;
     private GraphicsCardDimensions? _dimensions;
     private GraphicsCardVideoMemory? _videoMemory;
     private int? _pciEVersion;
     private GraphicsCardClockFrequency? _clockFrequency;
     private PowerConsumption? _powerConsumption;
+
+    public IGraphicsCardBuilder WithName(PcComponentName name)
+    {
+        _name = name;
+        return this;
+    }
 
     public IGraphicsCardBuilder WithDimensions(GraphicsCardDimensions dimensions)
     {
@@ -49,6 +56,7 @@ public class GraphicsCardBuilder : IGraphicsCardBuilder
             _videoMemory ?? throw new ArgumentNullException(nameof(_videoMemory)),
             _pciEVersion ?? throw new ArgumentNullException(nameof(_pciEVersion)),
             _clockFrequency ?? throw new ArgumentNullException(nameof(_clockFrequency)),
-            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)));
+            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)),
+            _name ?? throw new ArgumentNullException(nameof(_name)));
     }
 }

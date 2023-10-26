@@ -7,6 +7,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities
 
 public interface IMotherboardBuilder
 {
+    IMotherboardBuilder WithName(PcComponentName name);
     IMotherboardBuilder WithCpuSocket(CpuSocket socket);
     IMotherboardBuilder WithPciEAmount(MotherboardPciEAmount amount);
     IMotherboardBuilder WithSataAmount(MotherboardSataAmount amount);

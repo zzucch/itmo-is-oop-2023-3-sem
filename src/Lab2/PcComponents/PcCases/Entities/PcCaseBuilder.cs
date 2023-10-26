@@ -8,7 +8,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.PcCases.Entities;
 public class PcCaseBuilder : IPcCaseBuilder
 {
     private readonly List<MotherboardFormFactor> _motherboardFormFactors = new();
+    private PcComponentName? _name;
     private PcCaseDimensions? _dimensions;
+
+    public IPcCaseBuilder WithName(PcComponentName name)
+    {
+        _name = name;
+        return this;
+    }
 
     public IPcCaseBuilder AddSupportedMotherboardFormFactors(MotherboardFormFactor formFactor)
     {
@@ -26,6 +33,7 @@ public class PcCaseBuilder : IPcCaseBuilder
     {
         return new PcCase(
             _motherboardFormFactors,
-            _dimensions ?? throw new ArgumentNullException(nameof(_dimensions)));
+            _dimensions ?? throw new ArgumentNullException(nameof(_dimensions)),
+            _name ?? throw new ArgumentNullException(nameof(_name)));
     }
 }

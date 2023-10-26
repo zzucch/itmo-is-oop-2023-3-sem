@@ -7,6 +7,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 
 public interface ICpuBuilder
 {
+    ICpuBuilder WithName(PcComponentName name);
     ICpuBuilder WithCoreSpeed(CpuCoreSpeed speed);
     ICpuBuilder WithCoreAmount(CpuCoreAmount cores);
     ICpuBuilder WithSocket(CpuSocket socket);

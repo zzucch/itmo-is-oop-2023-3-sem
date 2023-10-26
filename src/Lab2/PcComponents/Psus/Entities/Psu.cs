@@ -7,10 +7,13 @@ public class Psu : IPsu
     private static readonly decimal RecommendedPowerMarginCoefficient = new(1.2);
     private readonly PowerConsumption _peakLoad;
 
-    internal Psu(PowerConsumption peakLoad)
+    internal Psu(PowerConsumption peakLoad, PcComponentName name)
     {
         _peakLoad = peakLoad;
+        Name = name;
     }
+
+    public PcComponentName Name { get; }
 
     public IPsuBuilder Direct(IPsuBuilder builder)
     {

@@ -6,10 +6,17 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
 
 public class SsdBuilder : ISsdBuilder
 {
+    private PcComponentName? _name;
     private SsdConnectionInterface? _connectionInterface;
     private int? _capacity;
     private int? _speed;
     private PowerConsumption? _powerConsumption;
+
+    public ISsdBuilder WithName(PcComponentName name)
+    {
+        _name = name;
+        return this;
+    }
 
     public ISsdBuilder WithInterface(SsdConnectionInterface connectionInterface)
     {
@@ -41,6 +48,7 @@ public class SsdBuilder : ISsdBuilder
             _connectionInterface ?? throw new ArgumentNullException(nameof(_connectionInterface)),
             _capacity ?? throw new ArgumentNullException(nameof(_capacity)),
             _speed ?? throw new ArgumentNullException(nameof(_speed)),
-            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)));
+            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)),
+            _name ?? throw new ArgumentNullException(nameof(_name)));
     }
 }

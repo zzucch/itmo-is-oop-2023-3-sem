@@ -10,10 +10,17 @@ public class RamBuilder : IRamBuilder
 {
     private readonly List<JedecProfile> _jedecProfiles = new();
     private readonly List<IXmp> _xmps = new();
+    private PcComponentName? _name;
     private RamCapacity? _capacity;
     private RamFormFactor? _formFactor;
     private RamDdrVersion? _ddrVersion;
     private PowerConsumption? _powerConsumption;
+
+    public IRamBuilder WithName(PcComponentName name)
+    {
+        _name = name;
+        return this;
+    }
 
     public IRamBuilder WithCapacity(RamCapacity capacity)
     {
@@ -59,6 +66,7 @@ public class RamBuilder : IRamBuilder
             _xmps,
             _formFactor ?? throw new ArgumentNullException(nameof(_formFactor)),
             _ddrVersion ?? throw new ArgumentNullException(nameof(_ddrVersion)),
-            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)));
+            _powerConsumption ?? throw new ArgumentNullException(nameof(_powerConsumption)),
+            _name ?? throw new ArgumentNullException(nameof(_name)));
     }
 }

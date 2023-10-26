@@ -5,7 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 
-public interface IRam : IRamBuilderDirector
+public interface IRam : IRamBuilderDirector, IPcComponent
 {
     public RamDdrVersion DdrVersion { get; }
     public PowerConsumption PowerConsumption { get; }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab2.PcComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Bioses.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
@@ -40,7 +41,8 @@ public class PcCompatibilityValidatorTest
             integratedGraphicsProcessor: true,
             supportedMemoryFrequencies: new[] { new RamFrequency(kHz: 2933) },
             tdp: new Tdp(watts: 65),
-            powerConsumption: new PowerConsumption(watts: 65));
+            powerConsumption: new PowerConsumption(watts: 65),
+            name: new PcComponentName("AMD Ryzen 3 2200G"));
 
         pcBuilder
             .WithCpu(ryzen2200G)
@@ -67,7 +69,8 @@ public class PcCompatibilityValidatorTest
                     new CpuSocket("LGA 1156"),
                     new CpuSocket("LGA 1200"),
                 },
-                tdp: new Tdp(watts: 130)))
+                tdp: new Tdp(watts: 130),
+                name: new PcComponentName("Deepcool GAMMAXX 300 FURY")))
             .WithMotherboard(new Motherboard(
                 cpuSocket: new CpuSocket("AM4"),
                 pciEAmount: new MotherboardPciEAmount(1),
@@ -89,7 +92,8 @@ public class PcCompatibilityValidatorTest
                     cpus: new[]
                     {
                         ryzen2200G,
-                    })))
+                    }),
+                name: new PcComponentName("ASRock B450M Pro4")))
             .WithPcCase(new PcCase(
                 motherboardFormFactors: new[]
                 {
@@ -105,14 +109,17 @@ public class PcCompatibilityValidatorTest
                     MaxCpuCoolingSystemUnitWidth: 130,
                     GraphicsCardMaxHeight: 100,
                     GraphicsCardMaxLenght: 350,
-                    GraphicsCardMaxWidth: 100)))
+                    GraphicsCardMaxWidth: 100),
+                name: new PcComponentName("Thermaltake Versa H17")))
             .WithPsu(new Psu(
-                peakLoad: new PowerConsumption(500)))
+                peakLoad: new PowerConsumption(watts: 500),
+                name: new PcComponentName("Cooler Master MWE 500 WHITE - V2")))
             .WithWiFiAdapter(new WiFiAdapter(
                 wifiVersion: 4,
                 builtInBluetooth: false,
                 pciEVersion: 1,
-                powerConsumption: new PowerConsumption(1)));
+                powerConsumption: new PowerConsumption(1),
+                name: new PcComponentName("Doesn't exist irl")));
 
         pcBuilder.AddRam(new Ram(
             capacity: new RamCapacity(16),
@@ -124,13 +131,15 @@ public class PcCompatibilityValidatorTest
             xmps: new List<IXmp>(),
             formFactor: new RamFormFactor.Dimm(),
             ddrVersion: new RamDdrVersion(4),
-            powerConsumption: new PowerConsumption(watts: new decimal(2.0))));
+            powerConsumption: new PowerConsumption(watts: new decimal(2.0)),
+            name: new PcComponentName("Samsung [M378A1G44AB0-CWE]")));
 
         pcBuilder.AddSsd(new Ssd(
             connectionInterface: SsdConnectionInterface.Sata,
             capacity: 480,
             speed: 7440,
-            powerConsumption: new PowerConsumption(watts: 15)));
+            powerConsumption: new PowerConsumption(watts: 15),
+            name: new PcComponentName("Crucial BX500")));
 
         IPc pc = pcBuilder.Build();
 
@@ -158,7 +167,8 @@ public class PcCompatibilityValidatorTest
             integratedGraphicsProcessor: true,
             supportedMemoryFrequencies: new[] { new RamFrequency(kHz: 2933) },
             tdp: new Tdp(watts: 65),
-            powerConsumption: new PowerConsumption(watts: 480));
+            powerConsumption: new PowerConsumption(watts: 480),
+            name: new PcComponentName("AMD Ryzen 3 2200G"));
 
         pcBuilder
             .WithCpu(ryzen2200GWithMorePowerConsumption)
@@ -185,7 +195,8 @@ public class PcCompatibilityValidatorTest
                     new CpuSocket("LGA 1156"),
                     new CpuSocket("LGA 1200"),
                 },
-                tdp: new Tdp(watts: 130)))
+                tdp: new Tdp(watts: 130),
+                name: new PcComponentName("Deepcool GAMMAXX 300 FURY")))
             .WithMotherboard(new Motherboard(
                 cpuSocket: new CpuSocket("AM4"),
                 pciEAmount: new MotherboardPciEAmount(1),
@@ -207,7 +218,8 @@ public class PcCompatibilityValidatorTest
                     cpus: new[]
                     {
                         ryzen2200GWithMorePowerConsumption,
-                    })))
+                    }),
+                name: new PcComponentName("ASRock B450M Pro4")))
             .WithPcCase(new PcCase(
                 motherboardFormFactors: new[]
                 {
@@ -223,14 +235,17 @@ public class PcCompatibilityValidatorTest
                     MaxCpuCoolingSystemUnitWidth: 130,
                     GraphicsCardMaxHeight: 100,
                     GraphicsCardMaxLenght: 350,
-                    GraphicsCardMaxWidth: 100)))
+                    GraphicsCardMaxWidth: 100),
+                name: new PcComponentName("Thermaltake Versa H17")))
             .WithPsu(new Psu(
-                peakLoad: new PowerConsumption(watts: 500)))
+                peakLoad: new PowerConsumption(watts: 500),
+                name: new PcComponentName("Cooler Master MWE 500 WHITE - V2")))
             .WithWiFiAdapter(new WiFiAdapter(
                 wifiVersion: 4,
                 builtInBluetooth: false,
                 pciEVersion: 1,
-                powerConsumption: new PowerConsumption(watts: 1)));
+                powerConsumption: new PowerConsumption(watts: 1),
+                name: new PcComponentName("Doesn't exist irl")));
 
         pcBuilder.AddRam(new Ram(
             capacity: new RamCapacity(gBytes: 16),
@@ -242,13 +257,15 @@ public class PcCompatibilityValidatorTest
             xmps: new List<IXmp>(),
             formFactor: new RamFormFactor.Dimm(),
             ddrVersion: new RamDdrVersion(4),
-            powerConsumption: new PowerConsumption(watts: new decimal(2.0))));
+            powerConsumption: new PowerConsumption(watts: new decimal(2.0)),
+            name: new PcComponentName("Samsung [M378A1G44AB0-CWE]")));
 
         pcBuilder.AddSsd(new Ssd(
             connectionInterface: SsdConnectionInterface.Sata,
             capacity: 480,
             speed: 7440,
-            powerConsumption: new PowerConsumption(watts: 15)));
+            powerConsumption: new PowerConsumption(watts: 15),
+            name: new PcComponentName("Crucial BX500")));
 
         IPc pc = pcBuilder.Build();
 
@@ -278,7 +295,8 @@ public class PcCompatibilityValidatorTest
             integratedGraphicsProcessor: true,
             supportedMemoryFrequencies: new[] { new RamFrequency(kHz: 2933) },
             tdp: new Tdp(watts: 1000),
-            powerConsumption: new PowerConsumption(watts: 65));
+            powerConsumption: new PowerConsumption(watts: 65),
+            name: new PcComponentName("AMD Ryzen 3 2200G"));
 
         pcBuilder
             .WithCpu(ryzen2200GWithMoreTdp)
@@ -305,7 +323,8 @@ public class PcCompatibilityValidatorTest
                     new CpuSocket("LGA 1156"),
                     new CpuSocket("LGA 1200"),
                 },
-                tdp: new Tdp(watts: 130)))
+                tdp: new Tdp(watts: 130),
+                name: new PcComponentName("Deepcool GAMMAXX 300 FURY")))
             .WithMotherboard(new Motherboard(
                 cpuSocket: new CpuSocket("AM4"),
                 pciEAmount: new MotherboardPciEAmount(1),
@@ -327,7 +346,8 @@ public class PcCompatibilityValidatorTest
                     cpus: new[]
                     {
                         ryzen2200GWithMoreTdp,
-                    })))
+                    }),
+                name: new PcComponentName("ASRock B450M Pro4")))
             .WithPcCase(new PcCase(
                 motherboardFormFactors: new[]
                 {
@@ -343,14 +363,17 @@ public class PcCompatibilityValidatorTest
                     MaxCpuCoolingSystemUnitWidth: 130,
                     GraphicsCardMaxHeight: 100,
                     GraphicsCardMaxLenght: 350,
-                    GraphicsCardMaxWidth: 100)))
+                    GraphicsCardMaxWidth: 100),
+                name: new PcComponentName("Thermaltake Versa H17")))
             .WithPsu(new Psu(
-                peakLoad: new PowerConsumption(watts: 500)))
+                peakLoad: new PowerConsumption(watts: 500),
+                name: new PcComponentName("Cooler Master MWE 500 WHITE - V2")))
             .WithWiFiAdapter(new WiFiAdapter(
                 wifiVersion: 4,
                 builtInBluetooth: false,
                 pciEVersion: 1,
-                powerConsumption: new PowerConsumption(watts: 1)));
+                powerConsumption: new PowerConsumption(watts: 1),
+                name: new PcComponentName("Doesn't exist irl")));
 
         pcBuilder.AddRam(new Ram(
             capacity: new RamCapacity(gBytes: 16),
@@ -362,13 +385,15 @@ public class PcCompatibilityValidatorTest
             xmps: new List<IXmp>(),
             formFactor: new RamFormFactor.Dimm(),
             ddrVersion: new RamDdrVersion(4),
-            powerConsumption: new PowerConsumption(watts: new decimal(2.0))));
+            powerConsumption: new PowerConsumption(watts: new decimal(2.0)),
+            name: new PcComponentName("Samsung [M378A1G44AB0-CWE]")));
 
         pcBuilder.AddSsd(new Ssd(
             connectionInterface: SsdConnectionInterface.Sata,
             capacity: 480,
             speed: 7440,
-            powerConsumption: new PowerConsumption(watts: 15)));
+            powerConsumption: new PowerConsumption(watts: 15),
+            name: new PcComponentName("Crucial BX500")));
 
         IPc pc = pcBuilder.Build();
 
@@ -398,7 +423,8 @@ public class PcCompatibilityValidatorTest
             integratedGraphicsProcessor: true,
             supportedMemoryFrequencies: new[] { new RamFrequency(kHz: 2933) },
             tdp: new Tdp(watts: 1000),
-            powerConsumption: new PowerConsumption(watts: 65));
+            powerConsumption: new PowerConsumption(watts: 65),
+            name: new PcComponentName("AMD Ryzen 3 2200G"));
 
         pcBuilder
             .WithCpu(ryzen2200G)
@@ -417,7 +443,8 @@ public class PcCompatibilityValidatorTest
                     new CpuSocket("FM2"),
                     new CpuSocket("FM2+"),
                 },
-                tdp: new Tdp(watts: 130)))
+                tdp: new Tdp(watts: 130),
+                name: new PcComponentName("Deepcool GAMMAXX 300 FURY")))
             .WithMotherboard(new Motherboard(
                 cpuSocket: new CpuSocket("AM5"),
                 pciEAmount: new MotherboardPciEAmount(1),
@@ -439,7 +466,8 @@ public class PcCompatibilityValidatorTest
                     cpus: new[]
                     {
                         ryzen2200G,
-                    })))
+                    }),
+                name: new PcComponentName("ASRock B450M Pro4")))
             .WithPcCase(new PcCase(
                 motherboardFormFactors: new[]
                 {
@@ -455,14 +483,17 @@ public class PcCompatibilityValidatorTest
                     MaxCpuCoolingSystemUnitWidth: 130,
                     GraphicsCardMaxHeight: 100,
                     GraphicsCardMaxLenght: 350,
-                    GraphicsCardMaxWidth: 100)))
+                    GraphicsCardMaxWidth: 100),
+                name: new PcComponentName("Thermaltake Versa H17")))
             .WithPsu(new Psu(
-                peakLoad: new PowerConsumption(watts: 500)))
+                peakLoad: new PowerConsumption(watts: 500),
+                name: new PcComponentName("Cooler Master MWE 500 WHITE - V2")))
             .WithWiFiAdapter(new WiFiAdapter(
                 wifiVersion: 4,
                 builtInBluetooth: false,
                 pciEVersion: 1,
-                powerConsumption: new PowerConsumption(watts: 1)));
+                powerConsumption: new PowerConsumption(watts: 1),
+                name: new PcComponentName("Doesn't exist irl")));
 
         pcBuilder.AddRam(new Ram(
             capacity: new RamCapacity(gBytes: 16),
@@ -474,13 +505,15 @@ public class PcCompatibilityValidatorTest
             xmps: new List<IXmp>(),
             formFactor: new RamFormFactor.Dimm(),
             ddrVersion: new RamDdrVersion(4),
-            powerConsumption: new PowerConsumption(watts: new decimal(2.0))));
+            powerConsumption: new PowerConsumption(watts: new decimal(2.0)),
+            name: new PcComponentName("Samsung [M378A1G44AB0-CWE]")));
 
         pcBuilder.AddSsd(new Ssd(
             connectionInterface: SsdConnectionInterface.Sata,
             capacity: 480,
             speed: 7440,
-            powerConsumption: new PowerConsumption(watts: 15)));
+            powerConsumption: new PowerConsumption(watts: 15),
+            name: new PcComponentName("Crucial BX500")));
 
         IPc pc = pcBuilder.Build();
 
@@ -513,7 +546,8 @@ public class PcCompatibilityValidatorTest
             integratedGraphicsProcessor: true,
             supportedMemoryFrequencies: new[] { new RamFrequency(kHz: 2933) },
             tdp: new Tdp(watts: 65),
-            powerConsumption: new PowerConsumption(watts: 65));
+            powerConsumption: new PowerConsumption(watts: 65),
+            name: new PcComponentName("AMD Ryzen 3 2200G"));
 
         pcBuilder
             .WithCpu(ryzen2200G)
@@ -540,7 +574,8 @@ public class PcCompatibilityValidatorTest
                     new CpuSocket("LGA 1156"),
                     new CpuSocket("LGA 1200"),
                 },
-                tdp: new Tdp(watts: 130)))
+                tdp: new Tdp(watts: 130),
+                name: new PcComponentName("Deepcool GAMMAXX 300 FURY")))
             .WithMotherboard(new Motherboard(
                 cpuSocket: new CpuSocket("AM4"),
                 pciEAmount: new MotherboardPciEAmount(0),
@@ -562,7 +597,8 @@ public class PcCompatibilityValidatorTest
                     cpus: new[]
                     {
                         ryzen2200G,
-                    })))
+                    }),
+                name: new PcComponentName("ASRock B450M Pro4")))
             .WithPcCase(new PcCase(
                 motherboardFormFactors: new[]
                 {
@@ -578,14 +614,17 @@ public class PcCompatibilityValidatorTest
                     MaxCpuCoolingSystemUnitWidth: 130,
                     GraphicsCardMaxHeight: 100,
                     GraphicsCardMaxLenght: 350,
-                    GraphicsCardMaxWidth: 100)))
+                    GraphicsCardMaxWidth: 100),
+                name: new PcComponentName("Thermaltake Versa H17")))
             .WithPsu(new Psu(
-                peakLoad: new PowerConsumption(watts: 500)))
+                peakLoad: new PowerConsumption(watts: 500),
+                name: new PcComponentName("Cooler Master MWE 500 WHITE - V2")))
             .WithWiFiAdapter(new WiFiAdapter(
                 wifiVersion: 4,
                 builtInBluetooth: false,
                 pciEVersion: 1,
-                powerConsumption: new PowerConsumption(watts: 1)));
+                powerConsumption: new PowerConsumption(watts: 1),
+                name: new PcComponentName("Doesn't exist irl")));
 
         pcBuilder.AddRam(new Ram(
             capacity: new RamCapacity(16),
@@ -597,13 +636,15 @@ public class PcCompatibilityValidatorTest
             xmps: new List<IXmp>(),
             formFactor: new RamFormFactor.Dimm(),
             ddrVersion: new RamDdrVersion(4),
-            powerConsumption: new PowerConsumption(watts: new decimal(2.0))));
+            powerConsumption: new PowerConsumption(watts: new decimal(2.0)),
+            name: new PcComponentName("Samsung [M378A1G44AB0-CWE]")));
 
         pcBuilder.AddSsd(new Ssd(
             connectionInterface: SsdConnectionInterface.Sata,
             capacity: 480,
             speed: 7440,
-            powerConsumption: new PowerConsumption(watts: 15)));
+            powerConsumption: new PowerConsumption(watts: 15),
+            name: new PcComponentName("Crucial BX500")));
 
         IPc pc = pcBuilder.Build();
 

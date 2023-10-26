@@ -13,14 +13,17 @@ public class CpuCoolingSystem : ICpuCoolingSystem
     internal CpuCoolingSystem(
         CoolingSystemDimensions dimensions,
         IEnumerable<CpuSocket> sockets,
-        Tdp tdp)
+        Tdp tdp,
+        PcComponentName name)
     {
         Dimensions = dimensions;
         _sockets = sockets.ToArray();
         _tdp = tdp;
+        Name = name;
     }
 
     public CoolingSystemDimensions Dimensions { get; }
+    public PcComponentName Name { get; }
 
     public ICpuCoolingSystemBuilder Direct(ICpuCoolingSystemBuilder builder)
     {

@@ -8,8 +8,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 public class CpuCoolingSystemBuilder : ICpuCoolingSystemBuilder
 {
     private readonly List<CpuSocket> _sockets = new();
+    private PcComponentName? _name;
     private CoolingSystemDimensions? _dimensions;
     private Tdp? _tdp;
+
+    public ICpuCoolingSystemBuilder WithName(PcComponentName name)
+    {
+        _name = name;
+        return this;
+    }
 
     public ICpuCoolingSystemBuilder WithDimensions(CoolingSystemDimensions dimensions)
     {
@@ -34,6 +41,7 @@ public class CpuCoolingSystemBuilder : ICpuCoolingSystemBuilder
         return new CpuCoolingSystem(
             _dimensions ?? throw new ArgumentNullException(nameof(_dimensions)),
             _sockets,
-            _tdp ?? throw new ArgumentNullException(nameof(_tdp)));
+            _tdp ?? throw new ArgumentNullException(nameof(_tdp)),
+            _name ?? throw new ArgumentNullException(nameof(_name)));
     }
 }

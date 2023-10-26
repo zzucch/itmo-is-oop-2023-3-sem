@@ -8,6 +8,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Motherboards.Entities
 
 public class MotherboardBuilder : IMotherboardBuilder
 {
+    private PcComponentName? _name;
     private CpuSocket? _cpuSocket;
     private MotherboardPciEAmount? _pciEAmount;
     private MotherboardSataAmount? _sataAmount;
@@ -17,6 +18,12 @@ public class MotherboardBuilder : IMotherboardBuilder
     private MotherboardFormFactor? _formFactor;
     private bool? _wifiModule;
     private IBios? _bios;
+
+    public IMotherboardBuilder WithName(PcComponentName name)
+    {
+        _name = name;
+        return this;
+    }
 
     public IMotherboardBuilder WithCpuSocket(CpuSocket socket)
     {
@@ -83,6 +90,7 @@ public class MotherboardBuilder : IMotherboardBuilder
             _ramSocketAmount ?? throw new ArgumentNullException(nameof(_ramSocketAmount)),
             _formFactor ?? throw new ArgumentNullException(nameof(_formFactor)),
             _wifiModule ?? throw new ArgumentNullException(nameof(_wifiModule)),
-            _bios ?? throw new ArgumentNullException(nameof(_bios)));
+            _bios ?? throw new ArgumentNullException(nameof(_bios)),
+            _name ?? throw new ArgumentNullException(nameof(_name)));
     }
 }
