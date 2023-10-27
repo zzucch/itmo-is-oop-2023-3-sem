@@ -1,26 +1,23 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStrategies;
 using Itmo.ObjectOrientedProgramming.Lab1.Collisions.Models;
-using Itmo.ObjectOrientedProgramming.Lab1.Ships.Models;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Hulls;
 
 public class Hull : IHull
 {
-    public Hull(IPhysicalDeflectionStrategy deflectionStrategy, MassDimensional massDimensional)
-    {
-        DeflectionStrategy = deflectionStrategy;
-        MassDimensional = massDimensional;
-    }
+    private readonly IDeflectionStrategy _deflectionStrategy;
+    private int _hitPointsLeft = 500;
 
-    private IDeflectionStrategy DeflectionStrategy { get; }
-    private MassDimensional MassDimensional { get; }
-    private int HitPointsLeft { get; set; } = 500;
+    public Hull(IPhysicalDeflectionStrategy deflectionStrategy)
+    {
+        _deflectionStrategy = deflectionStrategy;
+    }
 
     public DeflectionResult TryDeflect(Damage damage)
     {
-        (bool success, int hitPointsLeft) = DeflectionStrategy.TryDeflect(damage, HitPointsLeft);
-        bool damageTaken = (HitPointsLeft - hitPointsLeft) > 0;
-        HitPointsLeft = hitPointsLeft;
+        (bool success, int hitPointsLeft) = _deflectionStrategy.TryDeflect(damage, _hitPointsLeft);
+        bool damageTaken = (_hitPointsLeft - hitPointsLeft) > 0;
+        _hitPointsLeft = hitPointsLeft;
 
         return new DeflectionResult(success, damageTaken);
     }
