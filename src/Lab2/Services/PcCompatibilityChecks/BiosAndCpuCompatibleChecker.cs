@@ -7,7 +7,7 @@ public class BiosAndCpuCompatibleChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.Motherboard.Bios.IsCompatibleWithCpu(pc.Cpu))
+        if (pc.Motherboard.Bios.IsCompatibleWithCpu(pc.Cpu) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible BIOS and CPU");
         }

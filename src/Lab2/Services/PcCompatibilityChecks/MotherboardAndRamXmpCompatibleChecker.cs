@@ -9,7 +9,7 @@ public class MotherboardAndRamXmpCompatibleChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (Check(pc))
+        if (Check(pc) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible motherboard and RAM XMP");
         }

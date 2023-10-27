@@ -9,7 +9,7 @@ public class MotherboardSataAmountEnoughChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (Check(pc))
+        if (Check(pc) is false)
         {
             return new PcCompatibilityCheckResult.Failure("not enough motherboard SATA slots");
         }

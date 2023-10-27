@@ -8,7 +8,7 @@ public class CpuAndRamProfileCompatibleChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (Check(pc))
+        if (Check(pc) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible CPU and RAM profile");
         }

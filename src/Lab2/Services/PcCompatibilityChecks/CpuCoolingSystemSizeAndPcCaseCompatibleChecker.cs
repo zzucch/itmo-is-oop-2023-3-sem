@@ -9,7 +9,7 @@ public class CpuCoolingSystemSizeAndPcCaseCompatibleChecker : IPcCompatibilityCh
     {
         if (pc.PcCase.Dimensions.MaxCpuCoolingSystemUnitHeight >= pc.CpuCoolingSystem.Dimensions.Height
             && pc.PcCase.Dimensions.MaxCpuCoolingSystemUnitLength >= pc.CpuCoolingSystem.Dimensions.Length
-            && pc.PcCase.Dimensions.MaxCpuCoolingSystemUnitWidth >= pc.CpuCoolingSystem.Dimensions.Width)
+            && pc.PcCase.Dimensions.MaxCpuCoolingSystemUnitWidth >= pc.CpuCoolingSystem.Dimensions.Width is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible CPU cooling system and PC case");
         }

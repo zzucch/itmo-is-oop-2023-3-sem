@@ -7,7 +7,7 @@ public class CpuCoolingSystemAndCpuSocketCompatibleChecker : IPcCompatibilityChe
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.CpuCoolingSystem.IsCompatibleWithCpuTdp(pc.Cpu.Tdp))
+        if (pc.CpuCoolingSystem.IsCompatibleWithCpuSocket(pc.Cpu.Socket) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible CPU cooling system and CPU socket");
         }

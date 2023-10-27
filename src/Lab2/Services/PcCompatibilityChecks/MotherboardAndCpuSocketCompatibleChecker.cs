@@ -7,7 +7,7 @@ public class MotherboardAndCpuSocketCompatibleChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.Motherboard.IsCompatibleWithSocket(pc.Cpu.Socket))
+        if (pc.Motherboard.IsCompatibleWithSocket(pc.Cpu.Socket) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible motherboard CPU socket and CPU");
         }

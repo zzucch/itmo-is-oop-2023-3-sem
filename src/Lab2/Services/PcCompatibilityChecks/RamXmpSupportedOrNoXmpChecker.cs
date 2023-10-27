@@ -9,7 +9,7 @@ public class RamXmpSupportedOrNoXmpChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (Check(pc))
+        if (Check(pc) is false)
         {
             return new PcCompatibilityCheckResult.Failure("no RAM's XMP support");
         }

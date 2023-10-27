@@ -8,7 +8,7 @@ public class MotherboardAndRamDdrVersionCompatibleChecker : IPcCompatibilityChec
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.Rams.All(ram => pc.Motherboard.IsCompatibleWithDdrVersion(ram.DdrVersion)))
+        if (pc.Rams.All(ram => pc.Motherboard.IsCompatibleWithDdrVersion(ram.DdrVersion)) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible motherboard and RAM DDR version");
         }

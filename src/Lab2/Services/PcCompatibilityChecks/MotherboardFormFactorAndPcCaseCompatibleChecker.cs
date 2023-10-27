@@ -7,7 +7,7 @@ public class MotherboardFormFactorAndPcCaseCompatibleChecker : IPcCompatibilityC
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.PcCase.IsCompatibleWithMotherboardFormFactor(pc.Motherboard.FormFactor))
+        if (pc.PcCase.IsCompatibleWithMotherboardFormFactor(pc.Motherboard.FormFactor) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible motherboard form factor and PC case");
         }

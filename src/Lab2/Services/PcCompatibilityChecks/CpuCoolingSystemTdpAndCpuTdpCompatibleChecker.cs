@@ -7,7 +7,7 @@ public class CpuCoolingSystemTdpAndCpuTdpCompatibleChecker : IPcCompatibilityChe
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.CpuCoolingSystem.IsCompatibleWithCpuTdp(pc.Cpu.Tdp))
+        if (pc.CpuCoolingSystem.IsCompatibleWithCpuTdp(pc.Cpu.Tdp) is false)
         {
             return new PcCompatibilityCheckResult.WarrantyDisclaimed("incompatible CPU cooling system and CPU TDP, warranty is disclaimed");
         }

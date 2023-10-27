@@ -7,7 +7,7 @@ public class GraphicsCardSizeAndPcCaseCompatibleChecker : IPcCompatibilityChecke
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (Check(pc))
+        if (Check(pc) is false)
         {
             return new PcCompatibilityCheckResult.Failure("incompatible graphics card and PC case");
         }

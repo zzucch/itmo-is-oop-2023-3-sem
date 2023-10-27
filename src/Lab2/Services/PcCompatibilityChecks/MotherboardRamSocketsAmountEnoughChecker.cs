@@ -7,7 +7,7 @@ public class MotherboardRamSocketsAmountEnoughChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.Rams.Count <= pc.Motherboard.RamSocketAmount.Amount)
+        if (pc.Rams.Count <= pc.Motherboard.RamSocketAmount.Amount is false)
         {
             return new PcCompatibilityCheckResult.Failure("not enough motherboard RAM sockets");
         }

@@ -7,7 +7,7 @@ public class AtLeastOneDiskDrivePresentChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.Hdds.Count > 0 || pc.Ssds.Count > 0)
+        if ((pc.Hdds.Count > 0 || pc.Ssds.Count > 0) is false)
         {
             return new PcCompatibilityCheckResult.Failure("no disk drive");
         }

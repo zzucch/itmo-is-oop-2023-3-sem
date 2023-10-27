@@ -7,7 +7,7 @@ public class CpuWithGpuOrPcWithGraphicsCardChecker : IPcCompatibilityChecker
 {
     public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
     {
-        if (pc.Cpu.IntegratedGraphicsProcessor || pc.GraphicsCard is not null)
+        if ((pc.Cpu.IntegratedGraphicsProcessor || pc.GraphicsCard is not null) is false)
         {
             return new PcCompatibilityCheckResult.Failure("no CPU's IGP or graphics card");
         }
