@@ -22,6 +22,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.Services;
 using Itmo.ObjectOrientedProgramming.Lab2.Services.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.Services.PcCompatibilityChecks;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Tests;
@@ -113,6 +114,29 @@ public class PcCompatibilityValidatorTest
         tdp: new Tdp(watts: 130),
         name: new PcComponentName("Deepcool GAMMAXX 300 FURY"));
 
+    private readonly IReadOnlyList<IPcCompatibilityChecker> _checkers = new IPcCompatibilityChecker[]
+    {
+        new AtLeastOneDiskDrivePresentChecker(),
+        new BiosAndCpuCompatibleChecker(),
+        new CpuAndRamProfileCompatibleChecker(),
+        new CpuCoolingSystemAndCpuSocketCompatibleChecker(),
+        new CpuCoolingSystemSizeAndPcCaseCompatibleChecker(),
+        new CpuCoolingSystemTdpAndCpuTdpCompatibleChecker(),
+        new CpuWithGpuOrPcWithGraphicsCardChecker(),
+        new GraphicsCardSizeAndPcCaseCompatibleChecker(),
+        new MotherboardAndCpuSocketCompatibleChecker(),
+        new MotherboardAndRamDdrVersionCompatibleChecker(),
+        new MotherboardAndRamProfileCompatibleChecker(),
+        new MotherboardAndRamXmpCompatibleChecker(),
+        new MotherboardFormFactorAndPcCaseCompatibleChecker(),
+        new IsMotherboardPciEAmountEnoughChecker(),
+        new MotherboardRamSocketsAmountEnoughChecker(),
+        new MotherboardSataAmountEnoughChecker(),
+        new RamXmpSupportedOrNoXmpChecker(),
+        new RecommendedPsuPowerChecker(),
+        new SingleOrNoneWiFiModuleChecker(),
+    };
+
     [Fact]
     public void Validate_ShouldReturnSuccessWithWarranty_WhenUsingCompatibleComponents()
     {
@@ -133,7 +157,7 @@ public class PcCompatibilityValidatorTest
 
         IPc pc = pcBuilder.Build();
 
-        var validator = new PcCompatibilityValidator(pc);
+        var validator = new PcCompatibilityValidator(pc, _checkers);
 
         // Act
         BuildResult result = validator.Validate();
@@ -174,7 +198,7 @@ public class PcCompatibilityValidatorTest
 
         IPc pc = pcBuilder.Build();
 
-        var validator = new PcCompatibilityValidator(pc);
+        var validator = new PcCompatibilityValidator(pc, _checkers);
 
         // Act
         BuildResult result = validator.Validate();
@@ -217,7 +241,7 @@ public class PcCompatibilityValidatorTest
 
         IPc pc = pcBuilder.Build();
 
-        var validator = new PcCompatibilityValidator(pc);
+        var validator = new PcCompatibilityValidator(pc, _checkers);
 
         // Act
         BuildResult result = validator.Validate();
@@ -272,7 +296,7 @@ public class PcCompatibilityValidatorTest
 
         IPc pc = pcBuilder.Build();
 
-        var validator = new PcCompatibilityValidator(pc);
+        var validator = new PcCompatibilityValidator(pc, _checkers);
 
         // Act
         BuildResult result = validator.Validate();
@@ -327,7 +351,7 @@ public class PcCompatibilityValidatorTest
 
         IPc pc = pcBuilder.Build();
 
-        var validator = new PcCompatibilityValidator(pc);
+        var validator = new PcCompatibilityValidator(pc, _checkers);
 
         // Act
         BuildResult result = validator.Validate();
