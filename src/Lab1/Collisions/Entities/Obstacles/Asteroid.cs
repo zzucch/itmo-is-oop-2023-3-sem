@@ -7,8 +7,9 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Obstacles;
 public class Asteroid : INormalSpaceObstacle
 {
     private const int AsteroidPhysicalDamage = 25;
+
     public ShipDeflectionResult Damage(ISpaceShip ship)
     {
-        return ship.TakeDamage(new Damage(DamageType.Physical, AsteroidPhysicalDamage));
+        return ship.TakeDamage(new Damage.Physical(AsteroidPhysicalDamage));
     }
 }

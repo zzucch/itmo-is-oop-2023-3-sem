@@ -9,6 +9,6 @@ public class Meteorite : INormalSpaceObstacle
     private const int MeteoritePhysicalDamage = 100;
     public ShipDeflectionResult Damage(ISpaceShip ship)
     {
-        return ship.TakeDamage(new Damage(DamageType.Physical, MeteoritePhysicalDamage));
+        return ship.TakeDamage(new Damage.Physical(MeteoritePhysicalDamage));
     }
 }

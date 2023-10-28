@@ -4,19 +4,18 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStra
 
 public class PhysicalClass1DeflectionStrategy : IPhysicalDeflectionStrategy
 {
-    private const DamageType DeflectionType = DamageType.Physical;
     private const int DeflectionCoefficient = 40;
 
     public DeflectionStrategyResult TryDeflect(Damage damage, int hitPoints)
     {
-        if (damage.Type is not DeflectionType)
+        if (damage is not Damage.Physical physical)
         {
             return new DeflectionStrategyResult(Success: false, hitPoints);
         }
 
-        if (hitPoints >= damage.Amount * DeflectionCoefficient)
+        if (hitPoints >= physical.Amount * DeflectionCoefficient)
         {
-            hitPoints -= damage.Amount * DeflectionCoefficient;
+            hitPoints -= physical.Amount * DeflectionCoefficient;
 
             return new DeflectionStrategyResult(Success: true, hitPoints);
         }

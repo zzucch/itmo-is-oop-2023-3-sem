@@ -5,7 +5,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.Deflectors;
 
 public class PhotonDeflector : DeflectorDecorator
 {
-    private const DamageType DeflectionType = DamageType.Photon;
     private readonly IDeflectionStrategy _photonDeflectionStrategy = new PhotonDeflectionStrategy();
 
     public PhotonDeflector(IDeflector deflector)
@@ -17,7 +16,7 @@ public class PhotonDeflector : DeflectorDecorator
 
     public override DeflectionResult TryDeflect(Damage damage)
     {
-        if (damage.Type is not DeflectionType)
+        if (damage is not Damage.Photon)
         {
             return base.TryDeflect(damage);
         }

@@ -4,7 +4,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Collisions.Entities.DeflectionStra
 
 public class PhysicalClass2DeflectionStrategy : IPhysicalDeflectionStrategy
 {
-    private const DamageType DeflectionType = DamageType.Physical;
     private const int LowDamage = 50;
     private const int MediumDamage = 500;
     private const int LowDeflectionCoefficient = 4;
@@ -13,12 +12,12 @@ public class PhysicalClass2DeflectionStrategy : IPhysicalDeflectionStrategy
 
     public DeflectionStrategyResult TryDeflect(Damage damage, int hitPoints)
     {
-        if (damage.Type is not DeflectionType)
+        if (damage is not Damage.Physical physical)
         {
             return new DeflectionStrategyResult(Success: false, hitPoints);
         }
 
-        int damageAmount = damage.Amount;
+        int damageAmount = physical.Amount;
 
         damageAmount *= damageAmount switch
         {

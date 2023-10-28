@@ -10,6 +10,6 @@ public class AntimatterFlash : IDenseNebulaObstacle
 
     public ShipDeflectionResult Damage(ISpaceShip ship)
     {
-        return ship.TakeDamage(new Damage(DamageType.Photon, AntimatterPhotonDamage));
+        return ship.TakeDamage(new Damage.Photon(AntimatterPhotonDamage));
     }
 }

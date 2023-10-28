@@ -17,6 +17,8 @@ public class SpaceWhales : INitriteNebulaObstacle
 
     public ShipDeflectionResult Damage(ISpaceShip ship)
     {
-        return ship is IEmitterSpaceShip ? new ShipDeflectionResult(DeflectorResult: null, HullResult: null) : ship.TakeDamage(new Damage(DamageType.Physical, SpaceWhalePhysicalDamage * Amount));
+        return ship is IEmitterSpaceShip
+            ? new ShipDeflectionResult(DeflectorResult: null, HullResult: null)
+            : ship.TakeDamage(new Damage.Physical(SpaceWhalePhysicalDamage * Amount));
     }
 }
