@@ -20,9 +20,8 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.WiFiAdapters.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Xmps.Models;
 using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
-using Itmo.ObjectOrientedProgramming.Lab2.Services;
-using Itmo.ObjectOrientedProgramming.Lab2.Services.Models;
-using Itmo.ObjectOrientedProgramming.Lab2.Services.PcCompatibilityChecks;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Services.PcCompatibilityCheckers;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Tests;
@@ -155,17 +154,11 @@ public class PcCompatibilityValidatorTest
 
         pcBuilder.AddSsd(_crucialBx500);
 
-        IPc pc = pcBuilder.Build();
-
-        var validator = new PcCompatibilityValidator(pc, _checkers);
-
         // Act
-        BuildResult result = validator.Validate();
+        PcBuildResult pcBuildResult = pcBuilder.Build();
 
         // Assert
-        Assert.True(result.Success);
-        Assert.Empty(result.Comments);
-        Assert.False(result.WarrantyDisclaimer);
+        Assert.True(pcBuildResult is PcBuildResult.Success);
     }
 
     [Fact]
@@ -190,25 +183,25 @@ public class PcCompatibilityValidatorTest
             .WithMotherboard(AsrockB450MPro4(ryzen2200GWithMorePowerConsumption))
             .WithPcCase(_thermaltakeVersaH17)
             .WithPsu(_coolerMasterMwe500WhiteV2)
-            .WithWiFiAdapter(_someWiFiAdapter);
+            .WithWiFiAdapter(_someWiFiAdapter)
+            .WithPcCompatibilityCheckers(_checkers);
 
         pcBuilder.AddRam(_samsungGreenRam);
 
         pcBuilder.AddSsd(_crucialBx500);
 
-        IPc pc = pcBuilder.Build();
-
-        var validator = new PcCompatibilityValidator(pc, _checkers);
-
         // Act
-        BuildResult result = validator.Validate();
+        PcBuildResult pcBuildResult = pcBuilder.Build();
 
         // Assert
-        Assert.True(result.Success);
-        Assert.Contains(
-            collection: result.Comments,
-            filter: s => s == "PSU power is below recommended, warranty is disclaimed");
-        Assert.True(result.WarrantyDisclaimer);
+        Assert.True(pcBuildResult is PcBuildResult.WarrantyDisclaimed);
+
+        if (pcBuildResult is PcBuildResult.WarrantyDisclaimed warrantyDisclaimed)
+        {
+            Assert.Contains(
+                collection: warrantyDisclaimed.Comments,
+                filter: s => s == "PSU power is below recommended, warranty is disclaimed");
+        }
     }
 
     [Fact]
@@ -233,25 +226,25 @@ public class PcCompatibilityValidatorTest
             .WithMotherboard(AsrockB450MPro4(ryzen2200GWithMoreTdp))
             .WithPcCase(_thermaltakeVersaH17)
             .WithPsu(_coolerMasterMwe500WhiteV2)
-            .WithWiFiAdapter(_someWiFiAdapter);
+            .WithWiFiAdapter(_someWiFiAdapter)
+            .WithPcCompatibilityCheckers(_checkers);
 
         pcBuilder.AddRam(_samsungGreenRam);
 
         pcBuilder.AddSsd(_crucialBx500);
 
-        IPc pc = pcBuilder.Build();
-
-        var validator = new PcCompatibilityValidator(pc, _checkers);
-
         // Act
-        BuildResult result = validator.Validate();
+        PcBuildResult pcBuildResult = pcBuilder.Build();
 
         // Assert
-        Assert.True(result.Success);
-        Assert.Contains(
-            collection: result.Comments,
-            filter: s => s == "incompatible CPU cooling system and CPU TDP, warranty is disclaimed");
-        Assert.True(result.WarrantyDisclaimer);
+        Assert.True(pcBuildResult is PcBuildResult.WarrantyDisclaimed);
+
+        if (pcBuildResult is PcBuildResult.WarrantyDisclaimed warrantyDisclaimed)
+        {
+            Assert.Contains(
+                collection: warrantyDisclaimed.Comments,
+                filter: s => s == "incompatible CPU cooling system and CPU TDP, warranty is disclaimed");
+        }
     }
 
     [Fact]
@@ -288,25 +281,24 @@ public class PcCompatibilityValidatorTest
                 name: new PcComponentName("ASRock B450M Pro4 Mod-AM5")))
             .WithPcCase(_thermaltakeVersaH17)
             .WithPsu(_coolerMasterMwe500WhiteV2)
-            .WithWiFiAdapter(_someWiFiAdapter);
+            .WithWiFiAdapter(_someWiFiAdapter)
+            .WithPcCompatibilityCheckers(_checkers);
 
         pcBuilder.AddRam(_samsungGreenRam);
 
         pcBuilder.AddSsd(_crucialBx500);
 
-        IPc pc = pcBuilder.Build();
-
-        var validator = new PcCompatibilityValidator(pc, _checkers);
-
         // Act
-        BuildResult result = validator.Validate();
+        PcBuildResult pcBuildResult = pcBuilder.Build();
 
         // Assert
-        Assert.False(result.Success);
-        Assert.Contains(
-            collection: result.Comments,
-            filter: s => s == "incompatible motherboard CPU socket and CPU");
-        Assert.True(result.WarrantyDisclaimer);
+        Assert.True(pcBuildResult is PcBuildResult.Failure);
+        if (pcBuildResult is PcBuildResult.Failure failure)
+        {
+            Assert.Contains(
+                collection: failure.Comments,
+                filter: s => s == "incompatible motherboard CPU socket and CPU");
+        }
     }
 
     [Fact]
@@ -343,28 +335,26 @@ public class PcCompatibilityValidatorTest
                 name: new PcComponentName("ASRock B450M Pro4 Mod-No-Slots")))
             .WithPcCase(_thermaltakeVersaH17)
             .WithPsu(_coolerMasterMwe500WhiteV2)
-            .WithWiFiAdapter(_someWiFiAdapter);
+            .WithWiFiAdapter(_someWiFiAdapter)
+            .WithPcCompatibilityCheckers(_checkers);
 
         pcBuilder.AddRam(_samsungGreenRam);
 
         pcBuilder.AddSsd(_crucialBx500);
 
-        IPc pc = pcBuilder.Build();
-
-        var validator = new PcCompatibilityValidator(pc, _checkers);
-
         // Act
-        BuildResult result = validator.Validate();
+        PcBuildResult pcBuildResult = pcBuilder.Build();
 
         // Assert
-        Assert.False(result.Success);
+        Assert.True(pcBuildResult is PcBuildResult.Failure);
+
+        if (pcBuildResult is not PcBuildResult.Failure failure) return;
         Assert.Contains(
-            collection: result.Comments,
+            collection: failure.Comments,
             filter: s => s == "not enough motherboard SATA slots");
         Assert.Contains(
-            collection: result.Comments,
+            collection: failure.Comments,
             filter: s => s == "not enough motherboard PCIe slots");
-        Assert.True(result.WarrantyDisclaimer);
     }
 
     private static IMotherboard AsrockB450MPro4(ICpu cpu)

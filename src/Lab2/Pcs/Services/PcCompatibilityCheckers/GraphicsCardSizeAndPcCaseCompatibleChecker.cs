@@ -1,21 +1,20 @@
-using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
-using Itmo.ObjectOrientedProgramming.Lab2.Services.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab2.Services.PcCompatibilityChecks;
+namespace Itmo.ObjectOrientedProgramming.Lab2.Pcs.Services.PcCompatibilityCheckers;
 
 public class GraphicsCardSizeAndPcCaseCompatibleChecker : IPcCompatibilityChecker
 {
-    public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
+    public CompatibilityCheckResult CheckCompatibility(PcValidationModel pc)
     {
         if (Check(pc) is false)
         {
-            return new PcCompatibilityCheckResult.Failure("incompatible graphics card and PC case");
+            return new CompatibilityCheckResult.Failure("incompatible graphics card and PC case");
         }
 
-        return new PcCompatibilityCheckResult.Success();
+        return new CompatibilityCheckResult.Success();
     }
 
-    private static bool Check(IPc pc)
+    private static bool Check(PcValidationModel pc)
     {
         if (pc.GraphicsCard is null)
         {

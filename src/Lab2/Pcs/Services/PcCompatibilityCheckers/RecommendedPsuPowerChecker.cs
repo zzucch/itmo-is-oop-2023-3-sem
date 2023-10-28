@@ -1,30 +1,29 @@
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Models;
-using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
-using Itmo.ObjectOrientedProgramming.Lab2.Services.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab2.Services.PcCompatibilityChecks;
+namespace Itmo.ObjectOrientedProgramming.Lab2.Pcs.Services.PcCompatibilityCheckers;
 
 public class RecommendedPsuPowerChecker : IPcCompatibilityChecker
 {
-    public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
+    public CompatibilityCheckResult CheckCompatibility(PcValidationModel pc)
     {
         PowerConsumption allPowerConsumption = GetAllPowerConsumption(pc);
 
         if (pc.Psu.IsPowerRecommended(allPowerConsumption))
         {
-            return new PcCompatibilityCheckResult.Success();
+            return new CompatibilityCheckResult.Success();
         }
 
         if (pc.Psu.IsPowerEnough(allPowerConsumption))
         {
-            return new PcCompatibilityCheckResult.WarrantyDisclaimed("PSU power is below recommended, warranty is disclaimed");
+            return new CompatibilityCheckResult.WarrantyDisclaimed("PSU power is below recommended, warranty is disclaimed");
         }
 
-        return new PcCompatibilityCheckResult.Failure("PSU power is below needed");
+        return new CompatibilityCheckResult.Failure("PSU power is below needed");
     }
 
-    private static PowerConsumption GetAllPowerConsumption(IPc pc)
+    private static PowerConsumption GetAllPowerConsumption(PcValidationModel pc)
     {
         decimal powerConsumption = decimal.Zero;
 

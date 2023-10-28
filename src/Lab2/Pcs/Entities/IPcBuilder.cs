@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Entities;
@@ -8,6 +9,8 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.WiFiAdapters.Entities;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Services.PcCompatibilityCheckers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
 
@@ -23,5 +26,6 @@ public interface IPcBuilder
     IPcBuilder AddRam(IRam ram);
     IPcBuilder AddSsd(ISsd ssd);
     IPcBuilder WithWiFiAdapter(IWiFiAdapter wifiAdapter);
-    IPc Build();
+    IPcBuilder WithPcCompatibilityCheckers(IEnumerable<IPcCompatibilityChecker> compatibilityCheckers);
+    PcBuildResult Build();
 }

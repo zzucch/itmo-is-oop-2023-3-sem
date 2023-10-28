@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.CpuCooling.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Cpus.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.GraphicsCards.Entities;
@@ -10,6 +11,8 @@ using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Psus.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Rams.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Entities;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.WiFiAdapters.Entities;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Services.PcCompatibilityCheckers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
 
@@ -18,6 +21,7 @@ public class PcBuilder : IPcBuilder
     private readonly List<IHdd> _hdds = new();
     private readonly List<IRam> _rams = new();
     private readonly List<ISsd> _ssds = new();
+    private List<IPcCompatibilityChecker> _checkers = new();
     private ICpuCoolingSystem? _cpuCoolingSystem;
     private ICpu? _cpu;
     private IGraphicsCard? _graphicsCard;
@@ -88,7 +92,13 @@ public class PcBuilder : IPcBuilder
         return this;
     }
 
-    public IPc Build()
+    public IPcBuilder WithPcCompatibilityCheckers(IEnumerable<IPcCompatibilityChecker> compatibilityCheckers)
+    {
+        _checkers = compatibilityCheckers.ToList();
+        return this;
+    }
+
+    public PcBuildResult Build()
     {
         if (_rams.Count is 0)
         {
@@ -100,7 +110,7 @@ public class PcBuilder : IPcBuilder
             throw new ArgumentException(message: "PC must have at least one disk drive (HDD or SSD)");
         }
 
-        return new Pc(
+        var invalidPc = new PcValidationModel(
             _cpuCoolingSystem ?? throw new ArgumentNullException(nameof(_cpuCoolingSystem)),
             _cpu ?? throw new ArgumentNullException(nameof(_cpu)),
             _graphicsCard,
@@ -111,5 +121,56 @@ public class PcBuilder : IPcBuilder
             _rams,
             _ssds,
             _wifiAdapter);
+
+        return Validate(invalidPc);
+    }
+
+    private PcBuildResult Validate(PcValidationModel pcValidationModel)
+    {
+        bool success = true;
+        var comments = new List<string>();
+        bool warrantyDisclaimer = false;
+
+        foreach (CompatibilityCheckResult compatibilityCheckResult in _checkers.Select(checker => checker.CheckCompatibility(pcValidationModel)))
+        {
+            switch (compatibilityCheckResult)
+            {
+                case CompatibilityCheckResult.Success:
+                    break;
+                case CompatibilityCheckResult.WarrantyDisclaimed warrantyDisclaimed:
+                    warrantyDisclaimer = true;
+                    comments.Add(warrantyDisclaimed.Comment);
+                    break;
+                case CompatibilityCheckResult.Failure failure:
+                    success = false;
+                    comments.Add(failure.Comment);
+                    warrantyDisclaimer = true;
+                    break;
+            }
+        }
+
+        if (success is false)
+        {
+            return new PcBuildResult.Failure(comments);
+        }
+
+        var validPc = new Pc(
+            pcValidationModel.CpuCoolingSystem,
+            pcValidationModel.Cpu,
+            pcValidationModel.GraphicsCard,
+            pcValidationModel.Hdds,
+            pcValidationModel.Motherboard,
+            pcValidationModel.PcCase,
+            pcValidationModel.Psu,
+            pcValidationModel.Rams,
+            pcValidationModel.Ssds,
+            pcValidationModel.WiFiAdapter);
+
+        if (warrantyDisclaimer)
+        {
+            return new PcBuildResult.WarrantyDisclaimed(validPc, comments);
+        }
+
+        return new PcBuildResult.Success(validPc);
     }
 }

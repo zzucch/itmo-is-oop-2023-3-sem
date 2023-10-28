@@ -1,23 +1,22 @@
 using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab2.PcComponents.Ssds.Models;
-using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Entities;
-using Itmo.ObjectOrientedProgramming.Lab2.Services.Models;
+using Itmo.ObjectOrientedProgramming.Lab2.Pcs.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab2.Services.PcCompatibilityChecks;
+namespace Itmo.ObjectOrientedProgramming.Lab2.Pcs.Services.PcCompatibilityCheckers;
 
 public class MotherboardSataAmountEnoughChecker : IPcCompatibilityChecker
 {
-    public PcCompatibilityCheckResult CheckCompatibility(IPc pc)
+    public CompatibilityCheckResult CheckCompatibility(PcValidationModel pc)
     {
         if (Check(pc) is false)
         {
-            return new PcCompatibilityCheckResult.Failure("not enough motherboard SATA slots");
+            return new CompatibilityCheckResult.Failure("not enough motherboard SATA slots");
         }
 
-        return new PcCompatibilityCheckResult.Success();
+        return new CompatibilityCheckResult.Success();
     }
 
-    private static bool Check(IPc pc)
+    private static bool Check(PcValidationModel pc)
     {
         int sataCount = 0;
 
