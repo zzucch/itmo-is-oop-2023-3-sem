@@ -2,11 +2,11 @@ using System.Drawing;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.ColorModifiers;
 
-public class Modifier : IModifier
+public class ColorModifier : IModifier
 {
     private readonly Color _color;
 
-    public Modifier(Color color)
+    public ColorModifier(Color color)
     {
         _color = color;
     }
