@@ -5,23 +5,23 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Displays.Drivers;
 
 public class ConsoleDisplayDriver : IDisplayDriver
 {
-    private IModifier? _colorModifier;
+    private IModifier? _modifier;
 
     public void Clear()
     {
         Console.Clear();
     }
 
-    public void SetColorModifier(IModifier colorModifier)
+    public void SetColorModifier(IModifier modifier)
     {
-        _colorModifier = colorModifier;
+        _modifier = modifier;
     }
 
     public void Write(string value)
     {
-        if (_colorModifier is not null)
+        if (_modifier is not null)
         {
-            value = _colorModifier.Modify(value);
+            value = _modifier.Modify(value);
         }
 
         Console.WriteLine(value);

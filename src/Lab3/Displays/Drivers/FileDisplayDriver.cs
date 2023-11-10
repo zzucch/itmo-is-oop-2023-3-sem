@@ -6,7 +6,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Displays.Drivers;
 public class FileDisplayDriver : IDisplayDriver
 {
     private readonly string _filePath;
-    private IModifier? _colorModifier;
+    private IModifier? _modifier;
 
     public FileDisplayDriver(string filePath)
     {
@@ -18,16 +18,16 @@ public class FileDisplayDriver : IDisplayDriver
         File.Create(_filePath).Close();
     }
 
-    public void SetColorModifier(IModifier colorModifier)
+    public void SetColorModifier(IModifier modifier)
     {
-        _colorModifier = colorModifier;
+        _modifier = modifier;
     }
 
     public void Write(string value)
     {
-        if (_colorModifier is not null)
+        if (_modifier is not null)
         {
-            value = _colorModifier.Modify(value);
+            value = _modifier.Modify(value);
         }
 
         StreamWriter writer = File.AppendText(_filePath);
