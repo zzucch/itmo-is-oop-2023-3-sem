@@ -15,15 +15,21 @@ public class User : IUser
             new UserMessageStatus.Unread()));
     }
 
-    public void MarkMessageAsRead(IMessage message)
+    public MarkMessageAsReadResult MarkMessageAsRead(IMessage message)
     {
         foreach (UserMessage userMessage in _messages)
         {
-            if (userMessage.Message == message)
+            if (userMessage.Message != message) continue;
+            if (userMessage.MessageStatus is UserMessageStatus.Read)
             {
-                userMessage.MessageStatus = new UserMessageStatus.Read();
+                return new MarkMessageAsReadResult.Failure();
             }
+
+            userMessage.MessageStatus = new UserMessageStatus.Read();
+            return new MarkMessageAsReadResult.Success();
         }
+
+        return new MarkMessageAsReadResult.Failure();
     }
 
     public UserMessageStatus? FindMessageStatus(IMessage message)

@@ -1,4 +1,3 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Models;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Renderables;
@@ -69,9 +68,12 @@ public class MessageTests
         // Act
         topic.ForwardMessage(message);
         user.MarkMessageAsRead(message);
+        MarkMessageAsReadResult result = user.MarkMessageAsRead(message);
 
         // Assert
-        Assert.Throws<InvalidOperationException>(() => user.MarkMessageAsRead(message));
+        Assert.Equal(
+            expected: new MarkMessageAsReadResult.Failure(),
+            actual: result);
     }
 
     [Fact]
