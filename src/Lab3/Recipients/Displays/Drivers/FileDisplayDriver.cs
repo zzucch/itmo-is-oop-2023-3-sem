@@ -7,7 +7,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Drivers;
 public class FileDisplayDriver : IDisplayDriver
 {
     private readonly string _filePath;
-    private IColorModifier? _colorModifier;
+    private IModifier? _colorModifier;
 
     public FileDisplayDriver(string filePath)
     {
@@ -19,7 +19,7 @@ public class FileDisplayDriver : IDisplayDriver
         File.Create(_filePath).Close();
     }
 
-    public void SetColorModifier(IColorModifier colorModifier)
+    public void SetColorModifier(IModifier colorModifier)
     {
         _colorModifier = colorModifier;
     }

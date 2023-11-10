@@ -6,14 +6,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Drivers;
 
 public class ConsoleDisplayDriver : IDisplayDriver
 {
-    private IColorModifier? _colorModifier;
+    private IModifier? _colorModifier;
 
     public void Clear()
     {
         Console.Clear();
     }
 
-    public void SetColorModifier(IColorModifier colorModifier)
+    public void SetColorModifier(IModifier colorModifier)
     {
         _colorModifier = colorModifier;
     }

@@ -6,6 +6,6 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Drivers;
 public interface IDisplayDriver
 {
     void Clear();
-    void SetColorModifier(IColorModifier colorModifier);
+    void SetColorModifier(IModifier colorModifier);
     void Write(Message message);
 }
