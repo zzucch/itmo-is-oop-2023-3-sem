@@ -1,8 +1,8 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
+using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Displays.Models;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Drivers;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Displays;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Displays.Entities;
 
 public class Display : IDisplay
 {
@@ -19,16 +19,18 @@ public class Display : IDisplay
         _message = message;
     }
 
-    public void DisplayMessage()
+    public DisplayMessageResult TryDisplayMessage()
     {
         if (_message is null)
         {
-            throw new InvalidOperationException("display does not contain a message");
+            return new DisplayMessageResult.Failure();
         }
 
         _driver.Clear();
         _driver.Write(_message);
 
         _message = null;
+
+        return new DisplayMessageResult.Success();
     }
 }
