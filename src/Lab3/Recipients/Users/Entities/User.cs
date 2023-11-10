@@ -25,7 +25,9 @@ public class User : IUser
                 return new MarkMessageAsReadResult.Failure();
             }
 
-            userMessage.MessageStatus = new UserMessageStatus.Read();
+            _messages.Add(userMessage with { MessageStatus = new UserMessageStatus.Read() });
+            _messages.Remove(userMessage);
+
             return new MarkMessageAsReadResult.Success();
         }
 
