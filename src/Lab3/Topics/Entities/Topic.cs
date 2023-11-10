@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics.Models;
 
@@ -15,7 +15,7 @@ public class Topic : ITopic
         _recipient = recipient;
     }
 
-    public void ForwardMessage(IMessage message)
+    public void ForwardMessage(Message message)
     {
         _recipient.ReceiveMessage(message);
     }

@@ -1,5 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Models;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients;
 
@@ -14,7 +13,7 @@ public class RecipientAuthorizationByMessagePriorityLevelProxy : IRecipient
         _priorityLevel = priorityLevel;
     }
 
-    public void ReceiveMessage(IMessage message)
+    public void ReceiveMessage(Message message)
     {
         if (message.IsAuthorizedToPassPriorityLevel(_priorityLevel))
         {

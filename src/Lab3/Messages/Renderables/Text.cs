@@ -13,9 +13,4 @@ public class Text : IText<Text>
     {
         return Content;
     }
-
-    public Text Clone()
-    {
-        return new Text(Content);
-    }
 }

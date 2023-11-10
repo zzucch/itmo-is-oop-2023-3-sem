@@ -1,9 +1,8 @@
 using System.Text;
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 
-public class Message : IMessage
+public class Message : IRenderable
 {
     private readonly IRenderable _name;
     private readonly IRenderable _body;

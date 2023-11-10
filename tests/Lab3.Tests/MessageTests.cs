@@ -1,5 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Models;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Renderables;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Loggers;
@@ -20,7 +19,7 @@ public class MessageTests
     {
         // Arrange
         IUser user = new User();
-        IMessage message = new Message(
+        var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(0));
@@ -40,7 +39,7 @@ public class MessageTests
     {
         // Arrange
         IUser user = new User();
-        IMessage message = new Message(
+        var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(0));
@@ -61,7 +60,7 @@ public class MessageTests
     {
         // Arrange
         IUser user = new User();
-        IMessage message = new Message(
+        var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(1));
@@ -83,7 +82,7 @@ public class MessageTests
     {
         // Arrange
         IUser userMock = Substitute.For<IUser>();
-        IMessage message = new Message(
+        var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(1));
@@ -96,7 +95,7 @@ public class MessageTests
         topic.ForwardMessage(message);
 
         // Assert
-        userMock.DidNotReceive().ReceiveMessage(Arg.Any<IMessage>());
+        userMock.DidNotReceive().ReceiveMessage(Arg.Any<Message>());
     }
 
     [Fact]
@@ -104,7 +103,7 @@ public class MessageTests
     {
         // Arrange
         IUser user = new User();
-        IMessage message = new Message(
+        var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(1));
@@ -126,7 +125,7 @@ public class MessageTests
     {
         // Arrange
         IMessenger messengerMock = Substitute.For<IMessenger>();
-        IMessage message = new Message(
+        var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(1));
@@ -137,6 +136,6 @@ public class MessageTests
         topic.ForwardMessage(message);
 
         // Assert
-        messengerMock.Received().ReceiveMessage(Arg.Any<IMessage>());
+        messengerMock.Received().ReceiveMessage(Arg.Any<Message>());
     }
 }

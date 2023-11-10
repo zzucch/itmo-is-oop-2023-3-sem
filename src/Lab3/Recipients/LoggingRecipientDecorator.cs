@@ -1,5 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Loggers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients;
@@ -15,7 +15,7 @@ public class LoggingRecipientDecorator : IRecipient
         _logger = logger;
     }
 
-    public void ReceiveMessage(IMessage message)
+    public void ReceiveMessage(Message message)
     {
         _logger.LogInformation(MessageToLogInformation(message));
 

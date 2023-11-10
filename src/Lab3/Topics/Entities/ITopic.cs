@@ -1,8 +1,8 @@
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Topics.Entities;
 
 public interface ITopic
 {
-    void ForwardMessage(IMessage message);
+    void ForwardMessage(Message message);
 }
