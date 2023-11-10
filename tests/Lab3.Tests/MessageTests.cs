@@ -87,7 +87,7 @@ public class MessageTests
             new Text("message-body"),
             new MessagePriorityLevel(1));
 
-        var proxy = new RecipientAuthorizationByMessagePriorityLevelProxy(userMock, new MessagePriorityLevel(50));
+        var proxy = new MessagePriorityLevelAuthProxy(userMock, new MessagePriorityLevel(50));
 
         var topic = new Topic(new TopicName("topic-name"), proxy);
 

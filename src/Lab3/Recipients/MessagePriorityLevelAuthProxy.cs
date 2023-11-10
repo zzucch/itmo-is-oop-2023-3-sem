@@ -2,12 +2,12 @@ using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients;
 
-public class RecipientAuthorizationByMessagePriorityLevelProxy : IRecipient
+public class MessagePriorityLevelAuthProxy : IRecipient
 {
     private readonly IRecipient _recipient;
     private readonly MessagePriorityLevel _priorityLevel;
 
-    public RecipientAuthorizationByMessagePriorityLevelProxy(IRecipient recipient, MessagePriorityLevel priorityLevel)
+    public MessagePriorityLevelAuthProxy(IRecipient recipient, MessagePriorityLevel priorityLevel)
     {
         _recipient = recipient;
         _priorityLevel = priorityLevel;
