@@ -2,6 +2,8 @@ using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Entities;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages.Models;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Renderables;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients;
+using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Loggers;
+using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Messengers;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Users.Entities;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Users.Models;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics.Entities;
@@ -77,7 +79,7 @@ public class MessageTests
     }
 
     [Fact]
-    public void ForwardMessage_ShouldNot_()
+    public void ForwardMessage_ShouldNotForwardMessageToUser_WhenIncompatiblePriorityLevel()
     {
         // Arrange
         IUser userMock = Substitute.For<IUser>();
@@ -95,5 +97,46 @@ public class MessageTests
 
         // Assert
         userMock.DidNotReceive().ReceiveMessage(Arg.Any<IMessage>());
+    }
+
+    [Fact]
+    public void ForwardMessage_ShouldLogForwardedMessage_WhenLoggingIsEnabled()
+    {
+        // Arrange
+        IUser user = new User();
+        IMessage message = new Message(
+            new Text("message-name"),
+            new Text("message-body"),
+            new MessagePriorityLevel(1));
+        ILogger loggerMock = Substitute.For<ILogger>();
+
+        var decorator = new LoggingRecipientDecorator(user, loggerMock);
+
+        var topic = new Topic(new TopicName("topic-name"), decorator);
+
+        // Act
+        topic.ForwardMessage(message);
+
+        // Assert
+        loggerMock.Received().LogInformation(Arg.Any<string>());
+    }
+
+    [Fact]
+    public void ReceiveMessage_Should()
+    {
+        // Arrange
+        IMessenger messengerMock = Substitute.For<IMessenger>();
+        IMessage message = new Message(
+            new Text("message-name"),
+            new Text("message-body"),
+            new MessagePriorityLevel(1));
+
+        var topic = new Topic(new TopicName("topic-name"), messengerMock);
+
+        // Act
+        topic.ForwardMessage(message);
+
+        // Assert
+        messengerMock.Received().ReceiveMessage(Arg.Any<IMessage>());
     }
 }
