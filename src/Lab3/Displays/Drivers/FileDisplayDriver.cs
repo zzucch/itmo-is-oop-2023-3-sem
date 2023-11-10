@@ -1,8 +1,7 @@
 using System.IO;
-using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
-using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.ColorModifiers;
+using Itmo.ObjectOrientedProgramming.Lab3.Displays.ColorModifiers;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.Drivers;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Displays.Drivers;
 
 public class FileDisplayDriver : IDisplayDriver
 {
@@ -24,10 +23,8 @@ public class FileDisplayDriver : IDisplayDriver
         _colorModifier = colorModifier;
     }
 
-    public void Write(Message message)
+    public void Write(string value)
     {
-        string value = message.Render();
-
         if (_colorModifier is not null)
         {
             value = _colorModifier.Modify(value);

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Groups;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Recipients;
 
 public class RecipientsGroup : IRecipient
 {

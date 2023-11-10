@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
-using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Users.Models;
+using Itmo.ObjectOrientedProgramming.Lab3.Users.Models;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Users.Entities;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Users.Entities;
 
 public class User : IUser
 {

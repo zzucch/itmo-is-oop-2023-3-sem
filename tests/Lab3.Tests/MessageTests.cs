@@ -1,12 +1,13 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages.Renderables;
+using Itmo.ObjectOrientedProgramming.Lab3.Messengers;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients;
 using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Loggers;
-using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Messengers;
-using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Users.Entities;
-using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Users.Models;
+using Itmo.ObjectOrientedProgramming.Lab3.Recipients.Recipients;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics.Entities;
 using Itmo.ObjectOrientedProgramming.Lab3.Topics.Models;
+using Itmo.ObjectOrientedProgramming.Lab3.Users.Entities;
+using Itmo.ObjectOrientedProgramming.Lab3.Users.Models;
 using NSubstitute;
 using Xunit;
 
@@ -23,7 +24,7 @@ public class MessageTests
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(0));
-        var topic = new Topic(new TopicName("topic-name"), user);
+        var topic = new Topic(new TopicName("topic-name"), new UserRecipient(user));
 
         // Act
         topic.ForwardMessage(message);
@@ -43,7 +44,7 @@ public class MessageTests
             new Text("message-name"),
             new Text("message-body"),
             new MessagePriorityLevel(0));
-        var topic = new Topic(new TopicName("topic-name"), user);
+        var topic = new Topic(new TopicName("topic-name"), new UserRecipient(user));
 
         // Act
         topic.ForwardMessage(message);
@@ -63,8 +64,8 @@ public class MessageTests
         var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
-            new MessagePriorityLevel(1));
-        var topic = new Topic(new TopicName("topic-name"), user);
+            new MessagePriorityLevel(0));
+        var topic = new Topic(new TopicName("topic-name"), new UserRecipient(user));
 
         // Act
         topic.ForwardMessage(message);
@@ -81,13 +82,18 @@ public class MessageTests
     public void ForwardMessage_ShouldNotForwardMessageToUser_WhenIncompatiblePriorityLevel()
     {
         // Arrange
+        const int lowPriority = 1;
+        const int highPriority = 50;
+
         IUser userMock = Substitute.For<IUser>();
         var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
-            new MessagePriorityLevel(1));
+            new MessagePriorityLevel(lowPriority));
 
-        var proxy = new MessagePriorityLevelAuthProxy(userMock, new MessagePriorityLevel(50));
+        var proxy = new MessagePriorityLevelAuthProxy(
+            new UserRecipient(userMock),
+            new MessagePriorityLevel(highPriority));
 
         var topic = new Topic(new TopicName("topic-name"), proxy);
 
@@ -106,10 +112,10 @@ public class MessageTests
         var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
-            new MessagePriorityLevel(1));
+            new MessagePriorityLevel(0));
         ILogger loggerMock = Substitute.For<ILogger>();
 
-        var decorator = new LoggingRecipientDecorator(user, loggerMock);
+        var decorator = new LoggingRecipientDecorator(new UserRecipient(user), loggerMock);
 
         var topic = new Topic(new TopicName("topic-name"), decorator);
 
@@ -121,21 +127,21 @@ public class MessageTests
     }
 
     [Fact]
-    public void ReceiveMessage_Should()
+    public void ForwardMessage_ShouldDisplayInformation_WhenMessageForwardedToMessenger()
     {
         // Arrange
         IMessenger messengerMock = Substitute.For<IMessenger>();
         var message = new Message(
             new Text("message-name"),
             new Text("message-body"),
-            new MessagePriorityLevel(1));
+            new MessagePriorityLevel(0));
 
-        var topic = new Topic(new TopicName("topic-name"), messengerMock);
+        var topic = new Topic(new TopicName("topic-name"), new MessengerRecipient(messengerMock));
 
         // Act
         topic.ForwardMessage(message);
 
         // Assert
-        messengerMock.Received().ReceiveMessage(Arg.Any<Message>());
+        messengerMock.Received().DisplayInformation(Arg.Any<string>());
     }
 }

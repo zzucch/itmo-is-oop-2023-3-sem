@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Displays.ColorModifiers;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Displays.ColorModifiers;
 
 public class ColorModifier : IModifier
 {

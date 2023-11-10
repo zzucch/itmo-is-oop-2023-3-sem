@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab3.Recipients.Users.Models;
+namespace Itmo.ObjectOrientedProgramming.Lab3.Users.Models;
 
 public abstract record MarkMessageAsReadResult
 {
