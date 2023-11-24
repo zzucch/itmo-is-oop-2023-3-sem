@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Execution.Results;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Execution.Commands;
 
-public class TreeListCommands : ICommand
+public class TreeListCommand : ICommand
 {
     public void Execute(CommandContext context)
     {
