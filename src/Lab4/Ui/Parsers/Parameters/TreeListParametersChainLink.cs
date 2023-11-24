@@ -6,9 +6,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Parameters;
 
 public class TreeListParametersChainLink : ParserChainLinkBase
 {
+    private const int ParametersAmount = 3;
+
     public override ParseResult Handle(Request request)
     {
         string current = request.Value.GetCurrent();
+        if (current.Length < ParametersAmount)
+        {
+            current += new string(' ', ParametersAmount - current.Length);
+        }
 
         request.CommandContextBuilder.WithTreeListParameters(
             new TreeListParameters(

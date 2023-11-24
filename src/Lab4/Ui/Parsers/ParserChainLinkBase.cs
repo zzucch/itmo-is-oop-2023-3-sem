@@ -20,5 +20,17 @@ public abstract class ParserChainLinkBase : IParseChainLink
         }
     }
 
+    public void AddBranchNext(IParseChainLink link)
+    {
+        if (BranchChainNext is null)
+        {
+            BranchChainNext = link;
+        }
+        else
+        {
+            BranchChainNext.AddBranchNext(link);
+        }
+    }
+
     public abstract ParseResult Handle(Request request);
 }
