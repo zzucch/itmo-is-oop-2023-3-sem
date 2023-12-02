@@ -2,18 +2,19 @@ using System;
 using Itmo.ObjectOrientedProgramming.Lab4.Execution.Drivers.DisplayDrivers;
 using Itmo.ObjectOrientedProgramming.Lab4.Execution.FileSystemCommands;
 using Itmo.ObjectOrientedProgramming.Lab4.Execution.Models.CommandContexts;
+using Itmo.ObjectOrientedProgramming.Lab4.Execution.Models.Parameters;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Requests;
 
-namespace Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.Disconnect;
+namespace Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.Tree.Gotos;
 
-public class DisconnectChainLink : ParseChainLinkBase
+public class TreeGotoChainLink : ParseChainLinkBase
 {
-    private const string CommandName = "disconnect";
-    private readonly IParseBranchChainLink<DisconnectContext.Builder>? _branchChainLink;
+    private const string CommandName = "goto";
+    private readonly IParseBranchChainLink<TreeGotoContext.Builder>? _branchChainLink;
     private readonly IDisplayDriver _displayDriver;
 
-    public DisconnectChainLink(
-        IParseBranchChainLink<DisconnectContext.Builder>? branchChainLink,
+    public TreeGotoChainLink(
+        IParseBranchChainLink<TreeGotoContext.Builder>? branchChainLink,
         IDisplayDriver displayDriver)
     {
         _branchChainLink = branchChainLink;
@@ -29,14 +30,16 @@ public class DisconnectChainLink : ParseChainLinkBase
                 : Next.Handle(request);
         }
 
-        var builder = new DisconnectContext.Builder();
-        builder.WithDisplayDriver(_displayDriver);
+        var builder = new TreeGotoContext.Builder();
 
-        if (_branchChainLink is not null && request.Value.TryMove())
+        builder.WithDisplayDriver(_displayDriver);
+        builder.WithPath(new Path(request.Value.GetCurrent()));
+
+        if (_branchChainLink is null || request.Value.TryMove() is false)
         {
-            return _branchChainLink.Handle(request, builder);
+            return new ParseResult.Success(new TreeGotoCommand(builder.Build()));
         }
 
-        return new ParseResult.Success(new DisconnectCommand(builder.Build()));
+        return _branchChainLink.Handle(request, builder);
     }
 }

@@ -3,9 +3,15 @@ using Itmo.ObjectOrientedProgramming.Lab4.Ui.Requests;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.File;
 
-public class FileChainLink : ParserChainLinkBase
+public class FileChainLink : ParseChainLinkBase
 {
     private const string CommandName = "file";
+    private readonly IParseChainLink _innerChainLink;
+
+    public FileChainLink(IParseChainLink innerChainLink)
+    {
+        _innerChainLink = innerChainLink;
+    }
 
     public override ParseResult Handle(Request request)
     {
@@ -16,11 +22,8 @@ public class FileChainLink : ParserChainLinkBase
                 : Next.Handle(request);
         }
 
-        if (BranchChainNext is null || request.Value.TryMove() is false)
-        {
-            return new ParseResult.Failure();
-        }
-
-        return BranchChainNext.Handle(request);
+        return request.Value.TryMove() is false
+            ? new ParseResult.Failure()
+            : _innerChainLink.Handle(request);
     }
 }

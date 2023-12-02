@@ -1,250 +1,138 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Itmo.ObjectOrientedProgramming.Lab4.Execution.Models;
 using Itmo.ObjectOrientedProgramming.Lab4.Execution.Results;
-using Path = Itmo.ObjectOrientedProgramming.Lab4.Execution.Models.Path;
+using Path = Itmo.ObjectOrientedProgramming.Lab4.Execution.Models.Parameters.Path;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Execution.Drivers.FileSystemDrivers;
 
 public class LocalFileSystemDriver : IFileSystemDriver
 {
-    private const string PathIsNotAbsoluteMessage = "Path is not absolute";
-    private const string DisconnectedMessage = "Cannot be executed, connect to file system first";
-    private const string SourceNonExistentMessage = "Source file does not exist";
-    private const string SourceAlreadyExistsMessage = "Source file already exists";
-    private const string DestinationAlreadyExistsMessage = "Destination file already exists";
-    private Path? _currentPath;
-
-    public FileSystemDriverResult Connect(Path address)
+    public bool FileExists(Path path)
     {
-        if (System.IO.Path.IsPathFullyQualified(address.Value) is false)
-        {
-            return new FileSystemDriverResult.Failure(PathIsNotAbsoluteMessage);
-        }
-
-        _currentPath = address;
-
-        return new FileSystemDriverResult.Success();
+        return File.Exists(path.Value);
     }
 
-    public FileSystemDriverResult Disconnect()
+    public bool DirectoryExists(Path path)
     {
-        if (_currentPath is null)
-        {
-            return new FileSystemDriverResult.Failure(DisconnectedMessage);
-        }
-
-        _currentPath = null;
-
-        return new FileSystemDriverResult.Success();
+        return Directory.Exists(path.Value);
     }
 
-    public FileSystemDriverResult ChangeDirectory(Path path)
+    public bool IsAbsolutePath(Path path)
     {
-        if (_currentPath is null)
+        return System.IO.Path.IsPathFullyQualified(path.Value);
+    }
+
+    public Path? FindAbsolutePath(Path root, Path path)
+    {
+        if (IsAbsolutePath(path))
         {
-            return new FileSystemDriverResult.Failure(DisconnectedMessage);
+            return path;
         }
 
-        var absolute = new Path(path.Value);
-        if (System.IO.Path.IsPathFullyQualified(path.Value) is false)
-        {
-            absolute = new Path(System.IO.Path.Combine(_currentPath.Value, absolute.Value));
-        }
+        string absoluteCandidate = root.Value + System.IO.Path.DirectorySeparatorChar + path.Value;
 
-        _currentPath = absolute;
-
-        return new FileSystemDriverResult.Success();
+        return System.IO.Path.IsPathFullyQualified(absoluteCandidate) is false
+            ? null
+            : new Path(absoluteCandidate);
     }
 
     public FileDataResult ReadFileData(Path path)
     {
-        if (_currentPath is null)
+        try
         {
-            return new FileDataResult.Failure(DisconnectedMessage);
-        }
+            string data = File.ReadAllText(path.Value);
 
-        var absolute = new Path(path.Value);
-        if (System.IO.Path.IsPathFullyQualified(path.Value) is false)
+            return new FileDataResult.Success(data);
+        }
+        catch (Exception exception)
         {
-            absolute = new Path(System.IO.Path.Combine(_currentPath.Value, absolute.Value));
+            return new FileDataResult.Failure(exception.Message);
         }
-
-        return new FileDataResult.Success(File.ReadAllText(absolute.Value));
     }
 
     public FileSystemDriverResult MoveFile(Path source, Path destination)
     {
-        if (_currentPath is null)
+        try
         {
-            return new FileSystemDriverResult.Failure(DisconnectedMessage);
+            File.Move(source.Value, destination.Value);
+        }
+        catch (Exception exception)
+        {
+            return new FileSystemDriverResult.Failure(exception.Message);
         }
 
-        var absoluteSource = new Path(source.Value);
-        if (System.IO.Path.IsPathFullyQualified(source.Value) is false)
-        {
-            absoluteSource = new Path(System.IO.Path.Combine(_currentPath.Value, absoluteSource.Value));
-        }
+        return new FileSystemDriverResult.Success();
+    }
 
-        var absoluteDestination = new Path(destination.Value);
-        if (System.IO.Path.IsPathFullyQualified(destination.Value) is false)
+    public FileSystemDriverResult RenameFile(Path source, string fileName)
+    {
+        try
         {
-            absoluteDestination = new Path(System.IO.Path.Combine(_currentPath.Value, absoluteDestination.Value));
-        }
+            string directoryName = System.IO.Path.GetDirectoryName(source.Value) ?? string.Empty;
+            string destination = directoryName + System.IO.Path.DirectorySeparatorChar + fileName;
 
-        if (File.Exists(absoluteSource.Value) is false)
+            File.Copy(source.Value, destination);
+
+            File.Delete(source.Value);
+        }
+        catch (Exception exception)
         {
-            return new FileSystemDriverResult.Failure(SourceNonExistentMessage);
+            return new FileSystemDriverResult.Failure(exception.Message);
         }
-
-        if (File.Exists(absoluteDestination.Value))
-        {
-            return new FileSystemDriverResult.Failure(DestinationAlreadyExistsMessage);
-        }
-
-        File.Move(absoluteSource.Value, absoluteDestination.Value);
 
         return new FileSystemDriverResult.Success();
     }
 
     public FileSystemDriverResult CopyFile(Path source, Path destination)
     {
-        if (_currentPath is null)
+        try
         {
-            return new FileSystemDriverResult.Failure(DisconnectedMessage);
+            File.Copy(source.Value, destination.Value);
         }
-
-        var absoluteSource = new Path(source.Value);
-        if (System.IO.Path.IsPathFullyQualified(source.Value) is false)
+        catch (Exception exception)
         {
-            absoluteSource = new Path(System.IO.Path.Combine(_currentPath.Value, absoluteSource.Value));
+            return new FileSystemDriverResult.Failure(exception.Message);
         }
-
-        var absoluteDestination = new Path(destination.Value);
-        if (System.IO.Path.IsPathFullyQualified(destination.Value) is false)
-        {
-            absoluteDestination = new Path(System.IO.Path.Combine(_currentPath.Value, absoluteDestination.Value));
-        }
-
-        if (File.Exists(absoluteSource.Value) is false)
-        {
-            return new FileSystemDriverResult.Failure(SourceNonExistentMessage);
-        }
-
-        if (File.Exists(absoluteDestination.Value))
-        {
-            return new FileSystemDriverResult.Failure(DestinationAlreadyExistsMessage);
-        }
-
-        File.Copy(absoluteSource.Value, absoluteDestination.Value);
 
         return new FileSystemDriverResult.Success();
     }
 
     public FileSystemDriverResult DeleteFile(Path path)
     {
-        if (_currentPath is null)
+        try
         {
-            return new FileSystemDriverResult.Failure(DisconnectedMessage);
+            File.Delete(path.Value);
         }
-
-        var absolute = new Path(path.Value);
-        if (System.IO.Path.IsPathFullyQualified(path.Value) is false)
+        catch (Exception exception)
         {
-            absolute = new Path(System.IO.Path.Combine(_currentPath.Value, absolute.Value));
-        }
-
-        if (File.Exists(absolute.Value) is false)
-        {
-            return new FileSystemDriverResult.Failure(SourceNonExistentMessage);
-        }
-
-        File.Delete(absolute.Value);
-
-        return new FileSystemDriverResult.Success();
-    }
-
-    public FileSystemDriverResult RenameFile(Path path, string name)
-    {
-        if (_currentPath is null)
-        {
-            return new FileSystemDriverResult.Failure(DisconnectedMessage);
-        }
-
-        var absoluteSource = new Path(path.Value);
-        if (System.IO.Path.IsPathFullyQualified(path.Value) is false)
-        {
-            absoluteSource = new Path(System.IO.Path.Combine(_currentPath.Value, absoluteSource.Value));
-        }
-
-        var absoluteDestination = new Path(System.IO.Path.Combine(
-            System.IO.Path.GetDirectoryName(path.Value) ?? string.Empty,
-            name));
-        if (System.IO.Path.IsPathFullyQualified(absoluteDestination.Value) is false)
-        {
-            absoluteDestination = new Path(System.IO.Path.Combine(_currentPath.Value, absoluteDestination.Value));
-        }
-
-        if (File.Exists(absoluteSource.Value) is false)
-        {
-            return new FileSystemDriverResult.Failure(SourceNonExistentMessage);
-        }
-
-        File.Move(absoluteSource.Value, absoluteDestination.Value);
-
-        return new FileSystemDriverResult.Success();
-    }
-
-    public FileSystemDriverResult CreateFile(Path path, string data)
-    {
-        if (_currentPath is null)
-        {
-            return new FileSystemDriverResult.Failure(DisconnectedMessage);
-        }
-
-        var absolute = new Path(path.Value);
-        if (System.IO.Path.IsPathFullyQualified(path.Value) is false)
-        {
-            absolute = new Path(System.IO.Path.Combine(_currentPath.Value, absolute.Value));
-        }
-
-        if (File.Exists(absolute.Value))
-        {
-            return new FileSystemDriverResult.Failure(SourceAlreadyExistsMessage);
-        }
-
-        using (StreamWriter writer = File.CreateText(absolute.Value))
-        {
-            writer.Write(data);
+            return new FileSystemDriverResult.Failure(exception.Message);
         }
 
         return new FileSystemDriverResult.Success();
     }
 
-    public ListFilesResult TreeList(int depth, TreeListParameters parameters)
+    public FileSystemSubtreeResult GetSubtree(Path path, int depth)
     {
-        if (_currentPath is null)
+        try
         {
-            return new ListFilesResult.Failure(DisconnectedMessage);
+            List<TreeElement> list = Traversal(depth, currentDepth: 0, path, new List<TreeElement>());
+
+            list.Reverse();
+
+            return new FileSystemSubtreeResult.Success(list);
         }
-
-        List<string> list = Traversal(depth, currentDepth: 0, parameters, _currentPath, new List<string>());
-
-        string result = string.Empty;
-        list.Reverse();
-        result = list.Aggregate(result, (current, s) => current + s + Environment.NewLine);
-
-        return new ListFilesResult.Success(result);
+        catch (Exception exception)
+        {
+            return new FileSystemSubtreeResult.Failure(exception.Message);
+        }
     }
 
-    private static List<string> Traversal(
+    private static List<TreeElement> Traversal(
         int depth,
         int currentDepth,
-        TreeListParameters parameters,
         Path path,
-        List<string> currentResult)
+        List<TreeElement> currentResult)
     {
         if (currentDepth < depth)
         {
@@ -253,17 +141,20 @@ public class LocalFileSystemDriver : IFileSystemDriver
 
         if (File.Exists(path.Value))
         {
-            currentResult.Add(
-                new string(parameters.Indentation, currentDepth) +
-                parameters.FileIcon +
-                System.IO.Path.GetFileName(path.Value));
+            string name = System.IO.Path.GetFileName(path.Value);
+
+            currentResult.Add(new TreeElement.File(
+                name,
+                currentDepth));
+
+            return currentResult;
         }
-        else if (Directory.Exists(path.Value))
+
+        if (Directory.Exists(path.Value))
         {
-            currentResult.Add(
-                new string(parameters.Indentation, currentDepth) +
-                parameters.DirectoryIcon +
-                System.IO.Path.GetDirectoryName(path.Value));
+            currentResult.Add(new TreeElement.Directory(
+                System.IO.Path.GetDirectoryName(path.Value) ?? string.Empty,
+                currentDepth));
         }
 
         foreach (string entry in Directory.GetFileSystemEntries(path.Value))
@@ -271,7 +162,6 @@ public class LocalFileSystemDriver : IFileSystemDriver
             currentResult = Traversal(
                 depth,
                 currentDepth: currentDepth + 1,
-                parameters,
                 new Path(entry),
                 currentResult);
         }

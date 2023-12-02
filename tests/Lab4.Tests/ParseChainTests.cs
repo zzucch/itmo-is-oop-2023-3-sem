@@ -1,15 +1,18 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Execution.CommandContexts;
-using Itmo.ObjectOrientedProgramming.Lab4.Execution.Commands;
 using Itmo.ObjectOrientedProgramming.Lab4.Execution.Drivers.DisplayDrivers;
-using Itmo.ObjectOrientedProgramming.Lab4.Execution.Drivers.FileSystemDrivers;
+using Itmo.ObjectOrientedProgramming.Lab4.Execution.Models.Parameters;
+using Itmo.ObjectOrientedProgramming.Lab4.Execution.Visitors;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.Connect;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.Disconnect;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.File;
+using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.File.Copies;
+using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.File.Deletes;
+using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.File.Moves;
+using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.File.Renames;
+using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.File.Shows;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.Tree;
-using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Parameters;
-using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Parameters.Flags;
-using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Parameters.Paths;
+using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.Tree.Gotos;
+using Itmo.ObjectOrientedProgramming.Lab4.Ui.Parsers.Commands.Tree.Lists;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Requests;
 using Itmo.ObjectOrientedProgramming.Lab4.Ui.Requests.Iterators;
 using Xunit;
@@ -18,185 +21,61 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Tests;
 
 public class ParseChainTests
 {
-    [Fact]
-    public void Handle_ShouldParseRequestProperly_WhenCorrectConnectRequestPassed()
+    [Theory]
+    [InlineData("connect /home/pc/RiderProjects -m local")]
+    [InlineData("file show /home/pc/RiderProjects/zzucch/tests/Lab4.Tests/ParseChainTests.cs -m console")]
+    [InlineData("file delete /home/pc/RiderProjects/zzucch/tests/Lab4.Tests/ParseChainTests.cs")]
+    [InlineData("disconnect")]
+    [InlineData("tree list -d 12")]
+    [InlineData("file rename /home/pc/RiderProjects/zzucch/tests/Lab4.Tests/ParseChainTests.cs OtherName.cs")]
+    [InlineData("tree goto /home/pc/RiderProjects/zzucch/tests/Lab4.Tests/")]
+    [InlineData("file copy /home/pc/RiderProjects/zzucch/tests/Lab4.Tests/ParseChainTests.cs /home/pc/RiderProjects/zzucch/tests/Lab4.Tests/ParseChainTestsCopy.cs")]
+    public void Handle_ShouldParseRequestProperly_WhenCorrectRequestPassed(string command)
     {
         // Arrange
         IParseChainLink parseChain = GetParseChain();
-        const string command = "connect /home/pc/RiderProjects -m local";
-        var request = new Request(
-            new RequestStringIterator(command.Split()),
-            new CommandContextBuilder());
+        var request = new Request(new RequestStringIterator(command.Split()));
 
         // Act
         ParseResult result = parseChain.Handle(request);
 
         // Assert
         Assert.True(result is ParseResult.Success);
-        if (result is not ParseResult.Success success) return;
-        Assert.True(success.CommandContext.Command is ConnectCommand);
-        Assert.NotNull(success.CommandContext.Path);
-        Assert.Equal(expected: "/home/pc/RiderProjects", actual: success.CommandContext.Path.Value);
-        Assert.True(success.CommandContext.FileSystemDriver is LocalFileSystemDriver);
-    }
-
-    [Fact]
-    public void Handle_ShouldParseRequestProperly_WhenCorrectFileShowRequestPassed()
-    {
-        // Arrange
-        IParseChainLink parseChain = GetParseChain();
-        const string command = "file show /home/pc/RiderProjects/zzucch/src/Lab4/Ui/Parsers/Parameters/DepthChainLink.cs -m console";
-        var request = new Request(
-            new RequestStringIterator(command.Split()),
-            new CommandContextBuilder());
-
-        request.CommandContextBuilder.WithFileSystemDriver(new LocalFileSystemDriver());
-
-        // Act
-        ParseResult result = parseChain.Handle(request);
-
-        // Assert
-        Assert.True(result is ParseResult.Success);
-        if (result is not ParseResult.Success success) return;
-        Assert.True(success.CommandContext.Command is FileShowCommand);
-        Assert.NotNull(success.CommandContext.Path);
-        Assert.Equal(
-            expected: "/home/pc/RiderProjects/zzucch/src/Lab4/Ui/Parsers/Parameters/DepthChainLink.cs",
-            actual: success.CommandContext.Path?.Value);
-
-        Assert.True(success.CommandContext.DisplayDriver is ConsoleDisplayDriver);
-        Assert.True(success.CommandContext.FileSystemDriver is LocalFileSystemDriver);
-    }
-
-    [Fact]
-    public void Handle_ShouldParseRequestProperly_WhenCorrectFileDeleteRequestPassed()
-    {
-        // Arrange
-        IParseChainLink parseChain = GetParseChain();
-        const string command = "file delete /home/pc/RiderProjects/zzucch/src/Lab4/Ui/Parsers/Parameters/DepthChainLink.cs";
-        var request = new Request(
-            new RequestStringIterator(command.Split()),
-            new CommandContextBuilder());
-
-        request.CommandContextBuilder.WithFileSystemDriver(new LocalFileSystemDriver());
-
-        // Act
-        ParseResult result = parseChain.Handle(request);
-
-        // Assert
-        Assert.True(result is ParseResult.Success);
-        if (result is not ParseResult.Success success) return;
-        Assert.True(success.CommandContext.Command is FileDeleteCommand);
-        Assert.NotNull(success.CommandContext.Path);
-        Assert.Equal(
-            expected: "/home/pc/RiderProjects/zzucch/src/Lab4/Ui/Parsers/Parameters/DepthChainLink.cs",
-            actual: success.CommandContext.Path?.Value);
-
-        Assert.True(success.CommandContext.FileSystemDriver is LocalFileSystemDriver);
-    }
-
-    [Fact]
-    public void Handle_ShouldParseRequestProperly_WhenCorrectDisconnectRequestPassed()
-    {
-        // Arrange
-        IParseChainLink parseChain = GetParseChain();
-        const string firstCommand = "connect /home/pc/RiderProjects -m local";
-        var request = new Request(
-            new RequestStringIterator(firstCommand.Split()),
-            new CommandContextBuilder());
-
-        parseChain.Handle(request);
-
-        const string secondCommand = "disconnect";
-        request = request with { Value = new RequestStringIterator(secondCommand.Split()) };
-
-        // Act
-        ParseResult result = parseChain.Handle(request);
-
-        // Assert
-        Assert.True(result is ParseResult.Success);
-        if (result is not ParseResult.Success success) return;
-        Assert.True(success.CommandContext.Command is DisconnectCommand);
-    }
-
-    [Fact]
-    public void Handle_ShouldParseRequestProperly_WhenCorrectTreeListRequestPassed()
-    {
-        // Arrange
-        IParseChainLink parseChain = GetParseChain();
-        const string firstCommand = "connect /home/pc/RiderProjects -m local";
-        var request = new Request(
-            new RequestStringIterator(firstCommand.Split()),
-            new CommandContextBuilder());
-
-        parseChain.Handle(request);
-
-        const string secondCommand = "tree list -d 12 -m console FD-";
-        request = request with { Value = new RequestStringIterator(secondCommand.Split()) };
-
-        // Act
-        ParseResult result = parseChain.Handle(request);
-
-        // Assert
-        Assert.True(result is ParseResult.Success);
-        if (result is not ParseResult.Success success) return;
-        Assert.True(success.CommandContext.Command is TreeListCommand);
-        Assert.Equal(expected: 12, actual: success.CommandContext.Depth);
-        Assert.True(success.CommandContext.DisplayDriver is ConsoleDisplayDriver);
     }
 
     private static IParseChainLink GetParseChain()
     {
-        IParseChainLink parseChain = new ConnectChainLink();
-        parseChain.AddBranchNext(new TransitionalPathChainLink());
-        parseChain.AddBranchNext(new MFlagChainLink());
-        parseChain.AddBranchNext(new LocalFileSystemModeChainLink());
+        var displayDriver = new ConsoleDisplayDriver();
 
-        parseChain.AddNext(new DisconnectChainLink());
+        IParseChainLink parseChain = new ConnectChainLink(null, displayDriver);
 
-        IParseChainLink treeChainLink = new TreeChainLink();
+        parseChain.AddNext(new DisconnectChainLink(null, displayDriver));
 
-        IParseChainLink treeGotoChainLink = new TreeGotoChainLink();
-        treeGotoChainLink.AddBranchNext(new FinalPathChainLink());
+        IParseChainLink treeGotoChainLink = new TreeGotoChainLink(null, displayDriver);
+        IParseChainLink treeListChainLink = new TreeListChainLink(
+            null,
+            displayDriver,
+            new Visitor(new TreeListParameters('F', 'D', '-')));
 
-        IParseChainLink treeListChainLink = new TreeListChainLink();
-        treeListChainLink.AddBranchNext(new DFlagChainLink());
-        treeListChainLink.AddBranchNext(new DepthChainLink());
-        treeListChainLink.AddBranchNext(new MFlagChainLink());
-        treeListChainLink.AddBranchNext(new ConsoleDisplayModeChainLink());
-        treeListChainLink.AddBranchNext(new TreeListParametersChainLink());
         treeGotoChainLink.AddNext(treeListChainLink);
 
-        treeChainLink.AddBranchNext(treeGotoChainLink);
+        IParseChainLink treeChainLink = new TreeChainLink(treeGotoChainLink);
         parseChain.AddNext(treeChainLink);
 
-        IParseChainLink fileChainLink = new FileChainLink();
-
-        IParseChainLink fileShowChainLink = new FileShowChainLink();
-        fileShowChainLink.AddBranchNext(new TransitionalPathChainLink());
-        fileShowChainLink.AddBranchNext(new MFlagChainLink());
-        fileShowChainLink.AddBranchNext(new ConsoleDisplayModeChainLink());
-
-        IParseChainLink fileMoveChainLink = new FileMoveChainLink();
-        fileMoveChainLink.AddBranchNext(new SourcePathChainLink());
-        fileMoveChainLink.AddBranchNext(new DestinationPathChainLink());
+        IParseChainLink fileShowChainLink = new FileShowChainLink(null, displayDriver);
+        IParseChainLink fileMoveChainLink = new FileMoveChainLink(null, displayDriver);
         fileShowChainLink.AddNext(fileMoveChainLink);
 
-        IParseChainLink fileCopyChainLink = new FileCopyChainLink();
-        fileCopyChainLink.AddBranchNext(new SourcePathChainLink());
-        fileCopyChainLink.AddBranchNext(new DestinationPathChainLink());
+        IParseChainLink fileCopyChainLink = new FileCopyChainLink(null, displayDriver);
         fileShowChainLink.AddNext(fileCopyChainLink);
 
-        IParseChainLink fileDeleteChainLink = new FileDeleteChainLink();
-        fileDeleteChainLink.AddBranchNext(new FinalPathChainLink());
+        IParseChainLink fileDeleteChainLink = new FileDeleteChainLink(null, displayDriver);
         fileShowChainLink.AddNext(fileDeleteChainLink);
 
-        IParseChainLink fileRenameChainLink = new FileRenameChainLink();
-        fileRenameChainLink.AddBranchNext(new TransitionalPathChainLink());
-        fileRenameChainLink.AddBranchNext(new FileNameChainLink());
+        IParseChainLink fileRenameChainLink = new FileRenameChainLink(null, displayDriver);
         fileShowChainLink.AddNext(fileRenameChainLink);
 
-        fileChainLink.AddBranchNext(fileShowChainLink);
+        IParseChainLink fileChainLink = new FileChainLink(fileShowChainLink);
         parseChain.AddNext(fileChainLink);
 
         return parseChain;
