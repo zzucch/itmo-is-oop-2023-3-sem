@@ -4,4 +4,8 @@
         <RootNamespace>Itmo.ObjectOrientedProgramming.Lab3</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Crayon" Version="2.0.69"/>
+    </ItemGroup>
+
 </Project>
