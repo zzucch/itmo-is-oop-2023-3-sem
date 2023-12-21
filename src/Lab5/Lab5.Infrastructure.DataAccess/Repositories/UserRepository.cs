@@ -1,6 +1,8 @@
 using Itmo.Dev.Platform.Postgres.Connection;
+using Itmo.Dev.Platform.Postgres.Extensions;
 using Lab5.Application.Abstractions.Repositories;
 using Lab5.Application.Models.Users;
+using Npgsql;
 
 namespace Lab5.Infrastructure.DataAccess.Repositories;
 
@@ -15,16 +17,83 @@ public class UserRepository : IUserRepository
 
     public User? FindUserByName(string username)
     {
-        throw new NotImplementedException();
+        const string sql =
+            """
+            select user_name, user_password, user_role
+            from users
+            where user_name = :username;
+            """;
+
+        NpgsqlConnection connection = _connectionProvider
+            .GetConnectionAsync(default)
+            .Preserve()
+            .GetAwaiter()
+            .GetResult();
+
+        using var command = new NpgsqlCommand(sql, connection);
+        command.AddParameter("username", username);
+
+        using NpgsqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read() is false)
+            return null;
+
+        return new User(
+            Name: reader.GetString(0),
+            Password: reader.GetString(1),
+            Role: reader.GetFieldValue<UserRole>(2));
     }
 
     public User? TryAdminLogin(string password)
     {
-        throw new NotImplementedException();
+        const string sql =
+            """
+            select user_name, user_password, user_role
+            from users
+            where user_role = 'admin'
+            limit 1;
+            """;
+
+        NpgsqlConnection connection = _connectionProvider
+            .GetConnectionAsync(default)
+            .Preserve()
+            .GetAwaiter()
+            .GetResult();
+
+        using var command = new NpgsqlCommand(sql, connection);
+
+        using NpgsqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read() is false)
+            return null;
+
+        return new User(
+            Name: reader.GetString(0),
+            Password: reader.GetString(1),
+            Role: reader.GetFieldValue<UserRole>(2));
     }
 
     public void AddUser(User user)
     {
-        throw new NotImplementedException();
+        const string sql =
+            """
+            insert into accounts
+            values (default, (select user_id
+                              from users
+                              where users.user_name = :username), :balance, :password)
+            """;
+
+        NpgsqlConnection connection = _connectionProvider
+            .GetConnectionAsync(default)
+            .Preserve()
+            .GetAwaiter()
+            .GetResult();
+
+        using var command = new NpgsqlCommand(sql, connection);
+        command.AddParameter("name", user.Name);
+        command.AddParameter("password", user.Password);
+        command.AddParameter("role", user.Role);
+
+        command.ExecuteNonQuery();
     }
 }

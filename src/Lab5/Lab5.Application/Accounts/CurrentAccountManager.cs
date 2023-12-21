@@ -37,7 +37,8 @@ public class CurrentAccountManager : ICurrentAccountService
         }
 
         _accountRepository.WithdrawMoney(_account.Id, amount);
-        _transactionRepository.AddTransaction(new Transaction(amount, TransactionType.Withdrawal));
+        _transactionRepository.AddTransaction(
+            _account.Id, new Transaction(amount, TransactionType.Withdrawal));
 
         return new TransactionResult.Success();
     }
@@ -45,7 +46,8 @@ public class CurrentAccountManager : ICurrentAccountService
     public TransactionResult ReplenishMoney(decimal amount)
     {
         _accountRepository.ReplenishMoney(_account.Id, amount);
-        _transactionRepository.AddTransaction(new Transaction(amount, TransactionType.Replenishment));
+        _transactionRepository.AddTransaction(
+            _account.Id, new Transaction(amount, TransactionType.Replenishment));
 
         return new TransactionResult.Success();
     }

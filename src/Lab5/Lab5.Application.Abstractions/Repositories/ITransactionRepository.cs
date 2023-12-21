@@ -5,5 +5,5 @@ namespace Lab5.Application.Abstractions.Repositories;
 public interface ITransactionRepository
 {
     IEnumerable<Transaction> GetAllAccountTransactions(long accountId);
-    void AddTransaction(Transaction transaction);
+    void AddTransaction(long accountId, Transaction transaction);
 }

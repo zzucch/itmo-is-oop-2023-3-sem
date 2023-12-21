@@ -1,3 +1,4 @@
+using Lab5.Application.Contracts.Results;
 using Lab5.Application.Contracts.Users;
 using Spectre.Console;
 
@@ -17,15 +18,14 @@ public class CreateAccountScenario : IScenario
     public void Run()
     {
         string username = AnsiConsole.Ask<string>("Enter new account owner's name:");
-        long id = AnsiConsole.Ask<long>("Enter new account ID:");
         string password = AnsiConsole.Ask<string>("Enter the password:");
 
-        CreateResult result = _adminService.CreateAccount(username, id, password);
+        CreateAccountResult result = _adminService.CreateAccount(username, password);
 
         string message = result switch
         {
-            CreateResult.Success => "Account created.",
-            CreateResult.Failure => "Failed to create an account.",
+            CreateAccountResult.Success success => $"Account created with ID {success.Id}.",
+            CreateAccountResult.Failure => "Failed to create an account.",
             _ => throw new ArgumentOutOfRangeException(nameof(result)),
         };
 

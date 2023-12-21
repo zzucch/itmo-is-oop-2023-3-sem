@@ -1,4 +1,4 @@
-namespace Lab5.Application.Contracts.Users;
+namespace Lab5.Application.Contracts.Results;
 
 public abstract record LoginResult
 {

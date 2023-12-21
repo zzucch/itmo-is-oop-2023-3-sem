@@ -1,3 +1,4 @@
+using Lab5.Application.Contracts.Results;
 using Lab5.Application.Contracts.Users;
 using Spectre.Console;
 
@@ -19,12 +20,12 @@ public class CreateUserScenario : IScenario
         string username = AnsiConsole.Ask<string>("Enter username:");
         string password = AnsiConsole.Ask<string>("Enter the password:");
 
-        CreateResult result = _adminService.CreateUser(username, password);
+        CreateUserResult result = _adminService.CreateUser(username, password);
 
         string message = result switch
         {
-            CreateResult.Success => "User created.",
-            CreateResult.Failure => "Failed to create the user.",
+            CreateUserResult.Success => "User created.",
+            CreateUserResult.Failure => "Failed to create the user.",
             _ => throw new ArgumentOutOfRangeException(nameof(result)),
         };
 

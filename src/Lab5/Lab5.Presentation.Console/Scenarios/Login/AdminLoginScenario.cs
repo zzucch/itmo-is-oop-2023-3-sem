@@ -1,3 +1,4 @@
+using Lab5.Application.Contracts.Results;
 using Lab5.Application.Contracts.Users;
 using Spectre.Console;
 

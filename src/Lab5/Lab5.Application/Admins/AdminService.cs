@@ -1,4 +1,5 @@
 using Lab5.Application.Abstractions.Repositories;
+using Lab5.Application.Contracts.Results;
 using Lab5.Application.Contracts.Users;
 using Lab5.Application.Models.Accounts;
 using Lab5.Application.Models.Users;
@@ -34,15 +35,21 @@ internal class AdminService : IAdminService
         return new LoginResult.Success();
     }
 
-    public CreateResult CreateUser(string username, string password)
+    public CreateUserResult CreateUser(string username, string password)
     {
         _userRepository.AddUser(new User(username, password, UserRole.Customer));
-        return new CreateResult.Success();
+        return new CreateUserResult.Success();
     }
 
-    public CreateResult CreateAccount(string username, long id, string password)
+    public CreateAccountResult CreateAccount(string username, string password)
     {
-        _accountRepository.AddAccount(new Account(username, id, password));
-        return new CreateResult.Success();
+        Account? account = _accountRepository.AddAccount(username, password);
+
+        if (account is null)
+        {
+            return new CreateAccountResult.Failure();
+        }
+
+        return new CreateAccountResult.Success(account.Id);
     }
 }
