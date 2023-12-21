@@ -25,7 +25,7 @@ public class CustomerLoginScenario : IScenario
         string message = result switch
         {
             LoginResult.Success => "Logged in.",
-            LoginResult.NotFound => "User not found.",
+            LoginResult.Failure => "User not found.",
             _ => throw new ArgumentOutOfRangeException(nameof(result)),
         };
 

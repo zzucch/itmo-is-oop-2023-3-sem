@@ -33,6 +33,7 @@ public class Initial : SqlMigration
     (
         account_id bigint primary key generated always as identity,
         user_id bigint not null references users(user_id),
+        account_balance numeric(100, 2) not null,
         account_password text not null
     );
     

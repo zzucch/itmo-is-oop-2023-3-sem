@@ -19,12 +19,12 @@ public class CreateUserScenario : IScenario
         string username = AnsiConsole.Ask<string>("Enter username:");
         string password = AnsiConsole.Ask<string>("Enter the password:");
 
-        LoginResult result = _adminService.CreateUser(username, password);
+        CreateResult result = _adminService.CreateUser(username, password);
 
         string message = result switch
         {
-            LoginResult.Success => "User created.",
-            LoginResult.NotFound => "Failed to create the user.",
+            CreateResult.Success => "User created.",
+            CreateResult.Failure => "Failed to create the user.",
             _ => throw new ArgumentOutOfRangeException(nameof(result)),
         };
 

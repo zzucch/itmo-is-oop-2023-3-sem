@@ -1,29 +1,48 @@
 using Lab5.Application.Abstractions.Repositories;
 using Lab5.Application.Contracts.Users;
+using Lab5.Application.Models.Accounts;
+using Lab5.Application.Models.Users;
 
 namespace Lab5.Application.Admins;
 
-public class AdminService : IAdminService
+internal class AdminService : IAdminService
 {
-    private readonly IAccountRepository _repository;
+    private readonly CurrentAdminManager _currentAdminManager;
+    private readonly IAccountRepository _accountRepository;
+    private readonly IUserRepository _userRepository;
 
-    public AdminService(IAccountRepository repository)
+    public AdminService(
+        IAccountRepository accountRepository,
+        CurrentAdminManager currentAdminManager,
+        IUserRepository userRepository)
     {
-        _repository = repository;
+        _accountRepository = accountRepository;
+        _currentAdminManager = currentAdminManager;
+        _userRepository = userRepository;
     }
 
     public LoginResult Login(string password)
     {
-        throw new NotImplementedException();
+        User? user = _userRepository.TryAdminLogin(password);
+
+        if (user is null)
+        {
+            return new LoginResult.Failure();
+        }
+
+        _currentAdminManager.User = user;
+        return new LoginResult.Success();
     }
 
-    public LoginResult CreateUser(string username, string password)
+    public CreateResult CreateUser(string username, string password)
     {
-        throw new NotImplementedException();
+        _userRepository.AddUser(new User(username, password, UserRole.Customer));
+        return new CreateResult.Success();
     }
 
-    public LoginResult CreateAccount(string username, long id, string password)
+    public CreateResult CreateAccount(string username, long id, string password)
     {
-        throw new NotImplementedException();
+        _accountRepository.AddAccount(new Account(username, id, password));
+        return new CreateResult.Success();
     }
 }

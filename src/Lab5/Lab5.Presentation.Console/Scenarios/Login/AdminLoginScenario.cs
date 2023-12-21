@@ -24,7 +24,7 @@ public class AdminLoginScenario : IScenario
         string message = result switch
         {
             LoginResult.Success => "Logged in as admin.",
-            LoginResult.NotFound => "Wrong password.",
+            LoginResult.Failure => "Wrong password.",
             _ => throw new ArgumentOutOfRangeException(nameof(result)),
         };
 

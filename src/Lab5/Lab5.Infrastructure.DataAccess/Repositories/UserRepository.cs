@@ -18,6 +18,11 @@ public class UserRepository : IUserRepository
         throw new NotImplementedException();
     }
 
+    public User? TryAdminLogin(string password)
+    {
+        throw new NotImplementedException();
+    }
+
     public void AddUser(User user)
     {
         throw new NotImplementedException();

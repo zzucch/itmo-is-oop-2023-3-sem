@@ -4,7 +4,7 @@ using Lab5.Application.Models.Users;
 
 namespace Lab5.Application.Users;
 
-internal class CurrentUserManager : ICurrentUserService
+public class CurrentUserManager : ICurrentUserService
 {
     public User? User { get; set; }
     public ICurrentAccountService? CurrentAccountService { get; set; }
