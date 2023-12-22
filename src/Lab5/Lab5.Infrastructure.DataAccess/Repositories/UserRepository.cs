@@ -65,12 +65,21 @@ public class UserRepository : IUserRepository
         using NpgsqlDataReader reader = command.ExecuteReader();
 
         if (reader.Read() is false)
-            return null;
+        {
+            var newAdmin = new User("admin", password, UserRole.Admin);
+            reader.DisposeAsync().Preserve();
+            AddUser(newAdmin);
+            return newAdmin;
+        }
 
-        return new User(
+        var admin = new User(
             Name: reader.GetString(0),
             Password: reader.GetString(1),
             Role: reader.GetFieldValue<UserRole>(2));
+
+        return string.Equals(password, admin.Password, StringComparison.Ordinal)
+            ? admin
+            : null;
     }
 
     public void AddUser(User user)

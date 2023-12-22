@@ -6,4 +6,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="Npgsql">
+        <HintPath>..\..\..\..\..\.nuget\packages\npgsql\7.0.4\lib\net7.0\Npgsql.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

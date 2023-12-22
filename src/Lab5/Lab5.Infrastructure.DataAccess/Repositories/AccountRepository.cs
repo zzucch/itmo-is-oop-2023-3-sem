@@ -56,13 +56,13 @@ public class AccountRepository : IAccountRepository
                               limit 1), :balance, :password)
             """;
 
-        NpgsqlConnection connection = _connectionProvider
+        NpgsqlConnection connection1 = _connectionProvider
             .GetConnectionAsync(default)
             .Preserve()
             .GetAwaiter()
             .GetResult();
 
-        using (var command1 = new NpgsqlCommand(sql1, connection))
+        using (var command1 = new NpgsqlCommand(sql1, connection1))
         {
             command1.AddParameter("username", username);
             command1.AddParameter("balance", 0);
@@ -80,7 +80,13 @@ public class AccountRepository : IAccountRepository
             limit 1
             """;
 
-        using var command2 = new NpgsqlCommand(sql2, connection);
+        NpgsqlConnection connection2 = _connectionProvider
+            .GetConnectionAsync(default)
+            .Preserve()
+            .GetAwaiter()
+            .GetResult();
+
+        using var command2 = new NpgsqlCommand(sql2, connection2);
 
         command2.AddParameter("username", username);
         command2.AddParameter("password", password);
