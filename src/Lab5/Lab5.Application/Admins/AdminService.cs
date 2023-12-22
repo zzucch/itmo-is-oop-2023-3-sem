@@ -3,22 +3,23 @@ using Lab5.Application.Contracts.Results;
 using Lab5.Application.Contracts.Users;
 using Lab5.Application.Models.Accounts;
 using Lab5.Application.Models.Users;
+using Lab5.Application.Users;
 
 namespace Lab5.Application.Admins;
 
 internal class AdminService : IAdminService
 {
-    private readonly CurrentAdminManager _currentAdminManager;
+    private readonly CurrentUserManager _currentUserManager;
     private readonly IAccountRepository _accountRepository;
     private readonly IUserRepository _userRepository;
 
     public AdminService(
         IAccountRepository accountRepository,
-        CurrentAdminManager currentAdminManager,
+        CurrentUserManager currentUserManager,
         IUserRepository userRepository)
     {
         _accountRepository = accountRepository;
-        _currentAdminManager = currentAdminManager;
+        _currentUserManager = currentUserManager;
         _userRepository = userRepository;
     }
 
@@ -31,7 +32,7 @@ internal class AdminService : IAdminService
             return new LoginResult.Failure();
         }
 
-        _currentAdminManager.User = user;
+        _currentUserManager.User = user;
         return new LoginResult.Success();
     }
 

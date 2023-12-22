@@ -22,12 +22,22 @@ public class AdminLoginScenario : IScenario
 
         LoginResult result = _adminService.Login(password);
 
-        string message = result switch
+        string message;
+        switch (result)
         {
-            LoginResult.Success => "Logged in as admin.",
-            LoginResult.Failure => "Wrong password.",
-            _ => throw new ArgumentOutOfRangeException(nameof(result)),
-        };
+            case LoginResult.Success:
+                message = "Logged in as admin.";
+                break;
+            case LoginResult.Failure:
+                message = "Failed to login into admin account.";
+                AnsiConsole.WriteLine(message);
+
+                Environment.Exit(0);
+
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(result));
+        }
 
         AnsiConsole.WriteLine(message);
         AnsiConsole.Ask<string>("Ok");

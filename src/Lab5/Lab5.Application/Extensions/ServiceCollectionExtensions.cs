@@ -25,10 +25,6 @@ public static class ServiceCollectionExtensions
         collection.AddScoped<ICurrentAccountService>(
             p => p.GetRequiredService<CurrentAccountManager>());
 
-        collection.AddScoped<CurrentAdminManager>();
-        collection.AddScoped<ICurrentAdminService>(
-            p => p.GetRequiredService<CurrentAdminManager>());
-
         return collection;
     }
 }

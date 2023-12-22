@@ -2,15 +2,16 @@ using System.Diagnostics.CodeAnalysis;
 using Lab5.Application.Contracts.Users;
 using Lab5.Application.Models.Users;
 
-namespace Lab5.Presentation.Console.Scenarios.Transactions;
+namespace Lab5.Presentation.Console.Scenarios.Login;
 
-public class WithdrawMoneyScenarioProvider : IScenarioProvider
+public class AccountLoginScenarioProvider : IScenarioProvider
 {
     private readonly IUserService _userService;
     private readonly ICurrentUserService _currentUser;
 
-    public WithdrawMoneyScenarioProvider(
-        IUserService userService, ICurrentUserService currentUser)
+    public AccountLoginScenarioProvider(
+        IUserService userService,
+        ICurrentUserService currentUser)
     {
         _userService = userService;
         _currentUser = currentUser;
@@ -19,13 +20,13 @@ public class WithdrawMoneyScenarioProvider : IScenarioProvider
     public bool TryGetScenario(
         [NotNullWhen(true)] out IScenario? scenario)
     {
-        if (_currentUser.User is null || _currentUser.User.Role is not UserRole.Customer)
+        if (_currentUser.User is null || _currentUser.User.Role is UserRole.Admin)
         {
             scenario = null;
             return false;
         }
 
-        scenario = new WithdrawMoneyScenario(_userService);
+        scenario = new AccountLoginScenario(_userService);
         return true;
     }
 }

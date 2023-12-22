@@ -60,36 +60,34 @@ public class UserRepository : IUserRepository
             .GetAwaiter()
             .GetResult();
 
-        using var command = new NpgsqlCommand(sql, connection);
-
-        using NpgsqlDataReader reader = command.ExecuteReader();
-
-        if (reader.Read() is false)
+        using (var command = new NpgsqlCommand(sql, connection))
         {
-            var newAdmin = new User("admin", password, UserRole.Admin);
-            reader.DisposeAsync().Preserve();
-            AddUser(newAdmin);
-            return newAdmin;
+            using NpgsqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                var admin = new User(
+                    Name: reader.GetString(0),
+                    Password: reader.GetString(1),
+                    Role: reader.GetFieldValue<UserRole>(2));
+
+                return string.Equals(password, admin.Password, StringComparison.Ordinal)
+                    ? admin
+                    : null;
+            }
         }
 
-        var admin = new User(
-            Name: reader.GetString(0),
-            Password: reader.GetString(1),
-            Role: reader.GetFieldValue<UserRole>(2));
+        var newAdmin = new User("admin", password, UserRole.Admin);
+        AddUser(newAdmin);
 
-        return string.Equals(password, admin.Password, StringComparison.Ordinal)
-            ? admin
-            : null;
+        return newAdmin;
     }
 
     public void AddUser(User user)
     {
         const string sql =
             """
-            insert into accounts
-            values (default, (select user_id
-                              from users
-                              where users.user_name = :username), :balance, :password)
+            insert into users (user_name, user_password, user_role)
+            values (:name, :password, CAST(:role as user_role));
             """;
 
         NpgsqlConnection connection = _connectionProvider
@@ -101,6 +99,7 @@ public class UserRepository : IUserRepository
         using var command = new NpgsqlCommand(sql, connection);
         command.AddParameter("name", user.Name);
         command.AddParameter("password", user.Password);
+        command.AddParameter("role", user.Role);
 
         command.ExecuteNonQuery();
     }

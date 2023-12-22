@@ -35,7 +35,7 @@ public class TransactionRepository : ITransactionRepository
 
         using NpgsqlDataReader reader = command.ExecuteReader();
 
-        while (reader.Read() is false)
+        while (reader.Read() is not false)
         {
             yield return new Transaction(
                 reader.GetDecimal(2),
@@ -47,7 +47,7 @@ public class TransactionRepository : ITransactionRepository
     {
         const string sql =
             """
-            insert into transactions values (default, :accountId, :amount, :type)
+            insert into transactions values (default, :id, :amount, CAST(:type as transaction_type))
             """;
 
         NpgsqlConnection connection = _connectionProvider
@@ -57,7 +57,7 @@ public class TransactionRepository : ITransactionRepository
             .GetResult();
 
         using var command = new NpgsqlCommand(sql, connection);
-        command.AddParameter("accountId", transaction);
+        command.AddParameter("id", accountId);
         command.AddParameter("amount", transaction.Amount);
         command.AddParameter("type", transaction.Type);
 

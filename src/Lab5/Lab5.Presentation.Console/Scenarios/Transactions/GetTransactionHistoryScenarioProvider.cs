@@ -1,19 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 using Lab5.Application.Contracts.Users;
 using Lab5.Application.Models.Users;
-using Lab5.Presentation.Console.Scenarios.Creating;
 
 namespace Lab5.Presentation.Console.Scenarios.Transactions;
 
 public class GetTransactionHistoryScenarioProvider : IScenarioProvider
 {
-    private readonly IAdminService _adminService;
+    private readonly IUserService _userService;
     private readonly ICurrentUserService _currentUser;
 
     public GetTransactionHistoryScenarioProvider(
-        IAdminService adminService, ICurrentUserService currentUser)
+        IUserService userService, ICurrentUserService currentUser)
     {
-        _adminService = adminService;
+        _userService = userService;
         _currentUser = currentUser;
     }
 
@@ -26,7 +25,7 @@ public class GetTransactionHistoryScenarioProvider : IScenarioProvider
             return false;
         }
 
-        scenario = new CreateAccountScenario(_adminService);
+        scenario = new GetTransactionHistoryScenario(_userService);
         return true;
     }
 }

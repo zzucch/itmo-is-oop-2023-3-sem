@@ -18,7 +18,8 @@ public class CreateAccountScenario : IScenario
     public void Run()
     {
         string username = AnsiConsole.Ask<string>("Enter new account owner's name:");
-        string password = AnsiConsole.Ask<string>("Enter the password:");
+        string password = AnsiConsole.Prompt(new TextPrompt<string>("Enter your password:")
+            .Secret());
 
         CreateAccountResult result = _adminService.CreateAccount(username, password);
 

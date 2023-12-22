@@ -1,19 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 using Lab5.Application.Contracts.Users;
 using Lab5.Application.Models.Users;
-using Lab5.Presentation.Console.Scenarios.Creating;
 
 namespace Lab5.Presentation.Console.Scenarios.Transactions;
 
 public class ReplenishMoneyScenarioProvider : IScenarioProvider
 {
-    private readonly IAdminService _adminService;
+    private readonly IUserService _userService;
     private readonly ICurrentUserService _currentUser;
 
     public ReplenishMoneyScenarioProvider(
-        IAdminService adminService, ICurrentUserService currentUser)
+        IUserService userService, ICurrentUserService currentUser)
     {
-        _adminService = adminService;
+        _userService = userService;
         _currentUser = currentUser;
     }
 
@@ -26,7 +25,7 @@ public class ReplenishMoneyScenarioProvider : IScenarioProvider
             return false;
         }
 
-        scenario = new CreateAccountScenario(_adminService);
+        scenario = new ReplenishMoneyScenario(_userService);
         return true;
     }
 }

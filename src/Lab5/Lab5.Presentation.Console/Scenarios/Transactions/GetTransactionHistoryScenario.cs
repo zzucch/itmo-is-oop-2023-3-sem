@@ -44,7 +44,7 @@ public class GetTransactionHistoryScenario : IScenario
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    builder.Append(
+                    builder.AppendLine(
                         CultureInfo.InvariantCulture,
                         $"Amount: {transaction.Amount}");
                 }
@@ -53,7 +53,7 @@ public class GetTransactionHistoryScenario : IScenario
 
                 break;
             case TransactionsLogResult.Failure:
-                message = "Failed to replenish.";
+                message = "Failed to get transactions.";
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(result));
