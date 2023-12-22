@@ -1,3 +1,4 @@
+using Lab5.Application.Contracts.Results;
 using Lab5.Application.Contracts.Users;
 using Spectre.Console;
 
@@ -20,6 +21,16 @@ public class AccountLoginScenario : IScenario
         string password = AnsiConsole.Prompt(new TextPrompt<string>("Enter your password:")
             .Secret());
 
-        _userService.ChangeAccount(id, password);
+        LoginResult result = _userService.ChangeAccount(id, password);
+
+        string message = result switch
+        {
+            LoginResult.Success => "Logged in.",
+            LoginResult.Failure => "Invalid id or password.",
+            _ => throw new ArgumentOutOfRangeException(nameof(result)),
+        };
+
+        AnsiConsole.WriteLine(message);
+        AnsiConsole.Ask<string>("Ok");
     }
 }
