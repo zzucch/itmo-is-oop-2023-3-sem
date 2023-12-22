@@ -101,7 +101,6 @@ public class UserRepository : IUserRepository
         using var command = new NpgsqlCommand(sql, connection);
         command.AddParameter("name", user.Name);
         command.AddParameter("password", user.Password);
-        command.AddParameter("role", user.Role);
 
         command.ExecuteNonQuery();
     }
