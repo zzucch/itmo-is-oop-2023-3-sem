@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
 
         collection.AddScoped<IUserRepository, UserRepository>();
         collection.AddScoped<IAccountRepository, AccountRepository>();
+        collection.AddScoped<ITransactionRepository, TransactionRepository>();
 
         return collection;
     }
